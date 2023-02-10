@@ -11,6 +11,7 @@ specifiers:
   daisyui: ^2.49.0
   eslint: ^8.33.0
   eslint-config-next: 13.1.6
+  eslint-config-prettier: ^8.6.0
   next: 13.1.6
   postcss: ^8.4.21
   react: 18.2.0
@@ -38,6 +39,7 @@ devDependencies:
   '@types/react': 18.0.27
   eslint: 8.33.0
   eslint-config-next: 13.1.6_4vsywjlpuriuw3tl5oq6zy5a64
+  eslint-config-prettier: 8.6.0_eslint@8.33.0
   typescript: 4.9.5
 
 packages:
@@ -1077,6 +1079,15 @@ packages:
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
       - supports-color
+    dev: true
+
+  /eslint-config-prettier/8.6.0_eslint@8.33.0:
+    resolution: {integrity: sha512-bAF0eLpLVqP5oEVUFKpMA+NnRFICwn9X8B5jrR9FcqnYBuPbqWEjTEspPWMj5ye6czoSLDweCzSo3Ko7gGrZaA==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.33.0
     dev: true
 
   /eslint-import-resolver-node/0.3.7:
