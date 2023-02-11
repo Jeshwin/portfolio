@@ -4,7 +4,7 @@
 
 This website was made using Next.js and React and deployed on Vercel
 
-Some other useful libraries include TailwindCSS, DaisyUI, and MDX
+Some other useful libraries include [TailwindCSS](https://tailwindcss.com/), [DaisyUI](https://daisyui.com/), and [MDX.js](https://mdxjs.com/)
 
 ## Learn More
 
