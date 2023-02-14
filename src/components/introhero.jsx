@@ -1,13 +1,33 @@
 import Link from 'next/link'
+import { AcademicCapIcon, BriefcaseIcon, PencilSquareIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid'
 
-export default function IntroHero({ reverse, title, description, href, from, to }) {
+
+export default function IntroHero({ reverse, title, description, href }) {
 
   const reverseClass = reverse ? "lg:flex-row-reverse" : "lg:flex-row"
 
-  const textColorClass = `mb-5 text-${from} text-xl md:text-3xl lg:text-5xl font-bold`
+  let textColorClass
+  let gradientButtonClass
+  let sideHeroIcon
 
-  const gradientButtonClass = `btn btn-${from} lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-${from} to-${to} hover:from-${from}-focus hover:to-${to}-focus`
-
+  const sideHeroIconClass = `aspect-square mx-10 w-80 lg:w-[40rem]`
+  if (title === "Resume") {
+    textColorClass = "mb-5 text-primary text-xl md:text-3xl lg:text-5xl font-bold"
+    gradientButtonClass = "btn btn-primary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus"
+    sideHeroIcon = <AcademicCapIcon className={ `${sideHeroIconClass} fill-primary` } />
+  } else if (title === "Portfolio") {
+    textColorClass = "mb-5 text-secondary text-xl md:text-3xl lg:text-5xl font-bold"
+    gradientButtonClass = "btn btn-secondary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-secondary to-accent hover:from-secondary-focus hover:to-accent-focus"
+    sideHeroIcon = <BriefcaseIcon className={ `${sideHeroIconClass} fill-secondary` } />
+  } else if (title === "Blog") {
+    textColorClass = "mb-5 text-accent text-xl md:text-3xl lg:text-5xl font-bold"
+    gradientButtonClass = "btn btn-accent lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-accent to-primary hover:from-accent-focus hover:to-primary-focus"
+    sideHeroIcon = <PencilSquareIcon className={ `${sideHeroIconClass} fill-accent` } />
+  } else {
+    textColorClass = "mb-5 text-base-content text-xl md:text-3xl lg:text-5xl font-bold"
+    gradientButtonClass = "btn btn-primary lg:btn-lg lg:text-xl"
+    sideHeroIcon = <ExclamationCircleIcon className={ `${sideHeroIconClass} fill-neutral` } />
+  }
   return (
     <>
       <main className='min-h-screen flex flex-col lg:flex-row justify-between items-center'>
@@ -18,15 +38,7 @@ export default function IntroHero({ reverse, title, description, href, from, to 
                   <p className="mb-5 md:lext-lg lg:text-2xl">{description}</p>
                   <Link href={href} className={gradientButtonClass}>{title}</Link>
                 </div>
-                <svg className="-mt-24 w-80 lg:w-[40rem]" viewBox="0 0 80 80" fill="none" role="img" xmlns="http://www.w3.org/2000/svg">
-                  <mask id="mask__bauhaus" maskUnits="userSpaceOnUse" x="0" y="0" width="80" height="80"><rect width="80" height="80" rx="160" fill="#FFFFFF"></rect></mask>
-                  <g mask="url(#mask__bauhaus)">
-                    <rect width="80" height="80" className='fill-primary'></rect>
-                    <rect x="10" y="30" width="80" height="10" className='fill-secondary' transform="translate(6 -6) rotate(130 40 40)"></rect>
-                    <circle cx="40" cy="40" className='fill-accent' r="16" transform="translate(12 12)"></circle>
-                    <line x1="0" y1="40" x2="80" y2="40" stroke-width="2" className='stroke-neutral' transform="translate(0 0) rotate(260 40 40)"></line>
-                  </g>
-                </svg>
+                {sideHeroIcon}
             </div>
           </div>
       </main>
