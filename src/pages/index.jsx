@@ -1,35 +1,42 @@
+import Link from 'next/link'
+
 import MyHead from '@/components/head'
 import Greeting from '@/components/greeting'
-import HomeCard from '@/components/homecards'
+import IntroHero from '@/components/introhero'
 
 export default function Home() {
   return (
     <>
       <MyHead title="Hello Jeshwin" />
       <Greeting />
-      <div className='flex flex-col lg:flex-row p-4 xl:py-12 lg:px-40 xl:px-80 gap-4 w-auto'>
-        <HomeCard
-          color1="primary"
-          color2="secondary"
-          title="Portfolio"
-          description="Check out all my projects"
-          link="/projects"
-        />
-        <HomeCard
-          color1="secondary"
-          color2="accent"
-          title="Resume"
-          description="Look at a copy of my resume"
-          link="/resume"
-        />
-        <HomeCard
-          color1="accent"
-          color2="primary"
-          title="Blog"
-          description="Read my weekly blog posts"
-          link="/articles"
-        />
-      </div>
+      <IntroHero
+        reverse={true}
+        title="Resume"
+        description="Don\'t you think that regular paper resumes are too boring?
+          I sure do! Why not check out my resume on my website!
+          As a digital version of my resume, it is not only more readable but also adds more details that would be restricted by a paper format.
+          Even still, you can download a PDF version of my resume here, too."
+        href="/resume#top"
+      />
+      <IntroHero
+        reverse={false}
+        title="Portfolio"
+        description="I work on a lot of projects.
+          In my free time, I like to start new personal projects that teach me new skills,
+          such as web design, computer programming, embedded software and 3d modeling.
+          You can find a portfolio of all my previous and current personal projects here."
+        href="/projects"
+      />
+      <IntroHero
+        reverse={true}
+        title="Blog"
+        description="Some of my projects can get very large and can't be contained in just a portfolio entry.
+          For those types of projects, I write blog posts about them!
+          I love to write blogs about new projects I am working on,
+          the status of previous projects, or just anything that I've found interesting.
+          I hope to post here more regularly."
+        href="/articles"
+      />
     </>
   )
 }
