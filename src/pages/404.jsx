@@ -12,7 +12,7 @@ export default function Greeting() {
                       Oops! Looks like this pages doesn&apos;t exist!
                       Sorry about that, you should go home. The button below should help you!
                     </p>
-                    <Link href="/" className="btn btn-error lg:btn-lg text-error-content text-xl">Go Home</Link>
+                    <Link href="/#top" className="btn btn-error lg:btn-lg text-error-content text-xl">Go Home</Link>
                 </div>
             </div>
           </div>
