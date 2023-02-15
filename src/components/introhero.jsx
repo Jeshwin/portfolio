@@ -10,7 +10,7 @@ export default function IntroHero({ reverse, title, description, href }) {
   let gradientButtonClass
   let sideHeroIcon
 
-  const sideHeroIconClass = `aspect-square mx-10 w-80 lg:w-[40rem]`
+  const sideHeroIconClass = `aspect-square lg:mx-10 w-72 lg:w-[40rem]`
   if (title === "Resume") {
     textColorClass = "mb-5 text-primary text-xl md:text-3xl lg:text-5xl font-bold"
     gradientButtonClass = "btn btn-primary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus"

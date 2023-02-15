@@ -16,12 +16,11 @@ export default function Drawer({ children }) {
                   </svg>
                 </label>
               </div>
-              <li><Link href="/">Home</Link></li>
+              <li><Link href="/#top">Home</Link></li>
               <li><Link href="/about">About</Link></li>
-              <li><Link href="/resume">Resume</Link></li>
+              <li><Link href="/resume#top">Resume</Link></li>
               <li><Link href="/projects">Portfolio</Link></li>
               <li><Link href="/articles">Blog</Link></li>
-              <li><Link className='text-error animate-pulse' href="/this-endpoint-tests-404">Force 404</Link></li>
             </ul>
           </div>
         </div>

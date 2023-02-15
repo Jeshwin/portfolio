@@ -12,7 +12,7 @@ export default function Greeting() {
                       Oops! Looks like this pages isn&apos;t done yet!
                       Check back later when it&apos;s ready!
                     </p>
-                    <Link href="/" className="btn btn-accent btn-lg text-accent-content text-xl">Home</Link>
+                    <Link href="/#top" className="btn btn-accent btn-lg text-accent-content text-xl">Home</Link>
                 </div>
             </div>
           </div>
