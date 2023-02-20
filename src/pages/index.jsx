@@ -13,7 +13,7 @@ export default function Home() {
       <IntroHero
         reverse={true}
         title="Resume"
-        description="Don\'t you think that regular paper resumes are too boring?
+        description="Don't you think that regular paper resumes are too boring?
           I sure do! Why not check out my resume on my website!
           As a digital version of my resume, it is not only more readable but also adds more details that would be restricted by a paper format.
           Even still, you can download a PDF version of my resume here, too."
