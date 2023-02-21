@@ -3,7 +3,7 @@ import ThemeToggle from "./themetoggle"
 
 export default function Navbar() {
     return (
-        <div className="navbar lg:px-40 xl:px-80 bg-base-200 sticky z-50 top-0">
+        <nav className="navbar lg:px-40 xl:px-80 bg-base-200 sticky z-50 top-0">
           <div className="flex-none">
             <label htmlFor="my-drawer" className="btn btn-ghost btn-circle drawer-button">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24" className="inline-block stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -28,6 +28,6 @@ export default function Navbar() {
           <div className="flex-2 mr-2 lg:mr-0">
             <ThemeToggle />
           </div>
-        </div>
+        </nav>
     )
 }

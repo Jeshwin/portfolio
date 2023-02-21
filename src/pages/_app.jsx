@@ -9,11 +9,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     router.events.on('routeChangeComplete', () => {
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      })
+      window.scroll(0,0)
       window.setTimeout(() => {
         document.getElementById("my-drawer").checked = false
       }, 10)
