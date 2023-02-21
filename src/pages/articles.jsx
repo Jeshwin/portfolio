@@ -1,24 +1,44 @@
 import Link from 'next/link'
+import path from 'path'
+import fs from 'fs'
+
 import MyHead from '@/components/head'
 
-export default function Greeting() {
+export const getStaticProps = async (context) => {
+  const postDirectory = path.join(process.cwd(), "src/pages/articles")
+  let postFilenames = fs.readdirSync(postDirectory)
+  const postModules = await Promise.all(
+    postFilenames.map(async (p) => import(`./articles/${p}`))
+  );
+  const postMetadata = postModules.map((m) => (m.meta ? m.meta : null))
+  return {
+    props: {
+      postMetadata: postMetadata,
+    },
+  }
+}
+
+export default function Greeting({ postMetadata }) {
   return (
     <>
       <MyHead title="Jeshwin's Blog" />
-      <main className='min-h-screen flex flex-row justify-between items-center'>
-          <div className="hero min-h-screen bg-base-300">
-            <div className="hero-content flex-row">
-                <div className="max-w-2xl 2xl:max-w-7xl text-center text-base-content">
-                    <h1 className="font-mono mb-5 text-5xl font-bold">My Blog</h1>
-                    <p className="mb-5 text-xl lg:text-3xl">
-                      Oops! Looks like this pages isn&apos;t done yet!
-                      Check back later when it&apos;s ready!
-                    </p>
-                    <Link href="/" className="btn btn-accent btn-lg text-accent-content text-xl">Home</Link>
-                </div>
+      <div className="p-5 lg:px-48 xl:px-96 lg:py-10 xl:py-20">
+        <h1 className="font-bold w-fit text-6xl lg:text-8xl mt-20 mb-6">Articles</h1>
+        <time className="text-accent text-xl italic">Last Update Feb 20, 2023</time>
+        <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
+          {postMetadata.map(({ title, date, description }) => (
+          <li key={title} className="card bg-base-200 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title text-4xl">{title}</h2>
+              <p className='text-primary italic text-lg'>{date}</p>
+              <p className='text-lg'>{description}</p>
+              <div className="card-actions justify-end">
+                <Link href={`/articles/${title}`} className="btn btn-primary">Read</Link>
+              </div>
             </div>
-          </div>
-      </main>
+          </li>))}
+        </ol>
+      </div>
     </>
   )
 }
