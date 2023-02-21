@@ -1,8 +1,10 @@
 import Link from 'next/link'
+import MyHead from '@/components/head'
 
 export default function Greeting() {
   return (
     <>
+      <MyHead title="Jeshwin's Blog" />
       <main className='min-h-screen flex flex-row justify-between items-center'>
           <div className="hero min-h-screen bg-base-300">
             <div className="hero-content flex-row">

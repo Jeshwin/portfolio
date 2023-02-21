@@ -7,8 +7,7 @@ import IntroHero from '@/components/introhero'
 export default function Home() {
   return (
     <>
-      <MyHead title="Hello Jeshwin" />
-      <div id="top"></div>
+      <MyHead title="Jeshwin's Website" />
       <Greeting />
       <IntroHero
         reverse={true}
