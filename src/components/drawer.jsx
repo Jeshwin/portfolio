@@ -7,7 +7,7 @@ export default function Drawer({ children }) {
           <input id='my-drawer' type='checkbox' className="drawer-toggle" />
           <div className="drawer-content">{children}</div>
           <div className="drawer-side">
-            <label htmlFor="my-drawer" className="drawer-overlay"></label>
+            <label htmlFor="my-drawer" className="drawer-overlay p-auto"></label>
             <ul className="menu p-4 w-80 bg-base-100 text-base-content">
               <div className="btn btn-ghost btn-circle">
                 <label htmlFor="my-drawer">
@@ -16,9 +16,9 @@ export default function Drawer({ children }) {
                   </svg>
                 </label>
               </div>
-              <li><Link href="/#top">Home</Link></li>
+              <li><Link href="/">Home</Link></li>
               <li><Link href="/about">About</Link></li>
-              <li><Link href="/resume#top">Resume</Link></li>
+              <li><Link href="/resume">Resume</Link></li>
               <li><Link href="/projects">Portfolio</Link></li>
               <li><Link href="/articles">Blog</Link></li>
             </ul>

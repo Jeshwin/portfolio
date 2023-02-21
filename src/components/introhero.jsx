@@ -30,7 +30,7 @@ export default function IntroHero({ reverse, title, description, href }) {
   }
   return (
     <>
-      <main className='min-h-screen flex flex-col lg:flex-row justify-between items-center'>
+      <div className='min-h-screen flex flex-col lg:flex-row justify-between items-center'>
           <div className="hero min-h-screen bg-base-100">
             <div className={ `hero-content gap-6 max-w-full w-auto p-0 lg:p-1 lg:px-20 xl:px-40 flex-col-reverse ${reverseClass}` }>
                 <div className="mx-auto max-w-xs md:max-w-xl lg:max-w-2xl text-center text-base-content">
@@ -41,7 +41,7 @@ export default function IntroHero({ reverse, title, description, href }) {
                 {sideHeroIcon}
             </div>
           </div>
-      </main>
+      </div>
     </>
   )
 }
