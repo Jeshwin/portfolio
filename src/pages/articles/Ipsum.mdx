@@ -1,0 +1,13 @@
+import MdxWrapper from '@/components/mdxwrapper'
+
+export const meta = {
+  title: 'Ipsum',
+  date: 'Feb 20, 2023',
+  description: 'Test blog articles #2',
+}
+
+# Ipsum
+
+## Lorem
+
+export default ({ children }) => <MdxWrapper meta={meta}>{children}</MdxWrapper>

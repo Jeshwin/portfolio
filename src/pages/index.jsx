@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <>
       <MyHead title="Jeshwin's Website" />
+      <div id='top'></div>
       <Greeting />
       <IntroHero
         reverse={true}
