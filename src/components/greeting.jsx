@@ -15,7 +15,7 @@ export default function Greeting() {
                     I love programming, 3d printing, playing the guitar, and making art in Blender!
                     Check out my portfolio, resume, and blog here!
                   </p>
-                  <Link href="/about" className="btn btn-primary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus">Let&apos;s Go!</Link>
+                  <Link href="/resume" className="btn btn-primary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus">Let&apos;s Go!</Link>
                 </div>
                 <div className="relative -mt-24 w-80 lg:w-[40rem] aspect-square">
                   <Image fill src={Astroholder} alt="placeholder image of an astronaut" />
