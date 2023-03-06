@@ -36,7 +36,7 @@ export default function Home() {
           I love to write blogs about new projects I am working on,
           the status of previous projects, or just anything that I've found interesting.
           I hope to post here more regularly."
-        href="/articles"
+        href="/articles#top"
       />
     </>
   )

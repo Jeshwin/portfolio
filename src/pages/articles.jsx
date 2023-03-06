@@ -23,6 +23,7 @@ export default function Greeting({ postMetadata }) {
   return (
     <>
       <MyHead title="Jeshwin's Blog" />
+      <div id='top'></div>
       <div className="p-5 lg:px-48 xl:px-96 lg:py-10 xl:py-20">
         <h1 className="font-bold w-fit text-6xl lg:text-8xl mt-20 mb-6">Articles</h1>
         <time className="text-accent text-xl italic">Last Update Feb 20, 2023</time>
@@ -38,7 +39,7 @@ export default function Greeting({ postMetadata }) {
               <p className='text-primary italic text-lg'>{date}</p>
               <p className='text-lg'>{description}</p>
               <div className="card-actions justify-end">
-                <Link href={`/articles/${title}`} className="btn btn-primary">Read</Link>
+                <Link href={`/articles/${title}#top`} className="btn btn-primary">Read</Link>
               </div>
             </div>
           </li>))}
