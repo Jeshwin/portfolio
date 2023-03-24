@@ -17,7 +17,7 @@ export default function Home() {
           I sure do! Why not check out my resume on my website!
           As a digital version of my resume, it is not only more readable but also adds more details that would be restricted by a paper format.
           Even still, you can download a PDF version of my resume here, too."
-        href="/resume#top"
+        href="/articles/resume#top"
       />
       <IntroHero
         reverse={false}

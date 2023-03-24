@@ -39,7 +39,7 @@ export default function Greeting({ postMetadata }) {
               <p className='text-primary italic text-lg'>{date}</p>
               <p className='text-lg'>{description}</p>
               <div className="card-actions justify-end">
-                <Link href={`/articles/${title}#top`} className="btn btn-primary">Read</Link>
+                <Link href={`/articles/${filename}#top`} className="btn btn-primary">Read</Link>
               </div>
             </div>
           </li>))}

@@ -17,7 +17,7 @@ export default function Drawer({ children }) {
                 </label>
               </div>
               <li><Link href="/#top">Home</Link></li>
-              <li><Link href="/resume#top">Resume</Link></li>
+              <li><Link href="/articles/resume#top">Resume</Link></li>
               <li><Link href="/portfolio#top">Portfolio</Link></li>
               <li><Link href="/articles#top">Blog</Link></li>
             </ul>
