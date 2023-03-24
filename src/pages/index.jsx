@@ -26,7 +26,7 @@ export default function Home() {
           In my free time, I like to start new personal projects that teach me new skills,
           such as web design, computer programming, embedded software and 3d modeling.
           You can find a portfolio of all my previous and current personal projects here."
-        href="/projects"
+        href="/portfolio#top"
       />
       <IntroHero
         reverse={true}
