@@ -40,7 +40,7 @@ export default function Greeting({ portfolioFilenames }) {
     <>
       <MyHead title="Jeshwin's Blog" />
       <div id='top'></div>
-      <div className="p-5 lg:px-48 xl:px-96 lg:py-10 xl:py-20">
+      <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
         <h1 className="font-bold w-fit text-6xl lg:text-8xl mt-20 mb-6">Portfolio</h1>
         <time className="text-accent text-xl italic">Last Update Mar 23, 2023</time>
         <ul className="flex flex-wrap gap-4 mt-10">
@@ -51,7 +51,7 @@ export default function Greeting({ portfolioFilenames }) {
                 <div className='
                   absolute w-full h-full top-0 left-0
                   transition-all ease-in-out duration-150
-                  text-lg xl:text-2xl text-center text-transparent hover:text-base-content
+                  text-lg 2xl:text-2xl text-center text-transparent hover:text-base-content
                   flex items-center justify-center
                   rounded-lg bg-opacity-0 hover:bg-opacity-75 bg-base-300'>{image.split('.')[0]}
                 </div>
