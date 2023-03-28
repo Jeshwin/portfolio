@@ -25,7 +25,7 @@ function shuffle(array) {
 }
 
 export const getStaticProps = async (context) => {
-  const portfolioDirectory = path.join(process.cwd(), "public/portfolio")
+  const portfolioDirectory = path.join(process.cwd(), "public/assets")
   let portfolioFilenames = fs.readdirSync(portfolioDirectory)
   portfolioFilenames = shuffle(portfolioFilenames)
   return {
@@ -38,7 +38,7 @@ export const getStaticProps = async (context) => {
 export default function Greeting({ portfolioFilenames }) {
   return (
     <>
-      <MyHead title="Jeshwin's Blog" />
+      <MyHead title="Portfolio" />
       <div id='top'></div>
       <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
         <h1 className="font-bold w-fit text-6xl lg:text-8xl mt-20 mb-6">Portfolio</h1>
@@ -46,14 +46,14 @@ export default function Greeting({ portfolioFilenames }) {
         <ul className="flex flex-wrap gap-4 mt-10">
           {portfolioFilenames.map((image) => (
             <li key={image} className="flex-auto relative cursor-pointer shadow-xl h-[500px]">
-              <Link href={`/portfolio/${image}`}>
-                <Image className="rounded-lg object-cover align-middle w-full h-full" width={2160} height={2160} src={`/portfolio/${image}`} alt={image.split('.')[0]}/>
+              <Link href={`/portfolio/${encodeURIComponent(image.split('.')[0].split("_")[0])}?date=${image.split('.')[0].split("_")[1]}&tags=${encodeURIComponent(JSON.stringify(image.split('.')[0].split("_")[2].split(",")))}&format=${image.split('.')[1]}#top`}>
+                <Image className="rounded-lg object-cover align-middle w-full h-full" width={2160} height={2160} src={`/assets/${image}`} alt={image.split('.')[0]}/>
                 <div className='
                   absolute w-full h-full top-0 left-0
                   transition-all ease-in-out duration-150
                   text-lg 2xl:text-2xl text-center text-transparent hover:text-base-content
                   flex items-center justify-center
-                  rounded-lg bg-opacity-0 hover:bg-opacity-75 bg-base-300'>{image.split('.')[0]}
+                  rounded-lg bg-opacity-0 hover:bg-opacity-75 bg-base-300'>{image.split('.')[0].split("_")[0]}
                 </div>
               </Link>
             </li>
