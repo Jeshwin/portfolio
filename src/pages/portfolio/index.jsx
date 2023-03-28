@@ -46,7 +46,7 @@ export default function Greeting({ portfolioFilenames }) {
         <ul className="flex flex-wrap gap-4 mt-10">
           {portfolioFilenames.map((image) => (
             <li key={image} className="flex-auto relative cursor-pointer shadow-xl h-[500px]">
-              <Link href={`/portfolio/${encodeURIComponent(image.split('.')[0].split("_")[0])}?date=${image.split('.')[0].split("_")[1]}&tags=${encodeURIComponent(JSON.stringify(image.split('.')[0].split("_")[2].split(",")))}&format=${image.split('.')[1]}#top`}>
+              <Link href={`/portfolio/${encodeURIComponent(image.split('.')[0].split("_")[0])}?date=${image.split('.')[0].split("_")[1]}&tags=${JSON.stringify(image.split('.')[0].split("_")[2].split(","))}&format=${image.split('.')[1]}#top`}>
                 <Image className="rounded-lg object-cover align-middle w-full h-full" width={2160} height={2160} src={`/assets/${image}`} alt={image.split('.')[0]}/>
                 <div className='
                   absolute w-full h-full top-0 left-0
