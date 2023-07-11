@@ -30,9 +30,9 @@ export default function IntroHero({ reverse, title, description, href }) {
   }
   return (
     <>
-      <div className='min-h-screen flex flex-col lg:flex-row justify-between items-center'>
-          <div className="hero min-h-screen bg-base-100">
-            <div className={ `hero-content gap-6 max-w-full w-auto p-0 lg:p-1 lg:px-20 2xl:px-40 flex-col-reverse ${reverseClass}` }>
+      <div className='flex my-20 lg:my-32 flex-col lg:flex-row justify-items-center'>
+          <div className="hero bg-base-100">
+            <div className={ `hero-content gap-6 max-w-7xl w-auto p-0 lg:p-1 px-auto flex-col-reverse ${reverseClass}` }>
                 <div className="mx-auto max-w-xs md:max-w-xl lg:max-w-2xl text-center text-base-content">
                   <h1 className={textColorClass}>{title}</h1>
                   <p className="mb-5 md:lext-lg lg:text-2xl">{description}</p>
