@@ -7,7 +7,7 @@ export default function Greeting() {
     <>
       <main className='flex flex-col lg:flex-row justify-items-center'>
           <div className="hero mx-auto py-12 lg:py-24 bg-gradient-to-t from-base-100 to-base-200">
-            <div className="hero-content gap-6 max-w-7xl p-0 lg:p-1 px-auto flex-col">
+            <div className="hero-content gap-6 max-w-7xl p-0 lg:p-1 px-auto mx-10 flex-col">
               <div className="relative -mt-24 w-80 lg:w-[32rem] aspect-square">
                 <Image fill src={Astroholder} alt="placeholder image of an astronaut" />
               </div>
