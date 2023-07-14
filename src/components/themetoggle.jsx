@@ -1,12 +1,13 @@
-import React from "react"
+import { useEffect } from "react"
 
 export default function ThemeToggle() {
 
   const toggleTheme = () => {
-    localStorage.setItem("theme", localStorage.getItem("theme") == "light" ? "dark" : "light")
-    document.querySelector('html').setAttribute('data-theme', localStorage.getItem("theme"));  }
+    localStorage.setItem("theme", localStorage.getItem("theme") == "dark" ? "light" : "dark")
+    document.querySelector('html').setAttribute('data-theme', localStorage.getItem("theme"))
+  }
 
-  React.useEffect(() => {
+  useEffect(() => {
     toggleTheme()
   }, []);
 
