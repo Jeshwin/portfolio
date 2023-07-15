@@ -6,7 +6,7 @@ export default function CustomCursor() {
 
     useEffect(() => {
         const updateCursorPosition = (e) => {
-            setPosition({ x: e.clientX-25, y: e.clientY-25 })
+            setPosition({ x: e.clientX-15, y: e.clientY-15 })
         };
 
         document.addEventListener('mousemove', updateCursorPosition)
@@ -18,7 +18,7 @@ export default function CustomCursor() {
 
     return (
         <div
-            className={`${styles.circlecursor} bg-primary`}
+            className={`${styles.circlecursor} bg-neutral`}
             style={{ left: `${position.x}px`, top: `${position.y}px` }}
         ></div>
     )

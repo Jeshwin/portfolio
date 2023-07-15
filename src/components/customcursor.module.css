@@ -1,8 +1,8 @@
 .circlecursor {
     position: fixed;
     pointer-events: none;
-    width: 2rem;
-    height: 2rem;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     z-index: 9999; /* Ensure it appears above other elements */
     transition: transform 0.2s ease-in-out;
