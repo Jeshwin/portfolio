@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { AcademicCapIcon, BriefcaseIcon, PencilSquareIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid'
+import { AcademicCapIcon, BriefcaseIcon, AdjustmentsHorizontalIcon, PencilSquareIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid'
 
 
 export default function IntroHero({ reverse, title, description, href }) {
@@ -19,10 +19,14 @@ export default function IntroHero({ reverse, title, description, href }) {
     textColorClass = "mb-5 bg-clip-text text-transparent bg-gradient-to-br from-secondary to-accent text-xl md:text-3xl lg:text-5xl font-bold"
     gradientButtonClass = "btn btn-secondary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-secondary to-accent hover:from-secondary-focus hover:to-accent-focus"
     sideHeroIcon = <BriefcaseIcon className={ `${sideHeroIconClass} fill-secondary` } />
-  } else if (title === "Blog") {
+  } else if (title === "Demos") {
     textColorClass = "mb-5 bg-clip-text text-transparent bg-gradient-to-br from-accent to-primary text-xl md:text-3xl lg:text-5xl font-bold"
     gradientButtonClass = "btn btn-accent lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-accent to-primary hover:from-accent-focus hover:to-primary-focus"
-    sideHeroIcon = <PencilSquareIcon className={ `${sideHeroIconClass} fill-accent` } />
+    sideHeroIcon = <AdjustmentsHorizontalIcon className={ `${sideHeroIconClass} fill-accent` } />
+  } else if (title === "Blog") {
+    textColorClass = "mb-5 bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary text-xl md:text-3xl lg:text-5xl font-bold"
+    gradientButtonClass = "btn btn-primary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus"
+    sideHeroIcon = <PencilSquareIcon className={ `${sideHeroIconClass} fill-primary` } />
   } else {
     textColorClass = "mb-5 text-base-content text-xl md:text-3xl lg:text-5xl font-bold"
     gradientButtonClass = "btn btn-primary lg:btn-lg lg:text-xl"

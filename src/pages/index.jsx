@@ -30,6 +30,18 @@ export default function Home() {
       />
       <IntroHero
         reverse={true}
+        title="Demos"
+        description="Tired of static screenshots and plain descriptions? Welcome to the demo section of my personal website!
+        Here, I showcase interactive demos and simulations that bring my projects to life.
+        Whether it's a web application, a game prototype, or an innovative user interface,
+        these demos allow you to experience firsthand the functionality and creativity behind my work.
+        I believe that seeing is believing, so explore the demos below and get a taste of what I can do.
+        Don't worry, if you prefer a downloadable version, you can also find links to standalone executables or code repositories for each demo.
+        Prepare to be amazed by the interactive wonders awaiting you in this section!"
+        href="/demo#top"
+      />
+      <IntroHero
+        reverse={false}
         title="Blog"
         description="Some of my projects can get very large and can't be contained in just a portfolio entry.
           For those types of projects, I write blog posts about them!
