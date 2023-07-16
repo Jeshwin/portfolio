@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 a, svg, .btn {
-    cursor: none !important;
+    @apply cursor-auto lg:cursor-none; 
 }

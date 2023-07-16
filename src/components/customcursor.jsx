@@ -18,7 +18,7 @@ export default function CustomCursor() {
 
     return (
         <div
-            className={`${styles.circlecursor} bg-neutral`}
+            className={`${styles.circlecursor}  bg-transparent lg:bg-neutral`}
             style={{ left: `${position.x}px`, top: `${position.y}px` }}
         ></div>
     )
