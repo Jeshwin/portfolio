@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { AcademicCapIcon, BriefcaseIcon, AdjustmentsHorizontalIcon, PencilSquareIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid'
+import { motion } from 'framer-motion'
 
 
 export default function IntroHero({ reverse, title, description, href }) {
@@ -10,7 +11,7 @@ export default function IntroHero({ reverse, title, description, href }) {
   let gradientButtonClass
   let sideHeroIcon
 
-  const sideHeroIconClass = `aspect-square lg:mx-10 w-72 lg:w-[40rem]`
+  const sideHeroIconClass = `aspect-square lg:mx-10 w-60 lg:w-[32rem]`
   if (title === "Resume") {
     textColorClass = "mb-5 bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary text-xl md:text-3xl lg:text-5xl font-bold"
     gradientButtonClass = "btn btn-primary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus"
@@ -42,7 +43,14 @@ export default function IntroHero({ reverse, title, description, href }) {
                   <p className="mb-5 md:lext-lg lg:text-2xl">{description}</p>
                   <Link href={href} className={gradientButtonClass}>{title}</Link>
                 </div>
-                {sideHeroIcon}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.25 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ type: "spring" }}
+                  drag
+                  dragConstraints={{ top: -10, left: -10, right: 10, bottom: 10 }}>
+                  {sideHeroIcon}
+                </motion.div>
             </div>
           </div>
       </div>
