@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-a, svg, .btn {
-    @apply cursor-auto lg:cursor-none; 
+[data-theme="light"] * {
+    cursor: url(customcursor-light.svg) 20 20, auto !important;
+}
+
+[data-theme="light"] *:active {
+    cursor: url(customcursor-light-active.svg) 15 15, auto !important;
+}
+
+[data-theme="dark"] * {
+    cursor: url(customcursor-dark.svg) 20 20, auto !important;
+}
+
+[data-theme="dark"] *:active {
+    cursor: url(customcursor-dark-active.svg) 15 15, auto !important;
 }
