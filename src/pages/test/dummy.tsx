@@ -5,7 +5,6 @@ import { GetStaticProps } from "next";
 
 const prisma = new PrismaClient
 
-
 export const getStaticProps: GetStaticProps = async () => {
     const projects = await prisma.project.findMany({
         select: {
@@ -95,7 +94,8 @@ export default function Dummy({ projects, posts }) {
                             {tag.title}
                         </li>)}
                     </ul>
-                    <MarkdownRenderer markdownText={post.body} />
+                    {/* <MarkdownRenderer markdownText={post.body} /> */}
+                    {post.body}
                 </div>)}
             </div>
           </div>
