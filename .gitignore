@@ -33,7 +33,7 @@ yarn-error.log*
 .vercel
 
 # dummy
-dummy.js
-dummy1.md
-dummy2.md
-dummy3.md
+prisma/dummy.js
+prisma/dummy1.md
+prisma/dummy2.md
+prisma/dummy3.md
