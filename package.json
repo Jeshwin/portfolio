@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "migrate:deploy": "dotenv -e .env.development.local -- pnpm prisma migrate deploy",
     "db:push": "dotenv -e .env.development.local -- pnpm prisma db push",
-    "studio": "dotenv -e .env.development.local -- pnpm prisma studio"
+    "studio": "dotenv -e .env.development.local -- pnpm prisma studio",
+    "postinstall": "dotenv -e .env.development.local -- prisma generate"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.15",
