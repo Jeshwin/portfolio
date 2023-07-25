@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "prisma/dummy.ts"  ],
   "exclude": [
     "node_modules"
   ]

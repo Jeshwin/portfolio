@@ -8,8 +8,8 @@ export default function Entry() {
   const router = useRouter()
   const { entry, date, tags, format } = router.query
 
-  let fullDate = new Date(date)
-  let tagsData = tags ? JSON.parse(tags) : ["undefined"]
+  let fullDate = new Date(date as string)
+  let tagsData = tags ? JSON.parse(tags as string) : ["undefined"]
   let tagString = tagsData.toString()
 
   let filename = `${entry}_${date}_${tagString}.${format}`
@@ -20,7 +20,7 @@ export default function Entry() {
       <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <Link href={`/assets/${filename}`}>
-            <Image className="rounded object-contain align-middle w-full h-full" width={1000} height={1000} src={`/assets/${filename}`} alt={entry}/>
+            <Image className="rounded object-contain align-middle w-full h-full" width={1000} height={1000} src={`/assets/${filename}`} alt={entry as string}/>
           </Link>
           <div className="flex flex-col gap-2 flex-shrink">
             <div className="text-2xl xl:text-4xl text-primary pt-4 xl:pt-10">File name</div>

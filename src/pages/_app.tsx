@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }) {
     router.events.on('routeChangeComplete', () => {
       window.scroll(0,0)
       window.setTimeout(() => {
-        document.getElementById("my-drawer").checked = false
+        (document.getElementById("my-drawer") as any).checked = false
       }, 10)
     })
   })

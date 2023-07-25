@@ -37,7 +37,7 @@ export default function IntroHero({ reverse, title, description, href }) {
     <>
       <div className='flex my-20 lg:my-32 flex-col lg:flex-row justify-items-center'>
           <div className="hero bg-base-100">
-            <div className={ `hero-content gap-6 max-w-7xl w-auto mx-10 p-0 lg:p-1 px-auto flex-col-reverse ${reverseClass}` }>
+            <div className={ `hero-content gap-6 max-x-5xl w-auto mx-10 p-0 lg:p-1 px-auto flex-col-reverse ${reverseClass}` }>
                 <div className="mx-auto max-w-xs md:max-w-xl lg:max-w-2xl text-center text-base-content">
                   <h1 className={textColorClass}>{title}</h1>
                   <p className="mb-5 md:lext-lg lg:text-2xl">{description}</p>
@@ -48,7 +48,7 @@ export default function IntroHero({ reverse, title, description, href }) {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ type: "spring" }}
                   drag
-                  dragConstraints={{ top: -10, left: -10, right: 10, bottom: 10 }}>
+                  dragConstraints={{ top: -100, left: -100, right: 100, bottom: 100 }}>
                   {sideHeroIcon}
                 </motion.div>
             </div>
