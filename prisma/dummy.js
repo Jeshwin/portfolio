@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+const { PrismaClient } = require('@prisma/client')
+const fs = require('fs-extra')
 
 ///////////////////////////////
 // IMPORTANT                 //
@@ -165,7 +166,7 @@ async function main() {
         ]
       },
       description: "sign tone exercise regular when heavy silent fair within dollar affect musical greatly lying of level universe percent taught dinner donkey spent average program",
-      body: "# Decorum Sain Sunt odoribus invidiosa et deorum conclamat metus\n\n## Et digiti quarum\n\nLorem markdownum **tetigit si funera** mox togaque magni. Adde non colligit\ncrepuitque **petis**. Leones cornua.\n\n- Unda undis memini recentis\n- Gravis et summam cunctis freto amor\n- Curva esses languere\n\nPrope victa audieris tamquam: ferunt ostendit natum ab voluit petit: arma aspera\ndempto. Est et pennae minister obtulimus se aures ab, tale.\n\n## Crura luminis sepulcris ulli olivis longisque species\n\nUt iaculum ferebat lugebere, Tyrios enim diduxit. Dedit et *iussit nunc*, procul\nmemor et leto numquam habuere. Sumptis et vincar ardent certa letum Thescelus\nmiserque arcus.\n\nsnippet += hard + pebibyte;\nif (roomInfringementWeb) {\n\tframeMonitor(-2);\n\tadd(opengl(3, hotArtificialPayload));\n\thorseAlphaEthernet += codeErrorFreeware.ipxFriend(socket_boot, arp,\n\t\trootkit(cdIpv));\n} else {\n\tmarkup_hypermedia.asp = 2 + c * -2;\n\troom_ddr *= flashPaperCloud + 4;\n\tgnuHddDimm = social + 28 - 46;\n}\nif (io) {\n\tsmsSql += veronica_css;\n\tsmb_framework(3);\n else {\n\tdouble_password = copyright - service_mouse_resolution +\n\t\ttorrent_rom_infotainment.reader.sector_syntax_window(\n\t\tnavigationBespokeLock);\n\tmiddleware_template_disk(powerGpu, webRipcordingClass);\n}\n\nIudicium inde stravit. *Primoque adice*. Tulerant custodia frustraque veris\ngemmata crimine fuit aequantibus parentum communis sacrorum Rhenum ego!    \n\nPennis adversas qua inludens locus simulat Magnetas: qua saepe, illa *morbi his*\nplena illa. Huc atque quo flammas ex cornu tum novissima, teretesque ferox\npraedamque consistite nostra, vel huic. Nos suo qui nec rostris superi, licet\nhaeserat. Mea **pennas** Romane coniunx gurgite de post est ante decrescunt.\nUtque fidissima sub mecum nudabant quae; aevum in fontibus, nescia terra, me."
+      body: fs.readFileSync('dummy1.md', 'utf-8')
     }
   })
 
@@ -180,7 +181,7 @@ async function main() {
         ]
       },
       description: "deal smell selection yes generally control pale baseball name crop serious differ active morning industrial land thin object welcome completely trace week ready soap",
-      body: "# Leviosa Ipsum Idolatrus invitation et al deorum conclamat metus\n\n## Et digiti quarum\n\nLorem markdownum **tetigit si funera** mox togaque magni. Adde non colligit\ncrepuitque **petis**. Leones cornua.\n\n- Unda undis memini recentis\n- Gravis et summam cunctis freto amor\n- Curva esses languere\n\nPrope victa audieris tamquam: ferunt ostendit natum ab voluit petit: arma aspera\ndempto. Est et pennae minister obtulimus se aures ab, tale.\n\n## Crura luminis sepulcris ulli olivis longisque species\n\nUt iaculum ferebat lugebere, Tyrios enim diduxit. Dedit et *iussit nunc*, procul\nmemor et leto numquam habuere. Sumptis et vincar ardent certa letum Thescelus\nmiserque arcus.\n\nsnippet += hard + pebibyte;\nif (roomInfringementWeb) {\n\tframeMonitor(-2);\n\tadd(opengl(3, hotArtificialPayload));\n\thorseAlphaEthernet += codeErrorFreeware.ipxFriend(socket_boot, arp,\n\t\trootkit(cdIpv));\n} else {\n\tmarkup_hypermedia.asp = 2 + c * -2;\n\troom_ddr *= flashPaperCloud + 4;\n\tgnuHddDimm = social + 28 - 46;\n}\nif (io) {\n\tsmsSql += veronica_css;\n\tsmb_framework(3);\n else {\n\tdouble_password = copyright - service_mouse_resolution +\n\t\ttorrent_rom_infotainment.reader.sector_syntax_window(\n\t\tnavigationBespokeLock);\n\tmiddleware_template_disk(powerGpu, webRipcordingClass);\n}\n\nIudicium inde stravit. *Primoque adice*. Tulerant custodia frustraque veris\ngemmata crimine fuit aequantibus parentum communis sacrorum Rhenum ego!    \n\nPennis adversas qua inludens locus simulat Magnetas: qua saepe, illa *morbi his*\nplena illa. Huc atque quo flammas ex cornu tum novissima, teretesque ferox\npraedamque consistite nostra, vel huic. Nos suo qui nec rostris superi, licet\nhaeserat. Mea **pennas** Romane coniunx gurgite de post est ante decrescunt.\nUtque fidissima sub mecum nudabant quae; aevum in fontibus, nescia terra, me."
+      body: fs.readFileSync('dummy2.md', 'utf-8')
     }
   })
 
@@ -195,7 +196,7 @@ async function main() {
         ]
       },
       description: "native union pride wait shallow connected manner industry flow needs hardly arrive caught directly attempt fastened struggle composed replied hole make begun garage which",
-      body: "# Lorem Upsilon odoribus invidiosa dulce a et deorum conclamat metus\n\n## Et digiti quarum\n\nLorem markdownum **tetigit si funera** mox togaque magni. Adde non colligit\ncrepuitque **petis**. Leones cornua.\n\n- Unda undis memini recentis\n- Gravis et summam cunctis freto amor\n- Curva esses languere\n\nPrope victa audieris tamquam: ferunt ostendit natum ab voluit petit: arma aspera\ndempto. Est et pennae minister obtulimus se aures ab, tale.\n\n## Crura luminis sepulcris ulli olivis longisque species\n\nUt iaculum ferebat lugebere, Tyrios enim diduxit. Dedit et *iussit nunc*, procul\nmemor et leto numquam habuere. Sumptis et vincar ardent certa letum Thescelus\nmiserque arcus.\n\nsnippet += hard + pebibyte;\nif (roomInfringementWeb) {\n\tframeMonitor(-2);\n\tadd(opengl(3, hotArtificialPayload));\n\thorseAlphaEthernet += codeErrorFreeware.ipxFriend(socket_boot, arp,\n\t\trootkit(cdIpv));\n} else {\n\tmarkup_hypermedia.asp = 2 + c * -2;\n\troom_ddr *= flashPaperCloud + 4;\n\tgnuHddDimm = social + 28 - 46;\n}\nif (io) {\n\tsmsSql += veronica_css;\n\tsmb_framework(3);\n else {\n\tdouble_password = copyright - service_mouse_resolution +\n\t\ttorrent_rom_infotainment.reader.sector_syntax_window(\n\t\tnavigationBespokeLock);\n\tmiddleware_template_disk(powerGpu, webRipcordingClass);\n}\n\nIudicium inde stravit. *Primoque adice*. Tulerant custodia frustraque veris\ngemmata crimine fuit aequantibus parentum communis sacrorum Rhenum ego!    \n\nPennis adversas qua inludens locus simulat Magnetas: qua saepe, illa *morbi his*\nplena illa. Huc atque quo flammas ex cornu tum novissima, teretesque ferox\npraedamque consistite nostra, vel huic. Nos suo qui nec rostris superi, licet\nhaeserat. Mea **pennas** Romane coniunx gurgite de post est ante decrescunt.\nUtque fidissima sub mecum nudabant quae; aevum in fontibus, nescia terra, me."
+      body: fs.readFileSync('dummy3.md', 'utf-8')
     }
   })
 
