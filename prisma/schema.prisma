@@ -50,8 +50,7 @@ model Post {
 }
 
 model Tag {
-  id          Int              @id @default(autoincrement())
-  title       String           @unique
+  title       String           @id @unique
   projects    Project[]
   posts       Post[]
 }
