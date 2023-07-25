@@ -31,3 +31,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# dummy
+dummy.js
+dummy1.md
+dummy2.md
+dummy3.md
