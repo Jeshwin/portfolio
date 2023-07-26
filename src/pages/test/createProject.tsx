@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/solid'
-import { s3 } from '../../../awsConfig'
+import { S3Client } from '@aws-sdk/client-s3'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import MyHead from '@/components/head'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
+import 'dotenv/config'
 
 /*
  * Function: getFileExtension
@@ -32,8 +33,20 @@ function getFileExtension(filename) {
   return extension;
 }
 
+export const getStaticProps = () => {
+  const bucketName = process.env.AWS_BUCKET_NAME
+  const region = process.env.AWS_REGION
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID
+  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
 
-export default function NewProject() {
+  return {
+    props: {
+      accessKeyId, secretAccessKey, region, bucketName
+    }
+  }
+}
+
+export default function NewProject({ accessKeyId, secretAccessKey, region, bucketName }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [tags, setTags] = useState('')
@@ -41,14 +54,12 @@ export default function NewProject() {
   const [links, setLinks] = useState([''])
   const [gallery, setGallery] = useState([{ image: null, description: '' }])
 
-  ////////////////////////////////
-  // IMPORTANT                  //
-  // Sync region and bucketName //
-  // with environment variables //
-  ////////////////////////////////
-
-  const region = 'us-west-1'
-  const bucketName = 'jeshwin-portfolio-bucket'
+  const s3 = new S3Client({
+    region,
+    credentials: {
+      accessKeyId, secretAccessKey
+    }
+  })
 
   const handleImageChange = (index, event) => {
     const file = event.target.files[0]
@@ -144,13 +155,12 @@ export default function NewProject() {
       // Display the projectData as an alert (for testing purposes)
       console.dir(JSON.stringify(projectData, null, 2))
 
-
       // send POST request to store project in database
       await axios.post('/api/post/project', projectData)
       .then((res) => console.dir("RESPONSE\n\n", res))
       .catch((err) => console.error("PRINTING ERROR\n\n", err))
     } catch (error) {
-      alert('Error uploading images. Please try again.\n' + error);
+      console.error(error)
     }
   }
 
