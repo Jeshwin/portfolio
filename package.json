@@ -13,6 +13,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.377.0",
     "@heroicons/react": "^2.0.15",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@types/node": "18.13.0",
     "@types/react": "18.0.27",
+    "aws-sdk": "^2.1422.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.33.0",
     "eslint-config-next": "13.1.6",
