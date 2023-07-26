@@ -1,4 +1,5 @@
 // next.config.js
+require('dotenv').config()
 
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,

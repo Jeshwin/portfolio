@@ -1,6 +1,37 @@
 import { useState } from 'react'
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/solid'
-import { s3, bucketName, region } from '../../../awsConfig'
+import { s3, region, bucketName } from '../../../awsConfig'
+import { PutObjectCommand } from '@aws-sdk/client-s3'
+import MyHead from '@/components/head'
+import { nanoid } from 'nanoid'
+import axios from 'axios'
+
+/*
+ * Function: getFileExtension
+ * Author: OpenAI (adapted by [Jeshwin Prince])
+ * Description: Extracts the file extension from a given filename.
+ *              This function assumes that the last dot in the filename
+ *              is used to separate the file extension.
+ * Parameters:
+ *   - filename (string): The name of the file including its extension.
+ * Returns:
+ *   - (string): The file extension or an empty string if no extension is found.
+ */
+function getFileExtension(filename) {
+  // Split the filename by the dot (.)
+  const parts = filename.split('.');
+  
+  // If there's no dot in the filename or it's the first character, there's no extension
+  if (parts.length === 1 || parts[0] === "") {
+    return "";
+  }
+  
+  // The file extension is the last part after the last dot
+  const extension = parts[parts.length - 1];
+  
+  return extension;
+}
+
 
 export default function NewProject() {
   const [title, setTitle] = useState('')
@@ -9,6 +40,15 @@ export default function NewProject() {
   const [thumbnail, setThumbnail] = useState(null)
   const [links, setLinks] = useState([''])
   const [gallery, setGallery] = useState([{ image: null, description: '' }])
+
+  ////////////////////////////////
+  // IMPORTANT                  //
+  // Sync region and bucketName //
+  // with environment variables //
+  ////////////////////////////////
+
+  // const region = 'us-west-1'
+  // const bucketName = 'jeshwin-portfolio-bucket'
 
   const handleImageChange = (index, event) => {
     const file = event.target.files[0]
@@ -53,67 +93,73 @@ export default function NewProject() {
 
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0]
-    console.dir(file)
     setThumbnail(file)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.dir(thumbnail)
-
     const projectData: any = {
       title,
       tags: tags.split(',').map((tag) => tag.trim()), // Convert comma-separated tags to an array
-      description
+      description,
+      links
     }
 
     try {
-      // Upload thumbnail to S3 (if selected)
+      // Upload thumbnail to S3
       if (thumbnail) {
-        const thumbnailKey = `thumbnails/${thumbnail.name}`;
+        const thumbnailKey = `thumbnails/${nanoid()}.${getFileExtension(thumbnail.name)}`;
         await s3
-          .upload({
-            Bucket: bucketName,
-            Key: thumbnailKey,
-            Body: thumbnail,
-            ACL: 'public-read', // Allow public read access to the thumbnail
+          .send(
+            new PutObjectCommand({
+              Bucket: bucketName,
+              Key: thumbnailKey,
+              Body: thumbnail
           })
-          .promise();
+        )
 
         projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`;
       }
 
       // Upload gallery images to S3 (if any)
       const galleryUrls = [];
-      for (const [index, image] of gallery.entries()) {
-        const galleryKey = `gallery/${image.image.name}`;
+      for (const [index, pair] of gallery.entries()) {
+        const galleryKey = `gallery/${nanoid()}.${getFileExtension(pair.image.name)}`;
         await s3
-          .upload({
-            Bucket: bucketName,
-            Key: galleryKey,
-            Body: image,
-            ACL: 'public-read', // Allow public read access to the gallery image
-          })
-          .promise();
+          .send(
+            new PutObjectCommand({
+              Bucket: bucketName,
+              Key: galleryKey,
+              Body: pair.image
+            })
+          )
 
-        galleryUrls.push(`https://${bucketName}.s3.${region}.amazonaws.com/${galleryKey}`);
+        galleryUrls.push({ image: `https://${bucketName}.s3.${region}.amazonaws.com/${galleryKey}`, description: pair.description });
       }
 
       // Add galleryUrls to the projectData
       projectData.gallery = galleryUrls;
 
       // Display the projectData as an alert (for testing purposes)
-      alert(JSON.stringify(projectData, null, 2));
+      console.dir(JSON.stringify(projectData, null, 2))
+
+
+      // send POST request to store project in database
+      await axios.post('/api/post/project', projectData)
+      .then((res) => console.dir("RESPONSE\n\n", res))
+      .catch((err) => console.error("PRINTING ERROR\n\n", err))
     } catch (error) {
-      alert('Error uploading images. Please try again.');
+      alert('Error uploading images. Please try again.\n' + error);
     }
   }
 
   return (
     <>
+      <MyHead title="Create Project" />
       <div id='top'></div>
       <form className="m-12 lg:mx-auto max-w-5xl grid grid-cols-1 gap-6 bag-base-100" onSubmit={handleSubmit}>
+        <div className="text-5xl font-bold">Create Project</div>
         <label className='block'>
           <span className="text-2xl" >Title</span>
           <input className="block w-full rounded-lg mt-3 bg-base-200 focus:ring-0 border border-base-300 focus:border-info" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
@@ -157,7 +203,7 @@ export default function NewProject() {
           <div key={index} className="block py-4 px-6 bg-base-200 rounded-2xl">
             <span className="text-xl">Image</span>
             <input
-              className="block w-full rounded-lg border border-base-content bg-base-300 my-3 file:mr-5 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-primary-content hover:file:bg-primary-focus"
+              className="block w-full rounded-lg bg-base-300 my-3 file:mr-5 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-primary-content hover:file:bg-primary-focus"
               type="file"
               accept="image/*"
               onChange={(e) => handleImageChange(index, e)}
@@ -167,7 +213,7 @@ export default function NewProject() {
             <textarea
               value={pair.description}
               onChange={(e) => handleDescriptionChange(index, e)}
-              className="block w-full rounded-lg mt-3 bg-base-300 focus:ring-0 border border-base-content focus:border-info"
+              className="block w-full rounded-lg mt-3 bg-base-300 focus:ring-0 border border-base-300 focus:border-info"
               required
             />
             <button

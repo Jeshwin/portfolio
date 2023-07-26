@@ -44,11 +44,6 @@ export const getStaticProps: GetStaticProps = async () => {
         },
     })
 
-    console.log('PROJECTS: ')
-    console.dir(projects)
-    console.log('POSTS: ')
-    console.dir(posts)
-
     return {
         props: { projects, posts },
         revalidate: 10
@@ -94,8 +89,7 @@ export default function Dummy({ projects, posts }) {
                             {tag.title}
                         </li>)}
                     </ul>
-                    {/* <MarkdownRenderer markdownText={post.body} /> */}
-                    {post.body}
+                    <MarkdownRenderer markdownText={post.body} />
                 </div>)}
             </div>
           </div>

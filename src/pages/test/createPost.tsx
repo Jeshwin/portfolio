@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import axios from 'axios'
 import dynamic from 'next/dynamic'
+import 'react-quill/dist/quill.snow.css'
+import MyHead from '@/components/head'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false })
-import 'react-quill/dist/quill.snow.css'
 
 export default function NewPost() {
   const [title, setTitle] = useState('')
@@ -10,23 +12,29 @@ export default function NewPost() {
   const [description, setDescription] = useState('')
   const [body, setBody] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const data = {
+    const postData = {
       title,
       tags: tags.split(',').map((tag) => tag.trim()), // Convert comma-separated tags to an array
       description,
       body,
     }
 
-    alert(JSON.stringify(data, null, 2)) // Display form data as an alert
+    console.dir(JSON.stringify(postData, null, 2))
+
+    await axios.post('/api/post/post', postData)
+    .then((res) => console.dir("RESPONSE\n\n", res))
+    .catch((err) => console.error("PRINTING ERROR\n\n", err))
   }
 
   return (
     <>
+      <MyHead title="Create Post" />
       <div id='top'></div>
       <form className="m-12 lg:mx-auto max-w-5xl grid grid-cols-1 gap-6 bag-base-100" onSubmit={handleSubmit}>
+        <div className="text-5xl font-bold">Create Post</div>
         <label className='block'>
           <span className="text-2xl" >Title</span>
           <input className="block w-full mt-3 rounded-lg border border-base-300 bg-base-200 focus:ring-0 focus:border-info" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
@@ -41,7 +49,7 @@ export default function NewPost() {
         </label>
         <label className='block'>
           <span className="text-2xl" >Body:</span>
-          <QuillNoSSRWrapper className="mt-3 block w-full bg-slate-200" value={body} onChange={setBody} />
+          <QuillNoSSRWrapper className="mt-3 block w-full bg-slate-200 text-slate-800" value={body} onChange={setBody} />
         </label>
         <button className="btn btn-primary lg:btn-md w-auto mx-auto" type="submit">Create Post</button>
       </form>
