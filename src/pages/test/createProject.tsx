@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/solid'
-import { s3, region, bucketName } from '../../../awsConfig'
+import { s3 } from '../../../awsConfig'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import MyHead from '@/components/head'
 import { nanoid } from 'nanoid'
@@ -47,8 +47,8 @@ export default function NewProject() {
   // with environment variables //
   ////////////////////////////////
 
-  // const region = 'us-west-1'
-  // const bucketName = 'jeshwin-portfolio-bucket'
+  const region = 'us-west-1'
+  const bucketName = 'jeshwin-portfolio-bucket'
 
   const handleImageChange = (index, event) => {
     const file = event.target.files[0]
