@@ -34,6 +34,9 @@ export default function Footer() {
             </Link>
           </div>
         </div>
+        <div>
+          <Link href="/login" className="btn btn-ghost shadow-lg">Admin Login</Link>
+        </div>
       </footer>
   )
 }

@@ -12,6 +12,12 @@ datasource db {
   shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
+model Admin {
+  id          Int              @id @default(autoincrement())
+  email       String           @unique
+  password    String 
+}
+
 model Project {
   id          Int              @id @default(autoincrement())
   createdAt   DateTime         @default(now())
