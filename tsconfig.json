@@ -27,8 +27,9 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "prisma/dummy.js", "awsConfig.js", "src/pages/api/register.ts"  ],
+    "**/*.tsx",
+    "src/pages/api/register.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

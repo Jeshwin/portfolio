@@ -10,7 +10,6 @@ export default async function handler(req, res) {
   }
 
   const { email, password } = req.body
-  console.dir({ email, password })
   const hashedPassword = await bcrypt.hash(password, 10)
 
   try {
@@ -21,7 +20,7 @@ export default async function handler(req, res) {
       },
     })
 
-    return res.status(201).json(user)
+    return res.status(201).json({ message: "Admin use created" })
   } catch (error) {
     return res.status(500).json({ error })
   }

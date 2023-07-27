@@ -11,7 +11,6 @@ export default async function handler(req, res) {
   }
 
   const { email, password } = req.body
-  console.dir({ email, password })
 
   const user = await prisma.admin.findUnique({ where: { email } })
 

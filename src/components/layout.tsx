@@ -7,7 +7,9 @@ export default function Layout({ children }) {
         <>
             <Drawer>
                 <Navbar />
-                {children}
+                <div className="min-h-[63%]">
+                    {children}
+                </div>
                 <Footer />
             </Drawer>
         </>

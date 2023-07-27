@@ -9,7 +9,7 @@ import 'dotenv/config'
 
 /*
  * Function: getFileExtension
- * Author: OpenAI (adapted by [Jeshwin Prince])
+ * Author: OpenAI (adapted by Jeshwin Prince)
  * Description: Extracts the file extension from a given filename.
  *              This function assumes that the last dot in the filename
  *              is used to separate the file extension.
