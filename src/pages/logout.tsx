@@ -1,6 +1,5 @@
 import { useEffect } from "react"
 import { useRouter } from "next/router"
-import { ThreeDotsFade } from "react-svg-spinners"
 
 export default function NewPost() {
   const router = useRouter()
@@ -11,6 +10,6 @@ export default function NewPost() {
   })
 
   return (
-    <ThreeDotsFade />
+    <span className="loading loading-spinner loading-lg"></span>
   )
 }

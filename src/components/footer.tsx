@@ -22,8 +22,6 @@ export default function Footer() {
     validateToken(token)
   })
 
-  console.log("Are we currently logged in? " + (validToken ? "Yes" : "Nope"))
-
   const d = new Date()
   const currentYear = d.getFullYear()
 

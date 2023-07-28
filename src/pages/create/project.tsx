@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/solid'
 import { S3Client } from '@aws-sdk/client-s3'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
@@ -6,6 +6,7 @@ import MyHead from '@/components/head'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
 import 'dotenv/config'
+import Router, { useRouter } from 'next/router'
 
 /*
  * Function: getFileExtension
@@ -20,17 +21,17 @@ import 'dotenv/config'
  */
 function getFileExtension(filename) {
   // Split the filename by the dot (.)
-  const parts = filename.split('.');
+  const parts = filename.split('.')
   
   // If there's no dot in the filename or it's the first character, there's no extension
   if (parts.length === 1 || parts[0] === "") {
-    return "";
+    return ""
   }
   
   // The file extension is the last part after the last dot
-  const extension = parts[parts.length - 1];
+  const extension = parts[parts.length - 1]
   
-  return extension;
+  return extension
 }
 
 export const getStaticProps = () => {
@@ -53,6 +54,22 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
   const [thumbnail, setThumbnail] = useState(null)
   const [links, setLinks] = useState([''])
   const [gallery, setGallery] = useState([{ image: null, description: '' }])
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken')
+    async function validateToken(token) {
+      try {
+        const response = await axios.post('/api/validateJWT', { token })
+        if (!response.data.isValid) router.push('/login#top')
+      } catch (error) {
+        console.error('JWT validation failed: ', error)
+        router.push('/login#top')
+      }
+    }
+    validateToken(token)
+  })
 
   const s3 = new S3Client({
     region,
@@ -120,7 +137,7 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
     try {
       // Upload thumbnail to S3
       if (thumbnail) {
-        const thumbnailKey = `thumbnails/${nanoid()}.${getFileExtension(thumbnail.name)}`;
+        const thumbnailKey = `thumbnails/${nanoid()}.${getFileExtension(thumbnail.name)}`
         await s3
           .send(
             new PutObjectCommand({
@@ -130,13 +147,13 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
           })
         )
 
-        projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`;
+        projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`
       }
 
       // Upload gallery images to S3 (if any)
-      const galleryUrls = [];
+      const galleryUrls = []
       for (const [index, pair] of gallery.entries()) {
-        const galleryKey = `gallery/${nanoid()}.${getFileExtension(pair.image.name)}`;
+        const galleryKey = `gallery/${nanoid()}.${getFileExtension(pair.image.name)}`
         await s3
           .send(
             new PutObjectCommand({
@@ -146,14 +163,11 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
             })
           )
 
-        galleryUrls.push({ image: `https://${bucketName}.s3.${region}.amazonaws.com/${galleryKey}`, description: pair.description });
+        galleryUrls.push({ image: `https://${bucketName}.s3.${region}.amazonaws.com/${galleryKey}`, description: pair.description })
       }
 
       // Add galleryUrls to the projectData
-      projectData.gallery = galleryUrls;
-
-      // Display the projectData as an alert (for testing purposes)
-      console.dir(JSON.stringify(projectData, null, 2))
+      projectData.gallery = galleryUrls
 
       // send POST request to store project in database
       await axios.post('/api/post/project', projectData)
@@ -172,26 +186,25 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
         <div className="text-5xl font-bold">Create Project</div>
         <label className='block'>
           <span className="text-2xl" >Title</span>
-          <input className="block w-full rounded-lg mt-3 bg-base-200 focus:ring-0 border border-base-300 focus:border-info" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+          <input className="block w-full mt-3 input input-bordered bg-base-200" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </label>
         <label className='block'>
           <span className="text-2xl" >Tags (comma separated)</span>
-          <input className="block w-full rounded-lg mt-3 bg-base-200 focus:ring-0 border border-base-300 focus:border-info" type="text" value={tags} onChange={(e) => setTags(e.target.value)} required />
+          <input className="block w-full mt-3 input input-bordered bg-base-200" type="text" value={tags} onChange={(e) => setTags(e.target.value)} required />
         </label>
         <label className='block'>
           <span className="text-2xl" >Description</span>
-          <textarea className="block w-full rounded-lg mt-3 bg-base-200 focus:ring-0 border border-base-300 focus:border-info" value={description} onChange={(e) => setDescription(e.target.value)} required />
+          <textarea className="block w-full mt-3 textarea textarea-bordered bg-base-200" value={description} onChange={(e) => setDescription(e.target.value)} required />
         </label>
         <label className='block'>
           <span className="text-2xl" >Thumbnail</span>
-          <input className="block w-full rounded-lg border border-base-300 bg-base-200 mt-3 file:mr-5 file:py-2 file:px-4 file:rounded-lg file:border-0
-            file:bg-primary file:text-primary-content hover:file:bg-primary-focus" type="file" onChange={handleThumbnailChange} accept="image/*" required />
+          <input className="block mt-3 file-input file-input-primary w-full max-w-xl" type="file" onChange={handleThumbnailChange} accept="image/*" required />
         </label>
         <span className="text-2xl mt-3" >Links</span>
         {links.map((link, index) => (
           <div key={index} className="flex flex-row items-center gap-6 mx-6">
             <span className="text-xl min-w-max">Link {index + 1}:</span>
-            <input className="block w-full rounded-lg bg-base-200 focus:ring-0 border border-base-300 focus:border-info" type="text" value={link} onChange={(e) => handleLinkChange(index, e)} required />
+            <input className="block w-full mt-3 input input-bordered bg-base-200" type="text" value={link} onChange={(e) => handleLinkChange(index, e)} required />
             <button
               type="button"
               onClick={() => removeLink(index)}
@@ -213,7 +226,7 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
           <div key={index} className="block py-4 px-6 bg-base-200 rounded-2xl">
             <span className="text-xl">Image</span>
             <input
-              className="block w-full rounded-lg bg-base-300 my-3 file:mr-5 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-primary-content hover:file:bg-primary-focus"
+              className="block my-3 file-input file-input-primary w-full max-w-xl"
               type="file"
               accept="image/*"
               onChange={(e) => handleImageChange(index, e)}
@@ -223,7 +236,7 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
             <textarea
               value={pair.description}
               onChange={(e) => handleDescriptionChange(index, e)}
-              className="block w-full rounded-lg mt-3 bg-base-300 focus:ring-0 border border-base-300 focus:border-info"
+              className="block w-full mt-3 textarea textarea-bordered bg-base-300"
               required
             />
             <button
@@ -242,7 +255,7 @@ export default function NewProject({ accessKeyId, secretAccessKey, region, bucke
         >
           Add Image
         </button>
-        <button className="btn btn-primary lg:btn-md w-auto mx-auto" type="submit">Create Post</button>
+        <button className="btn btn-secondary lg:btn-md w-auto mx-auto" type="submit">Create Post</button>
       </form>
     </>
   )

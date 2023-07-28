@@ -20,6 +20,16 @@ const nextConfig = {
   // experimental: {
   //   mdxRs: true,
   // }
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'jeshwin-portfolio-bucket.s3.us-west-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      }
+    ]
+  }
 }
 
 // Merge MDX config with Next.js config

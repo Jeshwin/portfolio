@@ -1,7 +1,7 @@
-import MyHead from "@/components/head";
-import MarkdownRenderer from "@/components/markdownrenderer";
-import { PrismaClient } from "@prisma/client";
-import { GetStaticProps } from "next";
+import MyHead from "@/components/head"
+import { PrismaClient } from "@prisma/client"
+import { GetStaticProps } from "next"
+import Image from "next/image"
 
 const prisma = new PrismaClient
 
@@ -30,37 +30,29 @@ export const getStaticProps: GetStaticProps = async () => {
             }
         },
     })
-    const posts = await prisma.post.findMany({
-        select: {
-            id: true,
-            title: true,
-            description: true,
-            tags: {
-                select: {
-                    title: true
-                }
-            },
-            body: true
-        },
-    })
 
     return {
-        props: { projects, posts },
+        props: { projects },
         revalidate: 10
     }
 }
 
-export default function Dummy({ projects, posts }) {
+export default function AllProjects({ projects }) {
     return (
         <>
-          <MyHead title="Dummy" />
+          <MyHead title="Portfolio" />
           <div id='top'></div>
           <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
-            <div className="font-bold text-7xl mb-12">Does the Database Work?</div>
+            <div className="font-bold text-7xl mb-12">Portfolio</div>
             <div>
                 {projects.map((project) => <div className="text-xl leading-loose" key={project.id}>
                     <div className="text-5xl font-bold py-12">{project.title}</div>
-                    {project.thumbnail.image}
+                    <Image 
+                        src={project.thumbnail.image}
+                        width={500} height={500}
+                        alt={project.title}
+                        className="mask mask-hexagon"
+                    />
                     <div className="text-4xl font-semibold py-8">{project.description}</div>
                     <ul className="mb-8">
                         {project.tags.map((tag) => <li key={tag.title} className="badge badge-lg badge-primary m-2">
@@ -69,27 +61,20 @@ export default function Dummy({ projects, posts }) {
                     </ul>
                     <ul>
                         {project.links.map((link) => <li key={link}>
-                            <a className="btn btn-xl btn-info mb-6" href={link}>{link}</a>
+                            <a className="link link-info mb-6" href={link}>{link}</a>
                         </li>)}
                     </ul>
-                    <ul className="mb-8">
+                    <ul className="grid grid-cols-3 gap-6 mb-8">
                         {project.gallery.map((gal) => <li key={gal.image}>
-                            {gal.image}<br/>
+                            <Image 
+                                src={gal.image}
+                                width={500} height={500}
+                                alt={gal.description}
+                                className=" w-full rounded-xl"
+                            />
                             {gal.description}
                         </li>)}
                     </ul>
-                </div>)}
-            </div>
-            <div>
-                {posts.map((post) => <div key={post.id}>
-                    <div className="text-5xl font-bold mb-12">{post.title}</div>
-                    <div className="text-4xl font-semibold mb-8">{post.description}</div>
-                    <ul className="mb-8">
-                        {post.tags.map((tag) => <li key={tag.title} className="badge badge-lg badge-secondary m-2">
-                            {tag.title}
-                        </li>)}
-                    </ul>
-                    <MarkdownRenderer markdownText={post.body} />
                 </div>)}
             </div>
           </div>

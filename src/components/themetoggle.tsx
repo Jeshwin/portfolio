@@ -15,7 +15,6 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     localStorage.setItem('theme', theme)
-    console.log("Theme is currently " + theme)
     document.querySelector('html').setAttribute('data-theme', theme)
   }, [theme])
 

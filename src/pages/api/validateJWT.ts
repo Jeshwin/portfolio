@@ -7,7 +7,6 @@ export default function handler(req, res) {
     }
 
     const { token } = req.body
-    console.log("Attempting to validate token " + token)
 
     try {
         jwt.verify(token, process.env.JWT_SECRET_KEY)

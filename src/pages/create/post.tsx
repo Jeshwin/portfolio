@@ -3,12 +3,29 @@ import dynamic from "next/dynamic"
 import MyHead from "@/components/head"
 const QuillEditor = dynamic(import("@/components/quilleditor"), { ssr: false })
 import axios from "axios"
+import { useRouter } from "next/router"
 
 export default function NewPost() {
   const [title, setTitle] = useState("")
   const [tags, setTags] = useState("")
   const [description, setDescription] = useState("")
   const [body, setBody] = useState("")
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken')
+    async function validateToken(token) {
+      try {
+        const response = await axios.post('/api/validateJWT', { token })
+        if (!response.data.isValid) router.push('/login#top')
+      } catch (error) {
+        console.error('JWT validation failed: ', error)
+        router.push('/login#top')
+      }
+    }
+    validateToken(token)
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,8 +36,6 @@ export default function NewPost() {
       description,
       body,
     }
-
-    console.dir(JSON.stringify(postData, null, 2))
 
     await axios.post("/api/post/post", postData)
     .then((res) => console.dir("RESPONSE\n\n", res))

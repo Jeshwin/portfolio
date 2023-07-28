@@ -9,8 +9,6 @@ export default async function handler(req, res) {
 
   const { title, tags, description, links, thumbnail, gallery } = req.body
 
-  console.dir(req.body)
-
   try {
     const newProject = await prisma.project.create({
         data: {
