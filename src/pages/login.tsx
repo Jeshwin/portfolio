@@ -3,7 +3,7 @@ import MyHead from "@/components/head"
 import axios from "axios"
 import { useRouter } from "next/router"
 
-export default function NewPost() {
+export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [jwt, setJwt] = useState(null)

@@ -3,17 +3,25 @@ import Image from 'next/image'
 import Logo from '../../public/logo.png'
 import { LockClosedIcon, LockOpenIcon, RssIcon } from "@heroicons/react/24/solid"
 import { useState, useEffect } from "react"
-import { isTokenValid } from "../utils/auth"
+import axios from "axios"
 
 export default function Footer() {
-  const [token, setToken] = useState(null)
+  const [validToken, setValidToken] = useState(false)
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('jwtToken')
-    setToken(storedToken)
-  }, [])
+    const token = localStorage.getItem('jwtToken')
+    async function validateToken(token) {
+      try {
+        const response = await axios.post('/api/validateJWT', { token })
+        setValidToken(response.data.isValid)
+      } catch (error) {
+        console.error('JWT validation failed: ', error)
+        setValidToken(false)
+      }
+    }
+    validateToken(token)
+  })
 
-  const validToken = isTokenValid(token)
   console.log("Are we currently logged in? " + (validToken ? "Yes" : "Nope"))
 
   const d = new Date()
@@ -44,9 +52,15 @@ export default function Footer() {
             <Link href="/rss" className="btn btn-square btn-ghost rounded-full shadow">
               <RssIcon className="aspect-square w-6"/>
             </Link>
-            <Link href="/login#top" className="btn btn-square btn-ghost rounded-full shadow">
-              {validToken ? <LockOpenIcon className="aspect-square w-6"/> : <LockClosedIcon className="aspect-square w-6"/>}
-            </Link>
+            {!validToken ? 
+              <Link href="/login#top" className="btn btn-square btn-ghost rounded-full shadow">
+                <LockClosedIcon className="aspect-square w-6"/>
+              </Link>
+            : 
+              <Link href="/logout" className="btn btn-square btn-ghost rounded-full shadow">
+                <LockOpenIcon className="aspect-square w-6"/>
+              </Link>
+            }
           </div>
         </div>
       </footer>
