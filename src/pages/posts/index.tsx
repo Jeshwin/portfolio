@@ -37,8 +37,8 @@ export default function AllPosts({ posts }) {
                     {posts.map((post) => <div key={post.id}>
                         <div className="text-5xl font-bold mb-12">{post.title}</div>
                         <div className="text-4xl font-semibold mb-8">{post.description}</div>
-                        <ul className="mb-8">
-                            {post.tags.map((tag) => <li key={tag.title} className="badge badge-lg badge-secondary m-2">
+                        <ul className="flex gap-3 mb-8">
+                            {post.tags.map((tag) => <li key={tag.title} className="badge badge-lg badge-primary p-4">
                                 {tag.title}
                             </li>)}
                         </ul>

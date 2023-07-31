@@ -6,7 +6,8 @@ export default function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { token } = req.body
+    const { token } = req.body    
+    if (!token) return res.status(401).json({ isValid: false })
 
     try {
         jwt.verify(token, process.env.JWT_SECRET_KEY)
