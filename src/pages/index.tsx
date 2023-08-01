@@ -16,7 +16,7 @@ export default function Home() {
           I sure do! Why not check out my resume on my website!
           As a digital version of my resume, it is not only more readable but also adds more details that would be restricted by a paper format.
           Even still, you can download a PDF version of my resume here, too."
-        href="/articles/resume#top"
+        href="/posts/16#top"
       />
       <IntroHero
         reverse={false}
@@ -25,7 +25,7 @@ export default function Home() {
           In my free time, I like to start new personal projects that teach me new skills,
           such as web design, computer programming, embedded software and 3d modeling.
           You can find a portfolio of all my previous and current personal projects here."
-        href="/portfolio#top"
+        href="/projects#top"
       />
       <IntroHero
         reverse={true}
@@ -47,7 +47,7 @@ export default function Home() {
           I love to write blogs about new projects I am working on,
           the status of previous projects, or just anything that I've found interesting.
           I hope to post here more regularly."
-        href="/articles#top"
+        href="/posts#top"
       />
     </>
   )

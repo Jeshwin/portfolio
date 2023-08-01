@@ -1,50 +1,185 @@
 import MyHead from "@/components/head"
 import { sanitize } from 'isomorphic-dompurify'
-import { PrismaClient } from "@prisma/client"
-import { GetStaticProps } from "next"
+import axios from "axios"
+import useSWR from 'swr'
+import Link from "next/link"
 
-const prisma = new PrismaClient
+const fetcher = url => axios.get(url).then(res => res.data)
 
-export const getStaticProps: GetStaticProps = async () => {
-    const posts = await prisma.post.findMany({
-        select: {
-            id: true,
-            title: true,
-            description: true,
-            tags: {
-                select: {
-                    title: true
-                }
-            },
-            body: true
-        },
-    })
+export default function AllPosts() {
+    const { data, error } = useSWR(`/api/get/posts`, fetcher)
 
-    return {
-        props: { posts },
-        revalidate: 10
-    }
-}
+    if (error) return (
+        <>
+            <MyHead title="Loading" />
+            <div className="animate-pulse p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
+                <div className="h-20 bg-error rounded-lg max-w-sm mb-12" />
+                <ul className="grid grid-cols-3 gap-6 items-start mb-8">
+                    <li className="card bg-error-content shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-error rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-error-content shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-error rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-error-content shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-error rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-error-content shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-error rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-error-content shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-error rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </>
+    )
 
-export default function AllPosts({ posts }) {
+    if (!data) return (
+        <>
+            <MyHead title="Loading" />
+            <div className="animate-pulse p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
+                <div className="h-20 bg-base-300 rounded-lg max-w-sm mb-12" />
+                <ul className="grid grid-cols-3 gap-6 items-start mb-8">
+                    <li className="card bg-base-200 shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-base-300 rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-base-200 shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-base-300 rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-base-200 shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-base-300 rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-base-200 shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-base-300 rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="card bg-base-200 shadow-xl">
+                        <div className="w-full aspect-square rounded-t-2xl bg-base-300 rounded-lg" />
+                        <div className="card-body">
+                            <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
+                            <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
+                            <ul className="flex gap-3 justify-end">
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
+                                <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </>
+    )
+    
     return (
         <>
             <MyHead title="Blog" />
             <div id="top" />
             <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
                 <div className="font-bold text-7xl mb-12">Blog</div>
-                <div>
-                    {posts.map((post) => <div key={post.id}>
-                        <div className="text-5xl font-bold mb-12">{post.title}</div>
-                        <div className="text-4xl font-semibold mb-8">{post.description}</div>
-                        <ul className="flex gap-3 mb-8">
-                            {post.tags.map((tag) => <li key={tag.title} className="badge badge-lg badge-primary p-4">
-                                {tag.title}
-                            </li>)}
-                        </ul>
-                        <div className="prose lg:prose-xl pb-12" dangerouslySetInnerHTML={{ __html: sanitize(post.body) }} />
-                    </div>)}
-                </div>
+                <ul className="grid grid-cols-3 gap-6 items-start mb-8">
+                    {data.map((post) => <li key={post.id} className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75">
+                        <Link href={`/posts/${post.id}`} className="card-body">
+                            <div className="card-title text-5xl mb-4">{post.title}</div>
+                            <div className="text-xl mb-4">{post.description}</div>
+                            <ul className="flex gap-3 justify-end">
+                                {post.tags.map((tag) => <li key={tag.title} className="badge badge-lg badge-primary p-4">
+                                    {tag.title}
+                                </li>)}
+                            </ul>
+                        </Link>
+                    </li>)}
+                </ul>
             </div>
         </>
     )

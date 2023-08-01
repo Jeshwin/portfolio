@@ -14,7 +14,7 @@ export default function Post() {
 
     if (error) return (
         <>
-            <MyHead title="Loading" />
+            <MyHead title="Error" />
             <div className=" animate-pulse p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
                 <div className="h-24 bg-error rounded-lg max-w-2xl mb-12"/>
                 <div className="flex flex-col gap-2 mb-8">
@@ -60,6 +60,7 @@ export default function Post() {
     if (!data) return (
         <>
             <MyHead title="Loading" />
+            <div id="top" />
             <div className=" animate-pulse p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
                 <div className="h-24 bg-base-300 rounded-lg max-w-2xl mb-12"/>
                 <div className="flex flex-col gap-2 mb-8">
@@ -67,11 +68,11 @@ export default function Post() {
                     <div className="h-9 bg-base-300 rounded-lg max-w-4xl"/>
                 </div>
                 <div className="flex gap-3 mb-20">
-                    <div className="badge badge-outline badge-lg py-4 px-10"/>
-                    <div className="badge badge-outline badge-lg py-4 px-12"/>
-                    <div className="badge badge-outline badge-lg py-4 px-10"/>
-                    <div className="badge badge-outline badge-lg py-4 px-8"/>
-                    <div className="badge badge-outline badge-lg py-4 px-9"/>
+                    <div className="badge badge-ghost badge-lg py-4 px-10"/>
+                    <div className="badge badge-ghost badge-lg py-4 px-12"/>
+                    <div className="badge badge-ghost badge-lg py-4 px-10"/>
+                    <div className="badge badge-ghost badge-lg py-4 px-8"/>
+                    <div className="badge badge-ghost badge-lg py-4 px-9"/>
                 </div>
                 <div className="h-12 bg-base-300 rounded-lg max-w-2xl mb-12"/>
                 <div className="flex flex-col gap-2 mb-8 w-2/3">

@@ -8,7 +8,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const projects = await prisma.post.findMany();
+    const projects = await prisma.post.findMany({
+      include: {
+        tags: true
+      }
+    });
     return res.status(200).json(projects);
   } catch (error) {
     return res.status(500).json({ error: 'Something went wrong' });
