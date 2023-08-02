@@ -3,11 +3,8 @@ import dynamic from "next/dynamic"
 import MyHead from "@/components/head"
 import axios from "axios"
 import { useRouter } from "next/router"
-import useSWR from "swr"
 
 const QuillEditor = dynamic(import("@/components/quilleditor"), { ssr: false })
-
-// const fetcher = (url) => axios.get(url).then((res) => res.data)
 
 export default function UpdatePost() {
     const [title, setTitle] = useState("")
@@ -18,21 +15,14 @@ export default function UpdatePost() {
     const router = useRouter()
     const { postId } = router.query
 
-    // const { data, error } = useSWR(`/api/get/posts/${postId}`, fetcher)
-
-    // if (error) return <div>Failed to load</div>
-    // if (!data) return <div>Loading...</div>
-
     useEffect(() => {
         async function getData() {
             try {
                 const response = await axios.get(`/api/get/posts/${postId}`)
                 const postData = response.data
-                console.dir(postData)
                 setTitle(postData.title)
                 let tagString = ""
                 postData.tags.map((tag) => {
-                    console.log("Adding a tag")
                     tagString += "," + tag.title
                 })
                 setTags(tagString.substring(1))
@@ -44,7 +34,7 @@ export default function UpdatePost() {
             }
         }
         getData()
-    })
+    }, [postId, router])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -56,6 +46,10 @@ export default function UpdatePost() {
             description,
             body,
         }
+
+        console.log("SENDING POST DATA")
+        console.log()
+        console.dir(postData)
 
         await axios
             .post("/api/update/post", postData)
