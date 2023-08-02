@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid"
-import { S3Client } from "@aws-sdk/client-s3"
-import { PutObjectCommand } from "@aws-sdk/client-s3"
+import { useEffect, useRef, useState } from "react"
 import MyHead from "@/components/head"
-import { nanoid } from "nanoid"
 import axios from "axios"
 import "dotenv/config"
 import { useRouter } from "next/router"
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
+import { nanoid } from "nanoid"
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid"
+import Image from "next/image"
 
 function getFileExtension(filename) {
     const parts = filename.split(".")
@@ -17,7 +17,7 @@ function getFileExtension(filename) {
     return extension
 }
 
-export const getStaticProps = () => {
+export const getServerSideProps = () => {
     const bucketName = process.env.AWS_BUCKET_NAME
     const region = process.env.AWS_REGION
     const accessKeyId = process.env.AWS_ACCESS_KEY_ID
@@ -33,35 +33,66 @@ export const getStaticProps = () => {
     }
 }
 
-export default function NewProject({
+export default function UpdateProject({
     accessKeyId,
     secretAccessKey,
     region,
     bucketName,
 }) {
+    // Init State ///////////////////////////////////////////////////////////////
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [tags, setTags] = useState("")
-    const [thumbnail, setThumbnail] = useState(null)
+    const [newThumbnail, setNewThumbnail] = useState(null)
     const [links, setLinks] = useState([{ url: "", title: "", icon: "" }])
-    const [gallery, setGallery] = useState([{ image: null, description: "" }])
-
+    const [prevGallery, setPrevGallery] = useState([
+        { image: "", description: "" },
+    ])
+    const [newGallery, setNewGallery] = useState([
+        { image: null, description: "" },
+    ])
     const router = useRouter()
+    const { projectId } = router.query
+    /////////////////////////////////////////////////////////////////////////////
 
+    // Get Previous Project Data ////////////////////////////////////////////////
     useEffect(() => {
-        const token = localStorage.getItem("jwtToken")
-        async function validateToken(token) {
+        async function getData() {
             try {
-                const response = await axios.post("/api/validateJWT", { token })
-                if (!response.data.isValid) router.push("/login#top")
-            } catch (error) {
-                console.error("JWT validation failed: ", error)
-                router.push("/login#top")
+                const response = await axios.get(
+                    `/api/get/projects/${projectId}`
+                )
+                const projectData = response.data
+                setTitle(projectData.title)
+                let tagString = ""
+                projectData.tags.map((tag) => {
+                    tagString += "," + tag.title
+                })
+                setTags(tagString.substring(1))
+                setDescription(projectData.description)
+                setLinks(
+                    projectData.links.map((link) => ({
+                        url: link.url,
+                        title: link.title,
+                        icon: link.icon,
+                    }))
+                )
+                setPrevGallery(
+                    projectData.gallery.map((image) => ({
+                        image: image.image,
+                        description: image.description,
+                    }))
+                )
+            } catch (e) {
+                console.error(e)
+                router.push(`/projects/${projectId}`)
             }
         }
-        validateToken(token)
-    })
+        getData()
+    }, [projectId, router])
+    /////////////////////////////////////////////////////////////////////////////
 
+    // Init AWS S3 Config ///////////////////////////////////////////////////////
     const s3 = new S3Client({
         region,
         credentials: {
@@ -69,32 +100,16 @@ export default function NewProject({
             secretAccessKey,
         },
     })
+    /////////////////////////////////////////////////////////////////////////////
 
-    const handleImageChange = (index, event) => {
-        const file = event.target.files[0]
-        if (file) {
-            const updatedPairs = [...gallery]
-            updatedPairs[index].image = file
-            setGallery(updatedPairs)
-        }
+    // Handle New Thumbnail /////////////////////////////////////////////////////
+    const handleThumbnailChange = (e) => {
+        const file = e.target.files[0]
+        setNewThumbnail(file)
     }
+    /////////////////////////////////////////////////////////////////////////////
 
-    const handleDescriptionChange = (index, event) => {
-        const { value } = event.target
-        const updatedPairs = [...gallery]
-        updatedPairs[index].description = value
-        setGallery(updatedPairs)
-    }
-
-    const addImagePair = () => {
-        setGallery([...gallery, { image: null, description: "" }])
-    }
-
-    const removeImagePair = (index) => {
-        const updatedPairs = gallery.filter((_, i) => i !== index)
-        setGallery(updatedPairs)
-    }
-
+    // Handle Links /////////////////////////////////////////////////////////////
     const handleLinkUrlChange = (index, event) => {
         const { value } = event.target
         const updatedLinks = [...links]
@@ -124,45 +139,89 @@ export default function NewProject({
         const updatedLinks = links.filter((_, i) => i !== index)
         setLinks(updatedLinks)
     }
+    /////////////////////////////////////////////////////////////////////////////
 
-    const handleThumbnailChange = (e) => {
-        const file = e.target.files[0]
-        setThumbnail(file)
+    // Handle Previous Gallery Images ///////////////////////////////////////////
+    const handlePrevDescriptionChange = (index, event) => {
+        const { value } = event.target
+        const updatedPairs = [...prevGallery]
+        updatedPairs[index].description = value
+        setPrevGallery(updatedPairs)
     }
+
+    const removePrevImagePair = (index) => {
+        const updatedPairs = prevGallery.filter((_, i) => i !== index)
+        setPrevGallery(updatedPairs)
+    }
+    /////////////////////////////////////////////////////////////////////////////
+
+    // Handle New Gallery Images ////////////////////////////////////////////////
+    const handleNewImageChange = (index, event) => {
+        const file = event.target.files[0]
+        if (file) {
+            const updatedPairs = [...newGallery]
+            updatedPairs[index].image = file
+            setNewGallery(updatedPairs)
+        }
+    }
+
+    const handleNewDescriptionChange = (index, event) => {
+        const { value } = event.target
+        const updatedPairs = [...newGallery]
+        updatedPairs[index].description = value
+        setNewGallery(updatedPairs)
+    }
+
+    const addNewImagePair = () => {
+        setNewGallery([...newGallery, { image: null, description: "" }])
+    }
+
+    const removeNewImagePair = (index) => {
+        const updatedPairs = newGallery.filter((_, i) => i !== index)
+        setNewGallery(updatedPairs)
+    }
+    /////////////////////////////////////////////////////////////////////////////
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         const projectData: any = {
+            id: projectId,
             title,
             tags: tags.split(",").map((tag) => tag.trim()), // Convert comma-separated tags to an array
             description,
             links,
+            thumbnail: null,
         }
 
         try {
             // Upload thumbnail to S3
-            if (thumbnail) {
+            if (newThumbnail) {
                 const thumbnailKey = `thumbnails/${nanoid()}.${getFileExtension(
-                    thumbnail.name
+                    newThumbnail.name
                 )}`
+                console.log(`ADDING NEW THUMBNAIL ${thumbnailKey}`)
+                console.dir(newThumbnail)
                 await s3.send(
                     new PutObjectCommand({
                         Bucket: bucketName,
                         Key: thumbnailKey,
-                        Body: thumbnail,
+                        Body: newThumbnail,
                     })
                 )
 
+                console.log("SUCCESSFUL NEW THUMBNAIL")
                 projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`
             }
 
             // Upload gallery images to S3 (if any)
-            const galleryUrls = []
-            for (const [index, pair] of gallery.entries()) {
+            const galleryUrls = prevGallery
+            for (const [index, pair] of newGallery.entries()) {
                 const galleryKey = `gallery/${nanoid()}.${getFileExtension(
                     pair.image.name
                 )}`
+                console.log(`ADDING NEW THUMBNAIL ${galleryKey}`)
+                console.dir(pair.image)
                 await s3.send(
                     new PutObjectCommand({
                         Bucket: bucketName,
@@ -170,6 +229,7 @@ export default function NewProject({
                         Body: pair.image,
                     })
                 )
+                console.log("SUCCESSFUL NEW GALLERY IMAGE")
 
                 galleryUrls.push({
                     image: `https://${bucketName}.s3.${region}.amazonaws.com/${galleryKey}`,
@@ -180,9 +240,12 @@ export default function NewProject({
             // Add galleryUrls to the projectData
             projectData.gallery = galleryUrls
 
+            console.log("SENDING NEW PROJECT DATA: \n")
+            console.dir(projectData)
+
             // send POST request to store project in database
             await axios
-                .post("/api/post/project", projectData)
+                .post("/api/update/project", projectData)
                 .then((res) => console.dir("RESPONSE\n\n", res))
                 .catch((err) => console.error("PRINTING ERROR\n\n", err))
         } catch (error) {
@@ -235,7 +298,6 @@ export default function NewProject({
                         type="file"
                         onChange={handleThumbnailChange}
                         accept="image/*"
-                        required
                     />
                 </label>
                 <span className="text-2xl mt-3">Links</span>
@@ -292,8 +354,41 @@ export default function NewProject({
                 >
                     <PlusIcon className="aspect-square w-8" />
                 </button>
-                <span className="text-2xl">Gallery</span>
-                {gallery.map((pair, index) => (
+                <span className="text-2xl">Previous Gallery</span>
+                <div className="grid grid-cols-3 gap-4">
+                    {prevGallery.map((pair, index) => (
+                        <div
+                            key={index}
+                            className="block py-4 px-6 bg-base-200 rounded-2xl"
+                        >
+                            <Image
+                                src={pair.image}
+                                width={500}
+                                height={500}
+                                alt={pair.description}
+                                className="w-full aspect-square rounded-t-2xl"
+                            />
+                            <span className="text-xl">Description</span>
+                            <textarea
+                                value={pair.description}
+                                onChange={(e) =>
+                                    handlePrevDescriptionChange(index, e)
+                                }
+                                className="block w-full mt-3 textarea textarea-bordered bg-base-300"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => removePrevImagePair(index)}
+                                className="btn lg:btn-md btn-error mt-3"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                <span className="text-2xl">New Images</span>
+                {newGallery.map((pair, index) => (
                     <div
                         key={index}
                         className="block py-4 px-6 bg-base-200 rounded-2xl"
@@ -303,19 +398,21 @@ export default function NewProject({
                             className="block my-3 file-input file-input-primary w-full max-w-xl"
                             type="file"
                             accept="image/*"
-                            onChange={(e) => handleImageChange(index, e)}
+                            onChange={(e) => handleNewImageChange(index, e)}
                             required
                         />
                         <span className="text-xl">Description</span>
                         <textarea
                             value={pair.description}
-                            onChange={(e) => handleDescriptionChange(index, e)}
+                            onChange={(e) =>
+                                handleNewDescriptionChange(index, e)
+                            }
                             className="block w-full mt-3 textarea textarea-bordered bg-base-300"
                             required
                         />
                         <button
                             type="button"
-                            onClick={() => removeImagePair(index)}
+                            onClick={() => removeNewImagePair(index)}
                             className="btn lg:btn-md btn-error mt-3"
                         >
                             Remove
@@ -324,7 +421,7 @@ export default function NewProject({
                 ))}
                 <button
                     type="button"
-                    onClick={addImagePair}
+                    onClick={addNewImagePair}
                     className="btn lg:btn-md btn-info justify-self-end w-auto"
                 >
                     Add Image
@@ -333,7 +430,7 @@ export default function NewProject({
                     className="btn btn-secondary lg:btn-md w-auto mx-auto"
                     type="submit"
                 >
-                    Create Post
+                    Update Project
                 </button>
             </form>
         </>

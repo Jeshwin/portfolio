@@ -3,10 +3,28 @@ import Image from "next/image"
 import axios from "axios"
 import useSWR from "swr"
 import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import Link from "next/link"
 
 const fetcher = (url) => axios.get(url).then((res) => res.data)
 
 export default function Project() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem("jwtToken")
+        async function validateToken(token) {
+            try {
+                const response = await axios.post("/api/validateJWT", { token })
+                setIsLoggedIn(response.data.isValid)
+            } catch (error) {
+                console.error("JWT validation failed: ", error)
+                setIsLoggedIn(false)
+            }
+        }
+        validateToken(token)
+    })
+
     const router = useRouter()
     const { projectId } = router.query
 
@@ -147,6 +165,17 @@ export default function Project() {
                         <div className="text-8xl font-bold mt-4">
                             {data.title}
                         </div>
+                        {isLoggedIn && (
+                            <>
+                                <div className="grow h-24" />
+                                <Link
+                                    href={`/projects/${projectId}/edit`}
+                                    className="btn btn-ghost h-24 w-40 text-3xl shadow-lg"
+                                >
+                                    Edit
+                                </Link>
+                            </>
+                        )}
                     </div>
                     <ul className="flex gap-3 mb-8">
                         {data.tags.map((tag) => (

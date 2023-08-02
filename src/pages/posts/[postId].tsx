@@ -130,7 +130,7 @@ export default function Post() {
             <MyHead title="Blog" />
             <div id="top" />
             <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
-                <div className="flex w-full text-8xl font-bold font-serif mb-12">
+                <div className="flex w-full text-8xl font-bold mb-12">
                     {data.title}
                     {isLoggedIn && (
                         <>

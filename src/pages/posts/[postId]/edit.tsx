@@ -47,10 +47,6 @@ export default function UpdatePost() {
             body,
         }
 
-        console.log("SENDING POST DATA")
-        console.log()
-        console.dir(postData)
-
         await axios
             .post("/api/update/post", postData)
             .then((res) => console.dir("RESPONSE\n\n", res))
@@ -103,7 +99,7 @@ export default function UpdatePost() {
                     className="btn btn-primary lg:btn-md w-auto mx-auto"
                     type="submit"
                 >
-                    Create Post
+                    Update Post
                 </button>
             </form>
         </>

@@ -7,10 +7,6 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "Method not allowed" })
     }
 
-    console.log("USING RECIEVED DATA")
-    console.log()
-    console.dir(req.body)
-
     const { id, title, tags, description, body } = req.body
 
     try {
