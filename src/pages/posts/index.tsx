@@ -181,7 +181,7 @@ export default function AllPosts() {
                                 href={`/posts/${post.id}`}
                                 className="card-body"
                             >
-                                <div className="card-title text-5xl mb-4">
+                                <div className="card-title truncate text-5xl mb-4">
                                     {post.title}
                                 </div>
                                 <div className="text-xl mb-4">

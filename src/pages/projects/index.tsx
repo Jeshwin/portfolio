@@ -188,13 +188,13 @@ export default function AllProjects() {
                                     />
                                 </figure>
                                 <div className="card-body">
-                                    <div className="card-title text-5xl mb-4">
+                                    <div className="card-title truncate text-5xl mb-4">
                                         {project.title}
                                     </div>
                                     <div className="text-xl mb-4">
                                         {project.description}
                                     </div>
-                                    <ul className="flex gap-3 justify-end">
+                                    <ul className="flex flex-wrap gap-3 justify-end">
                                         {project.tags.map((tag) => (
                                             <li
                                                 key={tag.title}

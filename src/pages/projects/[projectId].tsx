@@ -167,9 +167,10 @@ export default function Project() {
                     </div>
                     <ul className="list-disc flex flex-col gap-4 ml-12 mb-12">
                         {data.links.map((link) => (
-                            <li key={link}>
-                                <a className="link link-info" href={link}>
-                                    {link}
+                            <li key={link.id}>
+                                <a className="link link-info" href={link.url}>
+                                    {link.icon}
+                                    {link.title}
                                 </a>
                             </li>
                         ))}
