@@ -1,18 +1,18 @@
 # Jeshwin Prince's Portfolio
 
-![Portfolio Preview](/public/logo.png)
+![Portfolio Preview](website_preview.png)
 
 Hello there! 👋 Welcome to my GitHub portfolio repository. This repository contains the source code for my personal portfolio website, showcasing my projects, skills, and achievements. The portfolio is built using Next.js, React, TypeScript, and Prisma, and is hosted on Vercel. It also utilizes AWS S3 for image hosting and PostgreSQL for the database.
 
 ## Technologies Used 🚀
 
-- [Next.js](https://nextjs.org/) - A React framework for building server-rendered and statically-generated websites.
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
-- [TypeScript](https://www.typescriptlang.org/) - A statically typed superset of JavaScript that enhances code quality and developer productivity.
-- [Prisma](https://www.prisma.io/) - A modern database toolkit and Object-Relational Mapping (ORM) tool.
-- [Vercel](https://vercel.com/) - A cloud platform for static sites and Serverless Functions, used for hosting the portfolio app.
-- [AWS S3](https://aws.amazon.com/s3/) - Amazon Simple Storage Service for hosting and serving images.
-- [PostgreSQL](https://www.postgresql.org/) - A powerful open-source relational database system.
+-   [Next.js](https://nextjs.org/) - A React framework for building server-rendered and statically-generated websites.
+-   [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
+-   [TypeScript](https://www.typescriptlang.org/) - A statically typed superset of JavaScript that enhances code quality and developer productivity.
+-   [Prisma](https://www.prisma.io/) - A modern database toolkit and Object-Relational Mapping (ORM) tool.
+-   [Vercel](https://vercel.com/) - A cloud platform for static sites and Serverless Functions, used for hosting the portfolio app.
+-   [AWS S3](https://aws.amazon.com/s3/) - Amazon Simple Storage Service for hosting and serving images.
+-   [PostgreSQL](https://www.postgresql.org/) - A powerful open-source relational database system.
 
 ## About Me 👨‍💻
 
@@ -20,10 +20,10 @@ I'm Jeshwin Prince, a passionate computer science undergraduate student with a l
 
 ## Features ✨
 
-- Showcase of my projects and case studies.
-- Detailed information about my skills and areas of expertise.
-- Contact information for potential collaborations and opportunities.
-- Seamless integration with my blog for sharing insights and knowledge.
+-   Showcase of my projects and case studies.
+-   Detailed information about my skills and areas of expertise.
+-   Contact information for potential collaborations and opportunities.
+-   Seamless integration with my blog for sharing insights and knowledge.
 
 ## Getting Started 🛠️
 
