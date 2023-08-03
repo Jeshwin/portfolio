@@ -188,7 +188,7 @@ export default function AllProjects() {
                                     />
                                 </figure>
                                 <div className="card-body">
-                                    <div className="card-title truncate text-3xl mb-3">
+                                    <div className="card-title break-all text-3xl mb-3">
                                         {project.title}
                                     </div>
                                     <div>
@@ -213,9 +213,9 @@ export default function AllProjects() {
                                             day: "numeric",
                                         })}
                                     </div>
-                                    <div className="text-xl mb-3">
+                                    {/* <div className="text-xl mb-3">
                                         {project.description}
-                                    </div>
+                                    </div> */}
                                     <ul className="flex flex-wrap gap-3 justify-end">
                                         {project.tags.map((tag) => (
                                             <li
