@@ -16,8 +16,8 @@ export default async function handler(req, res) {
                 description,
                 tags: {
                     connectOrCreate: tags.map((tag) => ({
-                        where: { title: tag },
-                        create: { title: tag },
+                        where: tag,
+                        create: tag,
                     })),
                 },
                 body,
