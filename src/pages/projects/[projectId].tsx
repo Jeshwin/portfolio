@@ -154,15 +154,15 @@ export default function Project() {
             <div id="top"></div>
             <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
                 <div className="text-xl leading-loose">
-                    <div className="flex flex-row items-center gap-4 pb-12">
+                    <div className="flex flex-row items-center gap-4 pb-6">
                         <Image
                             src={data.thumbnail.image}
                             width={256}
                             height={256}
                             alt={data.title}
-                            className="w-32 aspect-square rounded-full border-2 border-base-300"
+                            className="w-24 aspect-square rounded-full border-2 border-base-300"
                         />
-                        <div className="text-8xl font-bold mt-4">
+                        <div className="text-5xl font-bold mt-4">
                             {data.title}
                         </div>
                         {isLoggedIn && (
@@ -170,11 +170,35 @@ export default function Project() {
                                 <div className="grow h-24" />
                                 <Link
                                     href={`/projects/${projectId}/edit`}
-                                    className="btn btn-ghost h-24 w-40 text-3xl shadow-lg"
+                                    className="btn btn-warning h-12 w-20 text-xl shadow-lg"
                                 >
                                     Edit
                                 </Link>
                             </>
+                        )}
+                    </div>
+                    <div>
+                        Created:{" "}
+                        {new Date(data.createdAt).toLocaleDateString(
+                            undefined,
+                            {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            }
+                        )}
+                    </div>
+                    <div className="mb-3">
+                        Last Updated:{" "}
+                        {new Date(data.updatedAt).toLocaleDateString(
+                            undefined,
+                            {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            }
                         )}
                     </div>
                     <ul className="flex gap-3 mb-8">
@@ -187,11 +211,11 @@ export default function Project() {
                             </li>
                         ))}
                     </ul>
-                    <div className="text-4xl font-semibold pb-8">
+                    <div className="text-2xl font-semibold pb-8">
                         Description
                     </div>
                     <div className="text-xl pb-8">{data.description}</div>
-                    <div className="text-4xl font-semibold pb-8">
+                    <div className="text-2xl font-semibold pb-8">
                         Relevant Links
                     </div>
                     <ul className="list-disc flex flex-col gap-4 ml-12 mb-12">
@@ -204,7 +228,7 @@ export default function Project() {
                             </li>
                         ))}
                     </ul>
-                    <div className="text-4xl font-semibold pb-8">Gallery</div>
+                    <div className="text-2xl font-semibold pb-8">Gallery</div>
                     <ul className="grid grid-cols-3 gap-6 mb-8">
                         {data.gallery.map((gal) => (
                             <li
@@ -222,7 +246,7 @@ export default function Project() {
                                         />
                                     </figure>
                                     <div className="card-body text-center">
-                                        <p className="text-2xl">
+                                        <p className="text-xl">
                                             {gal.description}
                                         </p>
                                     </div>

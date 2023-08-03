@@ -170,8 +170,8 @@ export default function AllProjects() {
             <MyHead title="Blog" />
             <div id="top" />
             <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
-                <div className="font-bold text-7xl mb-12">Portfolio</div>
-                <ul className="grid grid-cols-3 gap-6 items-start mb-8">
+                <div className="font-bold text-5xl mb-12">Portfolio</div>
+                <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start mb-8">
                     {data.map((project) => (
                         <li
                             key={project.id}
@@ -188,10 +188,32 @@ export default function AllProjects() {
                                     />
                                 </figure>
                                 <div className="card-body">
-                                    <div className="card-title truncate text-5xl mb-4">
+                                    <div className="card-title truncate text-3xl mb-3">
                                         {project.title}
                                     </div>
-                                    <div className="text-xl mb-4">
+                                    <div>
+                                        Created:{" "}
+                                        {new Date(
+                                            project.createdAt
+                                        ).toLocaleDateString(undefined, {
+                                            weekday: "long",
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
+                                    </div>
+                                    <div className="mb-3">
+                                        Last Updated:{" "}
+                                        {new Date(
+                                            project.updatedAt
+                                        ).toLocaleDateString(undefined, {
+                                            weekday: "long",
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
+                                    </div>
+                                    <div className="text-xl mb-3">
                                         {project.description}
                                     </div>
                                     <ul className="flex flex-wrap gap-3 justify-end">

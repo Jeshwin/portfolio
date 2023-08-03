@@ -130,21 +130,39 @@ export default function Post() {
             <MyHead title="Blog" />
             <div id="top" />
             <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
-                <div className="flex w-full text-8xl font-bold mb-12">
+                <div className="flex w-full text-5xl font-bold mb-6">
                     {data.title}
                     {isLoggedIn && (
                         <>
-                            <div className="grow h-24" />
+                            <div className="grow h-12" />
                             <Link
                                 href={`/posts/${postId}/edit`}
-                                className="btn btn-ghost h-24 w-40 text-3xl shadow-lg"
+                                className="btn btn-warning h-12 w-20 text-xl shadow-lg"
                             >
                                 Edit
                             </Link>
                         </>
                     )}
                 </div>
-                <div className="text-4xl mb-8">{data.description}</div>
+                <div className="text-xl mb-4">{data.description}</div>
+                <div>
+                    Created:{" "}
+                    {new Date(data.createdAt).toLocaleDateString(undefined, {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })}
+                </div>
+                <div className="mb-3">
+                    Last Updated:{" "}
+                    {new Date(data.updatedAt).toLocaleDateString(undefined, {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })}
+                </div>
                 <ul className="flex gap-3 mb-20">
                     {data.tags.map((tag) => (
                         <li
@@ -156,7 +174,7 @@ export default function Post() {
                     ))}
                 </ul>
                 <div
-                    className="prose lg:prose-xl pb-12"
+                    className="prose xl:prose-lg pb-12"
                     dangerouslySetInnerHTML={{ __html: sanitize(data.body) }}
                 />
             </div>
