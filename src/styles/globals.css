@@ -17,3 +17,48 @@
 [data-theme="dark"] *:active {
     cursor: url(customcursor-dark-active.svg) 15 15, auto !important;
 }
+
+[data-theme="light"] .ql-toolbar .ql-stroke {
+    fill: none !important;
+    stroke: #4c4f69 !important;
+}
+
+[data-theme="light"] .ql-toolbar .ql-fill {
+    fill: #4c4f69 !important;
+    stroke: none !important;
+}
+
+[data-theme="light"] .ql-toolbar .ql-picker {
+    color: #4c4f69 !important;
+}
+
+[data-theme="light"] .ql-toolbar {
+    border: 1px solid #dce0e8 !important;
+}
+
+[data-theme="light"] .ql-container {
+    border: 1px solid #dce0e8 !important;
+}
+
+[data-theme="dark"] .ql-toolbar .ql-stroke {
+    fill: none !important;
+    stroke: #c6d0f5 !important;
+}
+
+[data-theme="dark"] .ql-toolbar .ql-fill {
+    fill: #c6d0f5 !important;
+    stroke: none !important;
+}
+
+[data-theme="dark"] .ql-toolbar .ql-picker {
+    color: #c6d0f5 !important;
+}
+
+[data-theme="dark"] .ql-toolbar {
+    border: 1px solid #232634 !important;
+}
+
+[data-theme="dark"] .ql-container {
+    border: 1px solid #232634 !important;
+}
+

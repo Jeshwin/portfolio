@@ -27,6 +27,13 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
+
+# dummy
+prisma/dummy.js
+prisma/dummy1.md
+prisma/dummy2.md
+prisma/dummy3.md
