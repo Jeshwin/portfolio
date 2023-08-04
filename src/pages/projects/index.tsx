@@ -23,7 +23,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
@@ -36,7 +36,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
@@ -49,7 +49,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
@@ -62,7 +62,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
@@ -75,7 +75,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-error rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-error rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-error rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-error py-4 px-12" />
@@ -101,7 +101,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
@@ -114,7 +114,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
@@ -127,7 +127,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
@@ -140,7 +140,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
@@ -153,7 +153,7 @@ export default function AllProjects() {
                                 <div className="card-title h-12 bg-base-300 rounded-lg max-w-md mb-4" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 ml-20" />
                                 <div className="h-5 bg-base-300 rounded-lg mb-4 mr-20" />
-                                <ul className="flex gap-3 justify-end">
+                                <ul className="flex flex-wrap gap-3 justify-end">
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-10" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-9" />
                                     <li className="badge badge-lg badge-ghost bg-base-300 py-4 px-12" />
