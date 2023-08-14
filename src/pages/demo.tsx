@@ -1,5 +1,6 @@
 import MyHead from "@/components/head"
-import init from "../lib/bevy_wasm_pack/pkg/demo"
+import init from "bevy_wasm_pack"
+// import * as wasm from "bevy_wasm_pack"
 import { useEffect } from "react"
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
             wasm.start()
         }
         createDemo()
+        // wasm.start()
     }, [])
 
     return (

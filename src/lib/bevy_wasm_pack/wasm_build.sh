@@ -1,3 +1,3 @@
 #!/usr/bin/bash
 
-wasm-pack build --no-typescript --target $1 --out-name demo
+wasm-pack build --target $1 --out-name demo

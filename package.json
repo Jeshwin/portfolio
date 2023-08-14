@@ -36,7 +36,8 @@
     "react-quill": "^2.0.0",
     "sharp": "^0.31.3",
     "swr": "^2.2.0",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "bevy_wasm_pack": "file:src/lib/bevy_wasm_pack/pkg/"
   },
   "devDependencies": {
     "@types/node": "18.13.0",
