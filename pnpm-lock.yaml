@@ -32,9 +32,6 @@ dependencies:
   bcrypt:
     specifier: ^5.1.0
     version: 5.1.0
-  bevy_wasm_pack:
-    specifier: file:src/lib/bevy_wasm_pack/pkg/
-    version: file:src/lib/bevy_wasm_pack/pkg
   daisyui:
     specifier: ^2.49.0
     version: 2.49.0(autoprefixer@10.4.13)(postcss@8.4.21)
@@ -50,6 +47,9 @@ dependencies:
   jsonwebtoken:
     specifier: ^9.0.1
     version: 9.0.1
+  my_sudoku:
+    specifier: file:src/lib/my_sudoku/pkg/
+    version: file:src/lib/my_sudoku/pkg
   nanoid:
     specifier: ^4.0.2
     version: 4.0.2
@@ -4787,7 +4787,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  file:src/lib/bevy_wasm_pack/pkg:
-    resolution: {directory: src/lib/bevy_wasm_pack/pkg, type: directory}
-    name: bevy_wasm_pack
+  file:src/lib/my_sudoku/pkg:
+    resolution: {directory: src/lib/my_sudoku/pkg, type: directory}
+    name: my_sudoku
     dev: false

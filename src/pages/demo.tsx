@@ -1,5 +1,5 @@
 import MyHead from "@/components/head"
-import init from "bevy_wasm_pack"
+import init from "my_sudoku"
 // import * as wasm from "bevy_wasm_pack"
 import { useEffect } from "react"
 
