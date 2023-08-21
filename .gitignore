@@ -12,6 +12,10 @@
 /.next/
 /out/
 
+# rust
+/src/lib/*/target/
+/src/lib/*/Cargo.lock
+
 # production
 /build
 
@@ -32,8 +36,3 @@ yarn-error.log*
 # vercel
 .vercel
 
-# dummy
-prisma/dummy.js
-prisma/dummy1.md
-prisma/dummy2.md
-prisma/dummy3.md

@@ -47,6 +47,9 @@ dependencies:
   jsonwebtoken:
     specifier: ^9.0.1
     version: 9.0.1
+  my_sudoku:
+    specifier: file:src/lib/my_sudoku/pkg/
+    version: file:src/lib/my_sudoku/pkg
   nanoid:
     specifier: ^4.0.2
     version: 4.0.2
@@ -4783,3 +4786,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  file:src/lib/my_sudoku/pkg:
+    resolution: {directory: src/lib/my_sudoku/pkg, type: directory}
+    name: my_sudoku
+    dev: false
