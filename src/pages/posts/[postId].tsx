@@ -174,7 +174,7 @@ export default function Post() {
                     ))}
                 </ul>
                 <div
-                    className="prose xl:prose-lg pb-12"
+                    className="prose lg:prose-lg xl:prose-xl max-w-5xl pb-12 mx-auto"
                     dangerouslySetInnerHTML={{ __html: sanitize(data.body) }}
                 />
             </div>

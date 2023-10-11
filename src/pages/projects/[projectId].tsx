@@ -5,6 +5,7 @@ import useSWR from "swr"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import CustomLinkIcon from "@/components/linkicon"
 
 const fetcher = (url) => axios.get(url).then((res) => res.data)
 
@@ -218,11 +219,14 @@ export default function Project() {
                     <div className="text-2xl font-semibold pb-8">
                         Relevant Links
                     </div>
-                    <ul className="list-disc flex flex-col gap-4 ml-12 mb-12">
+                    <ul className="flex flex-col gap-4 ml-12 mb-12">
                         {data.links.map((link) => (
                             <li key={link.id}>
-                                <a className="link link-info" href={link.url}>
-                                    {link.icon}
+                                <a
+                                    className="link link-info flex gap-2"
+                                    href={link.url}
+                                >
+                                    <CustomLinkIcon icon={link.icon} />
                                     {link.title}
                                 </a>
                             </li>
