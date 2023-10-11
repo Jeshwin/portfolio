@@ -19,7 +19,7 @@ export default function Greeting() {
                                 </span>
                             </h1>
                             <p className="mb-5 md:lext-xl lg:text-3xl">
-                                I am a first-year Computer Engineering student
+                                I am a second-year Computer Engineering student
                                 at Santa Clara University. I love programming,
                                 3d printing, playing the guitar, and making art
                                 in Blender! Check out my resume, portfolio,
