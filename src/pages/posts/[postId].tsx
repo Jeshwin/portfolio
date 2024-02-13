@@ -1,43 +1,45 @@
-import MyHead from "@/components/head"
-import Badge from "@/components/badge"
-import { sanitize } from "isomorphic-dompurify"
-import SWRLoading from "@/components/swrloading"
-import useSWR from "swr"
-import axios from "axios"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import Link from "next/link"
+import MyHead from "@/components/head";
+import Badge from "@/components/badge";
+import {sanitize} from "isomorphic-dompurify";
+import SWRLoading from "@/components/swrloading";
+import useSWR from "swr";
+import axios from "axios";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import Link from "next/link";
 
-const fetcher = (url) => axios.get(url).then((res) => res.data)
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function Post() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem("jwtToken")
+        const token = localStorage.getItem("jwtToken");
         async function validateToken(token) {
             try {
-                const response = await axios.post("/api/validateJWT", { token })
-                setIsLoggedIn(response.data.isValid)
+                const response = await axios.post("/api/validateJWT", {token});
+                setIsLoggedIn(response.data.isValid);
             } catch (error) {
-                console.error("JWT validation failed: ", error)
-                setIsLoggedIn(false)
+                console.error("JWT validation failed: ", error);
+                setIsLoggedIn(false);
             }
         }
-        validateToken(token)
-    })
+        validateToken(token);
+    });
 
-    const router = useRouter()
-    const { postId } = router.query
+    const router = useRouter();
+    const {postId} = router.query;
 
-    const { data, error } = useSWR(`/api/get/posts/${postId}`, fetcher)
+    const {data, error} = useSWR(`/api/get/posts/${postId}`, fetcher);
 
     if (error)
-        return <SWRLoading head="Error" size={200} fillColor="fill-error" />
+        return <SWRLoading head="Error" size={200} fillColor="fill-error" />;
 
     if (!data)
-        return <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
-        
+        return (
+            <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
+        );
+
     return (
         <>
             <MyHead title="Blog" />
@@ -84,10 +86,10 @@ export default function Post() {
                 <div className="grid justify-center">
                     <div
                         className="prose lg:prose-lg xl:prose-xl max-w-5xl pb-12 mx-auto"
-                        dangerouslySetInnerHTML={{ __html: sanitize(data.body) }}
+                        dangerouslySetInnerHTML={{__html: sanitize(data.body)}}
                     />
                 </div>
             </div>
         </>
-    )
+    );
 }

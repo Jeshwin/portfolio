@@ -1,43 +1,45 @@
-import MyHead from "@/components/head"
-import Image from "next/image"
-import axios from "axios"
-import useSWR from "swr"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import CustomLinkIcon from "@/components/linkicon"
-import SWRLoading from "@/components/swrloading"
-import Badge from "@/components/badge"
+import MyHead from "@/components/head";
+import Image from "next/image";
+import axios from "axios";
+import useSWR from "swr";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import Link from "next/link";
+import CustomLinkIcon from "@/components/linkicon";
+import SWRLoading from "@/components/swrloading";
+import Badge from "@/components/badge";
 
-const fetcher = (url) => axios.get(url).then((res) => res.data)
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function Project() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem("jwtToken")
+        const token = localStorage.getItem("jwtToken");
         async function validateToken(token) {
             try {
-                const response = await axios.post("/api/validateJWT", { token })
-                setIsLoggedIn(response.data.isValid)
+                const response = await axios.post("/api/validateJWT", {token});
+                setIsLoggedIn(response.data.isValid);
             } catch (error) {
-                console.error("JWT validation failed: ", error)
-                setIsLoggedIn(false)
+                console.error("JWT validation failed: ", error);
+                setIsLoggedIn(false);
             }
         }
-        validateToken(token)
-    })
+        validateToken(token);
+    });
 
-    const router = useRouter()
-    const { projectId } = router.query
+    const router = useRouter();
+    const {projectId} = router.query;
 
-    const { data, error } = useSWR(`/api/get/projects/${projectId}`, fetcher)
+    const {data, error} = useSWR(`/api/get/projects/${projectId}`, fetcher);
 
     if (error)
-        return <SWRLoading head="Error" size={200} fillColor="fill-error" />
+        return <SWRLoading head="Error" size={200} fillColor="fill-error" />;
 
     if (!data)
-        return <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
+        return (
+            <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
+        );
 
     return (
         <>
@@ -146,5 +148,5 @@ export default function Project() {
                 </div>
             </div>
         </>
-    )
+    );
 }

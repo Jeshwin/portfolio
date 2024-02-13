@@ -1,56 +1,56 @@
-import { useEffect, useState } from "react"
-import dynamic from "next/dynamic"
-import MyHead from "@/components/head"
-import axios from "axios"
-import { useRouter } from "next/router"
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid"
+import {useEffect, useState} from "react";
+import dynamic from "next/dynamic";
+import MyHead from "@/components/head";
+import axios from "axios";
+import {useRouter} from "next/router";
+import {MinusIcon, PlusIcon} from "@heroicons/react/24/solid";
 
-const QuillEditor = dynamic(import("@/components/quilleditor"), { ssr: false })
+const QuillEditor = dynamic(import("@/components/quilleditor"), {ssr: false});
 
 export default function UpdatePost() {
-    const [title, setTitle] = useState("")
-    const [tags, setTags] = useState([{ title: "" }])
-    const [description, setDescription] = useState("")
-    const [body, setBody] = useState("")
+    const [title, setTitle] = useState("");
+    const [tags, setTags] = useState([{title: ""}]);
+    const [description, setDescription] = useState("");
+    const [body, setBody] = useState("");
 
-    const router = useRouter()
-    const { postId } = router.query
+    const router = useRouter();
+    const {postId} = router.query;
 
     useEffect(() => {
         async function getData() {
             try {
-                const response = await axios.get(`/api/get/posts/${postId}`)
-                const postData = response.data
-                setTitle(postData.title)
-                setTags(postData.tags)
-                setDescription(postData.description)
-                setBody(postData.body)
+                const response = await axios.get(`/api/get/posts/${postId}`);
+                const postData = response.data;
+                setTitle(postData.title);
+                setTags(postData.tags);
+                setDescription(postData.description);
+                setBody(postData.body);
             } catch (e) {
-                console.error(e)
-                router.push(`/posts/${postId}`)
+                console.error(e);
+                router.push(`/posts/${postId}`);
             }
         }
-        getData()
-    }, [postId, router])
+        getData();
+    }, [postId, router]);
 
     const handleTagChange = (index, event) => {
-        const { value } = event.target
-        const updatedTags = [...tags]
-        updatedTags[index].title = value
-        setTags(updatedTags)
-    }
+        const {value} = event.target;
+        const updatedTags = [...tags];
+        updatedTags[index].title = value;
+        setTags(updatedTags);
+    };
 
     const addTag = () => {
-        setTags([...tags, { title: "" }])
-    }
+        setTags([...tags, {title: ""}]);
+    };
 
     const removeTag = (index) => {
-        const updatedTags = tags.filter((_, i) => i !== index)
-        setTags(updatedTags)
-    }
+        const updatedTags = tags.filter((_, i) => i !== index);
+        setTags(updatedTags);
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const postData = {
             id: postId,
@@ -58,13 +58,13 @@ export default function UpdatePost() {
             tags,
             description,
             body,
-        }
+        };
 
         await axios
             .post("/api/update/post", postData)
             .then((res) => console.dir("RESPONSE\n\n", res))
-            .catch((err) => console.error("PRINTING ERROR\n\n", err))
-    }
+            .catch((err) => console.error("PRINTING ERROR\n\n", err));
+    };
 
     return (
         <>
@@ -140,5 +140,5 @@ export default function UpdatePost() {
                 </button>
             </form>
         </>
-    )
+    );
 }

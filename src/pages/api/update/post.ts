@@ -1,13 +1,13 @@
-import { PrismaClient } from "@prisma/client"
+import {PrismaClient} from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" })
+        return res.status(405).json({error: "Method not allowed"});
     }
 
-    const { id, title, tags, description, body } = req.body
+    const {id, title, tags, description, body} = req.body;
 
     try {
         const deleteTags = prisma.post.update({
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                     set: [],
                 },
             },
-        })
+        });
 
         const updatePost = prisma.post.update({
             where: {
@@ -36,12 +36,12 @@ export default async function handler(req, res) {
                 },
                 body,
             },
-        })
+        });
 
-        const updatedPost = await prisma.$transaction([deleteTags, updatePost])
-        return res.status(200).json(updatedPost)
+        const updatedPost = await prisma.$transaction([deleteTags, updatePost]);
+        return res.status(200).json(updatedPost);
     } catch (error) {
-        console.error(error)
-        return res.status(500).json({ error })
+        console.error(error);
+        return res.status(500).json({error});
     }
 }

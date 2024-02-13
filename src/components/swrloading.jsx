@@ -1,7 +1,7 @@
-import Spinner from "@/components/spinner"
-import MyHead from "@/components/head"
+import Spinner from "@/components/spinner";
+import MyHead from "@/components/head";
 
-export default function SWRLoading({ head, size, fillColor }) {
+export default function SWRLoading({head, size, fillColor}) {
     return (
         <>
             <MyHead title={head} />
@@ -10,5 +10,5 @@ export default function SWRLoading({ head, size, fillColor }) {
                 <Spinner size={size} fillColor={fillColor} />
             </div>
         </>
-    )
+    );
 }

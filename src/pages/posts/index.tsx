@@ -1,20 +1,22 @@
-import MyHead from "@/components/head"
-import SWRLoading from "@/components/swrloading"
-import Badge from "@/components/badge"
-import axios from "axios"
-import useSWR from "swr"
-import Link from "next/link"
+import MyHead from "@/components/head";
+import SWRLoading from "@/components/swrloading";
+import Badge from "@/components/badge";
+import axios from "axios";
+import useSWR from "swr";
+import Link from "next/link";
 
-const fetcher = (url) => axios.get(url).then((res) => res.data)
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function AllPosts() {
-    const { data, error } = useSWR(`/api/get/posts`, fetcher)
+    const {data, error} = useSWR(`/api/get/posts`, fetcher);
 
     if (error)
-        return <SWRLoading head="Error" size={200} fillColor="fill-error" />
+        return <SWRLoading head="Error" size={200} fillColor="fill-error" />;
 
     if (!data)
-        return <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
+        return (
+            <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
+        );
 
     return (
         <>
@@ -62,7 +64,10 @@ export default function AllPosts() {
                                 </div>
                                 <ul className="flex flex-wrap gap-3 justify-end">
                                     {post.tags.map((tag) => (
-                                        <Badge key={tag.title} text={tag.title} />
+                                        <Badge
+                                            key={tag.title}
+                                            text={tag.title}
+                                        />
                                     ))}
                                 </ul>
                             </Link>
@@ -71,5 +76,5 @@ export default function AllPosts() {
                 </ul>
             </div>
         </>
-    )
+    );
 }

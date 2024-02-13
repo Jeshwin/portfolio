@@ -1,27 +1,27 @@
 // Assuming you have already set up Prisma in your file
-import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcrypt'
+import {PrismaClient} from "@prisma/client";
+import bcrypt from "bcrypt";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+    if (req.method !== "POST") {
+        return res.status(405).json({error: "Method not allowed"});
+    }
 
-  const { email, password } = req.body
-  const hashedPassword = await bcrypt.hash(password, 10)
+    const {email, password} = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  try {
-    const user = await prisma.admin.create({
-      data: {
-        email,
-        password: hashedPassword,
-      },
-    })
+    try {
+        const user = await prisma.admin.create({
+            data: {
+                email,
+                password: hashedPassword,
+            },
+        });
 
-    return res.status(201).json({ message: "Admin use created" })
-  } catch (error) {
-    return res.status(500).json({ error })
-  }
+        return res.status(201).json({message: "Admin use created"});
+    } catch (error) {
+        return res.status(500).json({error});
+    }
 }

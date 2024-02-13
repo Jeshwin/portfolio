@@ -1,14 +1,14 @@
 {
-  "name": "my_sudoku",
-  "version": "0.1.0",
-  "files": [
-    "demo_bg.wasm",
-    "demo.js",
-    "demo.d.ts"
-  ],
-  "module": "demo.js",
-  "types": "demo.d.ts",
-  "sideEffects": [
-    "./snippets/*"
-  ]
+    "name": "my_sudoku",
+    "version": "0.1.0",
+    "files": [
+        "demo_bg.wasm",
+        "demo.js",
+        "demo.d.ts"
+    ],
+    "module": "demo.js",
+    "types": "demo.d.ts",
+    "sideEffects": [
+        "./snippets/*"
+    ]
 }

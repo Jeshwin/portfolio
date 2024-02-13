@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react"
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid"
-import { S3Client } from "@aws-sdk/client-s3"
-import { PutObjectCommand } from "@aws-sdk/client-s3"
-import MyHead from "@/components/head"
-import { nanoid } from "nanoid"
-import axios from "axios"
-import "dotenv/config"
-import { useRouter } from "next/router"
+import {useEffect, useState} from "react";
+import {PlusIcon, MinusIcon} from "@heroicons/react/24/solid";
+import {S3Client} from "@aws-sdk/client-s3";
+import {PutObjectCommand} from "@aws-sdk/client-s3";
+import MyHead from "@/components/head";
+import {nanoid} from "nanoid";
+import axios from "axios";
+import "dotenv/config";
+import {useRouter} from "next/router";
 
 function getFileExtension(filename) {
-    const parts = filename.split(".")
+    const parts = filename.split(".");
     if (parts.length === 1 || parts[0] === "") {
-        return ""
+        return "";
     }
-    const extension = parts[parts.length - 1]
-    return extension
+    const extension = parts[parts.length - 1];
+    return extension;
 }
 
 export const getStaticProps = () => {
-    const bucketName = process.env.AWS_BUCKET_NAME
-    const region = process.env.AWS_REGION
-    const accessKeyId = process.env.AWS_ACCESS_KEY_ID
-    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+    const bucketName = process.env.AWS_BUCKET_NAME;
+    const region = process.env.AWS_REGION;
+    const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
     return {
         props: {
@@ -30,8 +30,8 @@ export const getStaticProps = () => {
             region,
             bucketName,
         },
-    }
-}
+    };
+};
 
 export default function NewProject({
     accessKeyId,
@@ -39,28 +39,28 @@ export default function NewProject({
     region,
     bucketName,
 }) {
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [tags, setTags] = useState("")
-    const [thumbnail, setThumbnail] = useState(null)
-    const [links, setLinks] = useState([{ url: "", title: "", icon: "" }])
-    const [gallery, setGallery] = useState([{ image: null, description: "" }])
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [tags, setTags] = useState("");
+    const [thumbnail, setThumbnail] = useState(null);
+    const [links, setLinks] = useState([{url: "", title: "", icon: ""}]);
+    const [gallery, setGallery] = useState([{image: null, description: ""}]);
 
-    const router = useRouter()
+    const router = useRouter();
 
     useEffect(() => {
-        const token = localStorage.getItem("jwtToken")
+        const token = localStorage.getItem("jwtToken");
         async function validateToken(token) {
             try {
-                const response = await axios.post("/api/validateJWT", { token })
-                if (!response.data.isValid) router.push("/login#top")
+                const response = await axios.post("/api/validateJWT", {token});
+                if (!response.data.isValid) router.push("/login#top");
             } catch (error) {
-                console.error("JWT validation failed: ", error)
-                router.push("/login#top")
+                console.error("JWT validation failed: ", error);
+                router.push("/login#top");
             }
         }
-        validateToken(token)
-    })
+        validateToken(token);
+    });
 
     const s3 = new S3Client({
         region,
@@ -68,127 +68,127 @@ export default function NewProject({
             accessKeyId,
             secretAccessKey,
         },
-    })
+    });
 
     const handleImageChange = (index, event) => {
-        const file = event.target.files[0]
+        const file = event.target.files[0];
         if (file) {
-            const updatedPairs = [...gallery]
-            updatedPairs[index].image = file
-            setGallery(updatedPairs)
+            const updatedPairs = [...gallery];
+            updatedPairs[index].image = file;
+            setGallery(updatedPairs);
         }
-    }
+    };
 
     const handleDescriptionChange = (index, event) => {
-        const { value } = event.target
-        const updatedPairs = [...gallery]
-        updatedPairs[index].description = value
-        setGallery(updatedPairs)
-    }
+        const {value} = event.target;
+        const updatedPairs = [...gallery];
+        updatedPairs[index].description = value;
+        setGallery(updatedPairs);
+    };
 
     const addImagePair = () => {
-        setGallery([...gallery, { image: null, description: "" }])
-    }
+        setGallery([...gallery, {image: null, description: ""}]);
+    };
 
     const removeImagePair = (index) => {
-        const updatedPairs = gallery.filter((_, i) => i !== index)
-        setGallery(updatedPairs)
-    }
+        const updatedPairs = gallery.filter((_, i) => i !== index);
+        setGallery(updatedPairs);
+    };
 
     const handleLinkUrlChange = (index, event) => {
-        const { value } = event.target
-        const updatedLinks = [...links]
-        updatedLinks[index].url = value
-        setLinks(updatedLinks)
-    }
+        const {value} = event.target;
+        const updatedLinks = [...links];
+        updatedLinks[index].url = value;
+        setLinks(updatedLinks);
+    };
 
     const handleLinkTitleChange = (index, event) => {
-        const { value } = event.target
-        const updatedLinks = [...links]
-        updatedLinks[index].title = value
-        setLinks(updatedLinks)
-    }
+        const {value} = event.target;
+        const updatedLinks = [...links];
+        updatedLinks[index].title = value;
+        setLinks(updatedLinks);
+    };
 
     const handleLinkIconChange = (index, event) => {
-        const { value } = event.target
-        const updatedLinks = [...links]
-        updatedLinks[index].icon = value
-        setLinks(updatedLinks)
-    }
+        const {value} = event.target;
+        const updatedLinks = [...links];
+        updatedLinks[index].icon = value;
+        setLinks(updatedLinks);
+    };
 
     const addLink = () => {
-        setLinks([...links, { url: "", title: "", icon: "" }])
-    }
+        setLinks([...links, {url: "", title: "", icon: ""}]);
+    };
 
     const removeLink = (index) => {
-        const updatedLinks = links.filter((_, i) => i !== index)
-        setLinks(updatedLinks)
-    }
+        const updatedLinks = links.filter((_, i) => i !== index);
+        setLinks(updatedLinks);
+    };
 
     const handleThumbnailChange = (e) => {
-        const file = e.target.files[0]
-        setThumbnail(file)
-    }
+        const file = e.target.files[0];
+        setThumbnail(file);
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const projectData: any = {
             title,
             tags: tags.split(",").map((tag) => tag.trim()), // Convert comma-separated tags to an array
             description,
             links,
-        }
+        };
 
         try {
             // Upload thumbnail to S3
             if (thumbnail) {
                 const thumbnailKey = `thumbnails/${nanoid()}.${getFileExtension(
                     thumbnail.name
-                )}`
+                )}`;
                 await s3.send(
                     new PutObjectCommand({
                         Bucket: bucketName,
                         Key: thumbnailKey,
                         Body: thumbnail,
                     })
-                )
+                );
 
-                projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`
+                projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`;
             }
 
             // Upload gallery images to S3 (if any)
-            const galleryUrls = []
+            const galleryUrls = [];
             for (const [index, pair] of gallery.entries()) {
                 const galleryKey = `gallery/${nanoid()}.${getFileExtension(
                     pair.image.name
-                )}`
+                )}`;
                 await s3.send(
                     new PutObjectCommand({
                         Bucket: bucketName,
                         Key: galleryKey,
                         Body: pair.image,
                     })
-                )
+                );
 
                 galleryUrls.push({
                     image: `https://${bucketName}.s3.${region}.amazonaws.com/${galleryKey}`,
                     description: pair.description,
-                })
+                });
             }
 
             // Add galleryUrls to the projectData
-            projectData.gallery = galleryUrls
+            projectData.gallery = galleryUrls;
 
             // send POST request to store project in database
             await axios
                 .post("/api/post/project", projectData)
                 .then((res) => console.dir("RESPONSE\n\n", res))
-                .catch((err) => console.error("PRINTING ERROR\n\n", err))
+                .catch((err) => console.error("PRINTING ERROR\n\n", err));
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-    }
+    };
 
     return (
         <>
@@ -337,5 +337,5 @@ export default function NewProject({
                 </button>
             </form>
         </>
-    )
+    );
 }

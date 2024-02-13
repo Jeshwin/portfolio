@@ -1,64 +1,64 @@
-import { useEffect, useState } from "react"
-import dynamic from "next/dynamic"
-import MyHead from "@/components/head"
-const QuillEditor = dynamic(import("@/components/quilleditor"), { ssr: false })
-import axios from "axios"
-import { useRouter } from "next/router"
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid"
+import {useEffect, useState} from "react";
+import dynamic from "next/dynamic";
+import MyHead from "@/components/head";
+const QuillEditor = dynamic(import("@/components/quilleditor"), {ssr: false});
+import axios from "axios";
+import {useRouter} from "next/router";
+import {MinusIcon, PlusIcon} from "@heroicons/react/24/solid";
 
 export default function NewPost() {
-    const [title, setTitle] = useState("")
-    const [tags, setTags] = useState([{ title: "" }])
-    const [description, setDescription] = useState("")
-    const [body, setBody] = useState("")
+    const [title, setTitle] = useState("");
+    const [tags, setTags] = useState([{title: ""}]);
+    const [description, setDescription] = useState("");
+    const [body, setBody] = useState("");
 
-    const router = useRouter()
+    const router = useRouter();
 
     useEffect(() => {
-        const token = localStorage.getItem("jwtToken")
+        const token = localStorage.getItem("jwtToken");
         async function validateToken(token) {
             try {
-                const response = await axios.post("/api/validateJWT", { token })
-                if (!response.data.isValid) router.push("/login#top")
+                const response = await axios.post("/api/validateJWT", {token});
+                if (!response.data.isValid) router.push("/login#top");
             } catch (error) {
-                console.error("JWT validation failed: ", error)
-                router.push("/login#top")
+                console.error("JWT validation failed: ", error);
+                router.push("/login#top");
             }
         }
-        validateToken(token)
-    })
+        validateToken(token);
+    });
 
     const handleTagChange = (index, event) => {
-        const { value } = event.target
-        const updatedTags = [...tags]
-        updatedTags[index].title = value
-        setTags(updatedTags)
-    }
+        const {value} = event.target;
+        const updatedTags = [...tags];
+        updatedTags[index].title = value;
+        setTags(updatedTags);
+    };
 
     const addTag = () => {
-        setTags([...tags, { title: "" }])
-    }
+        setTags([...tags, {title: ""}]);
+    };
 
     const removeTag = (index) => {
-        const updatedTags = tags.filter((_, i) => i !== index)
-        setTags(updatedTags)
-    }
+        const updatedTags = tags.filter((_, i) => i !== index);
+        setTags(updatedTags);
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const postData = {
             title,
             tags,
             description,
             body,
-        }
+        };
 
         await axios
             .post("/api/post/post", postData)
             .then((res) => console.dir("RESPONSE\n\n", res))
-            .catch((err) => console.error("PRINTING ERROR\n\n", err))
-    }
+            .catch((err) => console.error("PRINTING ERROR\n\n", err));
+    };
 
     return (
         <>
@@ -134,5 +134,5 @@ export default function NewPost() {
                 </button>
             </form>
         </>
-    )
+    );
 }

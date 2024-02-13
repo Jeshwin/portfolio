@@ -1,36 +1,49 @@
-import ReactQuill, { Quill } from "react-quill"
-import MarkdownShortcuts from 'quill-markdown-shortcuts'
+import ReactQuill, {Quill} from "react-quill";
+import MarkdownShortcuts from "quill-markdown-shortcuts";
 import "react-quill/dist/quill.snow.css";
-Quill.register('modules/markdownShortcuts', MarkdownShortcuts)
+Quill.register("modules/markdownShortcuts", MarkdownShortcuts);
 
-export default function QuillEditor({ value, onChange }) {
+export default function QuillEditor({value, onChange}) {
     const quillModules = {
         toolbar: [
-          [{ "header": [1, 2, 3, false] }],
-          ["bold", "italic", "underline", "strike", "code"],
-          ["blockquote", "code-block"],
-          [{ 'align': '' }, { 'align' : 'center' }, { 'align' : 'right' }, { 'align' : 'justify' }],
-          [{"indent": "-1"}, {"indent": "+1"}],
-          [{"list": "ordered"}, {"list": "bullet"}],
-          ["link", "image", "video"],
-          ["clean"]
+            [{header: [1, 2, 3, false]}],
+            ["bold", "italic", "underline", "strike", "code"],
+            ["blockquote", "code-block"],
+            [
+                {align: ""},
+                {align: "center"},
+                {align: "right"},
+                {align: "justify"},
+            ],
+            [{indent: "-1"}, {indent: "+1"}],
+            [{list: "ordered"}, {list: "bullet"}],
+            ["link", "image", "video"],
+            ["clean"],
         ],
-        markdownShortcuts: {}
-      }
-    
-      const quillFormats = [
+        markdownShortcuts: {},
+    };
+
+    const quillFormats = [
         "header",
-        "bold", "italic", "underline", "strike", "code",
-        "blockquote", "code-block",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "code",
+        "blockquote",
+        "code-block",
         "align",
         "indent",
-        "list", "bullet",
-        "link", "image", "video"
-      ]
+        "list",
+        "bullet",
+        "link",
+        "image",
+        "video",
+    ];
 
     return (
         <>
-            <ReactQuill 
+            <ReactQuill
                 className="mt-3 block w-full bg-base-200"
                 value={value}
                 onChange={onChange}
@@ -38,5 +51,5 @@ export default function QuillEditor({ value, onChange }) {
                 formats={quillFormats}
             />
         </>
-    )
+    );
 }
