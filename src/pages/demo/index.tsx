@@ -1,7 +1,9 @@
-import MyHead from "@/components/head"
-import Link from "next/link"
-import Image from "next/image"
-import Logo from "../../../public/demo/sudoku.png"
+import MyHead from "@/components/head";
+import Link from "next/link";
+import Image from "next/image";
+import SudokuPng from "../../../public/demo/sudoku.png";
+import BokehPng from "../../../public/demo/bokeh.png";
+import BoidPng from "../../../public/demo/boid.png";
 
 export default function AllDemos() {
     return (
@@ -15,7 +17,7 @@ export default function AllDemos() {
                         <Link href="/demo/sudoku#top">
                             <figure>
                                 <Image
-                                    src={Logo}
+                                    src={SudokuPng}
                                     width={1024}
                                     height={1024}
                                     alt="Sudoku"
@@ -23,7 +25,7 @@ export default function AllDemos() {
                                 />
                             </figure>
                             <div className="card-body">
-                                <div className="card-title truncate text-3xl mb-3">
+                                <div className="card-title break-words text-3xl mb-3">
                                     Sudoku
                                 </div>
                                 <div>Created: August 21, 2023</div>
@@ -43,8 +45,77 @@ export default function AllDemos() {
                             </div>
                         </Link>
                     </li>
+                    <li className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75">
+                        <Link href="/demo/bokeh#top">
+                            <figure>
+                                <Image
+                                    src={BokehPng}
+                                    width={1024}
+                                    height={1024}
+                                    alt="Sudoku"
+                                    className="w-full aspect-auto rounded-t-2xl"
+                                />
+                            </figure>
+                            <div className="card-body">
+                                <div className="card-title break-words text-3xl mb-3">
+                                    Bokeh Effect
+                                </div>
+                                <div>Created: Feb 12, 2024</div>
+                                <div>Last Updated: Feb 12, 2024</div>
+                                <div className="text-lg mb-3">
+                                    A bokeh backdrop to add some color to the{" "}
+                                    <a
+                                        className="underline text-primary hover:brightness-150"
+                                        href="https://www.codenest.space"
+                                    >
+                                        CodeNest
+                                    </a>{" "}
+                                    front page
+                                </div>
+                                <ul className="flex flex-wrap gap-3 justify-end">
+                                    <li className="badge badge-lg badge-primary p-4">
+                                        website
+                                    </li>
+                                    <li className="badge badge-lg badge-primary p-4">
+                                        javascript
+                                    </li>
+                                </ul>
+                            </div>
+                        </Link>
+                    </li>
+                    <li className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75">
+                        <Link href="/demo/boid#top">
+                            <figure>
+                                <Image
+                                    src={BoidPng}
+                                    width={1024}
+                                    height={1024}
+                                    alt="Sudoku"
+                                    className="w-full aspect-auto rounded-t-2xl"
+                                />
+                            </figure>
+                            <div className="card-body">
+                                <div className="card-title break-words text-3xl mb-3">
+                                    Boid Simulation
+                                </div>
+                                <div>Created: Dec 16, 2023</div>
+                                <div>Last Updated: Dec 16, 2023</div>
+                                <div className="text-lg mb-3">
+                                    A boid simulation written in JavaScript
+                                </div>
+                                <ul className="flex flex-wrap gap-3 justify-end">
+                                    <li className="badge badge-lg badge-primary p-4">
+                                        simulation
+                                    </li>
+                                    <li className="badge badge-lg badge-primary p-4">
+                                        javascript
+                                    </li>
+                                </ul>
+                            </div>
+                        </Link>
+                    </li>
                 </ul>
             </div>
         </>
-    )
+    );
 }
