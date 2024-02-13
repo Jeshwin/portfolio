@@ -1,21 +1,23 @@
-import MyHead from "@/components/head"
-import SWRLoading from "@/components/swrloading"
-import Badge from "@/components/badge"
-import Image from "next/image"
-import Link from "next/link"
-import axios from "axios"
-import useSWR from "swr"
+import MyHead from "@/components/head";
+import SWRLoading from "@/components/swrloading";
+import Badge from "@/components/badge";
+import Image from "next/image";
+import Link from "next/link";
+import axios from "axios";
+import useSWR from "swr";
 
-const fetcher = (url) => axios.get(url).then((res) => res.data)
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function AllProjects() {
-    const { data, error } = useSWR(`/api/get/projects`, fetcher)
+    const {data, error} = useSWR(`/api/get/projects`, fetcher);
 
     if (error)
-        return <SWRLoading head="Error" size={200} fillColor="fill-error" />
+        return <SWRLoading head="Error" size={200} fillColor="fill-error" />;
 
     if (!data)
-        return <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
+        return (
+            <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
+        );
 
     return (
         <>
@@ -70,7 +72,10 @@ export default function AllProjects() {
                                     </div>
                                     <ul className="flex flex-wrap gap-3 justify-end">
                                         {project.tags.map((tag) => (
-                                            <Badge key={tag.title} text={tag.title} />
+                                            <Badge
+                                                key={tag.title}
+                                                text={tag.title}
+                                            />
                                         ))}
                                     </ul>
                                 </div>
@@ -80,5 +85,5 @@ export default function AllProjects() {
                 </ul>
             </div>
         </>
-    )
+    );
 }

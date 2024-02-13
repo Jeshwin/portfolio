@@ -1,15 +1,15 @@
-import MyHead from "@/components/head"
-import init from "my_sudoku"
-import { useEffect } from "react"
+import MyHead from "@/components/head";
+import init from "my_sudoku";
+import {useEffect} from "react";
 
 export default function SudokuDemo() {
     useEffect(() => {
         async function createDemo() {
-            const wasm = await init()
-            wasm.start()
+            const wasm = await init();
+            wasm.start();
         }
-        createDemo()
-    }, [])
+        createDemo();
+    }, []);
 
     return (
         <>
@@ -26,5 +26,5 @@ export default function SudokuDemo() {
                 </div>
             </div>
         </>
-    )
+    );
 }

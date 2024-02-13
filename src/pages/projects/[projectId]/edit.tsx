@@ -1,27 +1,27 @@
-import { useEffect, useRef, useState } from "react"
-import MyHead from "@/components/head"
-import axios from "axios"
-import "dotenv/config"
-import { useRouter } from "next/router"
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
-import { nanoid } from "nanoid"
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid"
-import Image from "next/image"
+import {useEffect, useRef, useState} from "react";
+import MyHead from "@/components/head";
+import axios from "axios";
+import "dotenv/config";
+import {useRouter} from "next/router";
+import {PutObjectCommand, S3Client} from "@aws-sdk/client-s3";
+import {nanoid} from "nanoid";
+import {MinusIcon, PlusIcon} from "@heroicons/react/24/solid";
+import Image from "next/image";
 
 function getFileExtension(filename) {
-    const parts = filename.split(".")
+    const parts = filename.split(".");
     if (parts.length === 1 || parts[0] === "") {
-        return ""
+        return "";
     }
-    const extension = parts[parts.length - 1]
-    return extension
+    const extension = parts[parts.length - 1];
+    return extension;
 }
 
 export const getServerSideProps = () => {
-    const bucketName = process.env.AWS_BUCKET_NAME
-    const region = process.env.AWS_REGION
-    const accessKeyId = process.env.AWS_ACCESS_KEY_ID
-    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+    const bucketName = process.env.AWS_BUCKET_NAME;
+    const region = process.env.AWS_REGION;
+    const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
     return {
         props: {
@@ -30,8 +30,8 @@ export const getServerSideProps = () => {
             region,
             bucketName,
         },
-    }
-}
+    };
+};
 
 export default function UpdateProject({
     accessKeyId,
@@ -40,19 +40,19 @@ export default function UpdateProject({
     bucketName,
 }) {
     // Init State ///////////////////////////////////////////////////////////////
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [tags, setTags] = useState("")
-    const [newThumbnail, setNewThumbnail] = useState(null)
-    const [links, setLinks] = useState([{ url: "", title: "", icon: "" }])
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [tags, setTags] = useState("");
+    const [newThumbnail, setNewThumbnail] = useState(null);
+    const [links, setLinks] = useState([{url: "", title: "", icon: ""}]);
     const [prevGallery, setPrevGallery] = useState([
-        { image: "", description: "" },
-    ])
+        {image: "", description: ""},
+    ]);
     const [newGallery, setNewGallery] = useState([
-        { image: null, description: "" },
-    ])
-    const router = useRouter()
-    const { projectId } = router.query
+        {image: null, description: ""},
+    ]);
+    const router = useRouter();
+    const {projectId} = router.query;
     /////////////////////////////////////////////////////////////////////////////
 
     // Get Previous Project Data ////////////////////////////////////////////////
@@ -61,35 +61,35 @@ export default function UpdateProject({
             try {
                 const response = await axios.get(
                     `/api/get/projects/${projectId}`
-                )
-                const projectData = response.data
-                setTitle(projectData.title)
-                let tagString = ""
+                );
+                const projectData = response.data;
+                setTitle(projectData.title);
+                let tagString = "";
                 projectData.tags.map((tag) => {
-                    tagString += "," + tag.title
-                })
-                setTags(tagString.substring(1))
-                setDescription(projectData.description)
+                    tagString += "," + tag.title;
+                });
+                setTags(tagString.substring(1));
+                setDescription(projectData.description);
                 setLinks(
                     projectData.links.map((link) => ({
                         url: link.url,
                         title: link.title,
                         icon: link.icon,
                     }))
-                )
+                );
                 setPrevGallery(
                     projectData.gallery.map((image) => ({
                         image: image.image,
                         description: image.description,
                     }))
-                )
+                );
             } catch (e) {
-                console.error(e)
-                router.push(`/projects/${projectId}`)
+                console.error(e);
+                router.push(`/projects/${projectId}`);
             }
         }
-        getData()
-    }, [projectId, router])
+        getData();
+    }, [projectId, router]);
     /////////////////////////////////////////////////////////////////////////////
 
     // Init AWS S3 Config ///////////////////////////////////////////////////////
@@ -99,91 +99,91 @@ export default function UpdateProject({
             accessKeyId,
             secretAccessKey,
         },
-    })
+    });
     /////////////////////////////////////////////////////////////////////////////
 
     // Handle New Thumbnail /////////////////////////////////////////////////////
     const handleThumbnailChange = (e) => {
-        const file = e.target.files[0]
-        setNewThumbnail(file)
-    }
+        const file = e.target.files[0];
+        setNewThumbnail(file);
+    };
     /////////////////////////////////////////////////////////////////////////////
 
     // Handle Links /////////////////////////////////////////////////////////////
     const handleLinkUrlChange = (index, event) => {
-        const { value } = event.target
-        const updatedLinks = [...links]
-        updatedLinks[index].url = value
-        setLinks(updatedLinks)
-    }
+        const {value} = event.target;
+        const updatedLinks = [...links];
+        updatedLinks[index].url = value;
+        setLinks(updatedLinks);
+    };
 
     const handleLinkTitleChange = (index, event) => {
-        const { value } = event.target
-        const updatedLinks = [...links]
-        updatedLinks[index].title = value
-        setLinks(updatedLinks)
-    }
+        const {value} = event.target;
+        const updatedLinks = [...links];
+        updatedLinks[index].title = value;
+        setLinks(updatedLinks);
+    };
 
     const handleLinkIconChange = (index, event) => {
-        const { value } = event.target
-        const updatedLinks = [...links]
-        updatedLinks[index].icon = value
-        setLinks(updatedLinks)
-    }
+        const {value} = event.target;
+        const updatedLinks = [...links];
+        updatedLinks[index].icon = value;
+        setLinks(updatedLinks);
+    };
 
     const addLink = () => {
-        setLinks([...links, { url: "", title: "", icon: "" }])
-    }
+        setLinks([...links, {url: "", title: "", icon: ""}]);
+    };
 
     const removeLink = (index) => {
-        const updatedLinks = links.filter((_, i) => i !== index)
-        setLinks(updatedLinks)
-    }
+        const updatedLinks = links.filter((_, i) => i !== index);
+        setLinks(updatedLinks);
+    };
     /////////////////////////////////////////////////////////////////////////////
 
     // Handle Previous Gallery Images ///////////////////////////////////////////
     const handlePrevDescriptionChange = (index, event) => {
-        const { value } = event.target
-        const updatedPairs = [...prevGallery]
-        updatedPairs[index].description = value
-        setPrevGallery(updatedPairs)
-    }
+        const {value} = event.target;
+        const updatedPairs = [...prevGallery];
+        updatedPairs[index].description = value;
+        setPrevGallery(updatedPairs);
+    };
 
     const removePrevImagePair = (index) => {
-        const updatedPairs = prevGallery.filter((_, i) => i !== index)
-        setPrevGallery(updatedPairs)
-    }
+        const updatedPairs = prevGallery.filter((_, i) => i !== index);
+        setPrevGallery(updatedPairs);
+    };
     /////////////////////////////////////////////////////////////////////////////
 
     // Handle New Gallery Images ////////////////////////////////////////////////
     const handleNewImageChange = (index, event) => {
-        const file = event.target.files[0]
+        const file = event.target.files[0];
         if (file) {
-            const updatedPairs = [...newGallery]
-            updatedPairs[index].image = file
-            setNewGallery(updatedPairs)
+            const updatedPairs = [...newGallery];
+            updatedPairs[index].image = file;
+            setNewGallery(updatedPairs);
         }
-    }
+    };
 
     const handleNewDescriptionChange = (index, event) => {
-        const { value } = event.target
-        const updatedPairs = [...newGallery]
-        updatedPairs[index].description = value
-        setNewGallery(updatedPairs)
-    }
+        const {value} = event.target;
+        const updatedPairs = [...newGallery];
+        updatedPairs[index].description = value;
+        setNewGallery(updatedPairs);
+    };
 
     const addNewImagePair = () => {
-        setNewGallery([...newGallery, { image: null, description: "" }])
-    }
+        setNewGallery([...newGallery, {image: null, description: ""}]);
+    };
 
     const removeNewImagePair = (index) => {
-        const updatedPairs = newGallery.filter((_, i) => i !== index)
-        setNewGallery(updatedPairs)
-    }
+        const updatedPairs = newGallery.filter((_, i) => i !== index);
+        setNewGallery(updatedPairs);
+    };
     /////////////////////////////////////////////////////////////////////////////
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const projectData: any = {
             id: projectId,
@@ -192,66 +192,66 @@ export default function UpdateProject({
             description,
             links,
             thumbnail: null,
-        }
+        };
 
         try {
             // Upload thumbnail to S3
             if (newThumbnail) {
                 const thumbnailKey = `thumbnails/${nanoid()}.${getFileExtension(
                     newThumbnail.name
-                )}`
-                console.log(`ADDING NEW THUMBNAIL ${thumbnailKey}`)
-                console.dir(newThumbnail)
+                )}`;
+                console.log(`ADDING NEW THUMBNAIL ${thumbnailKey}`);
+                console.dir(newThumbnail);
                 await s3.send(
                     new PutObjectCommand({
                         Bucket: bucketName,
                         Key: thumbnailKey,
                         Body: newThumbnail,
                     })
-                )
+                );
 
-                console.log("SUCCESSFUL NEW THUMBNAIL")
-                projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`
+                console.log("SUCCESSFUL NEW THUMBNAIL");
+                projectData.thumbnail = `https://${bucketName}.s3.${region}.amazonaws.com/${thumbnailKey}`;
             }
 
             // Upload gallery images to S3 (if any)
-            const galleryUrls = prevGallery
+            const galleryUrls = prevGallery;
             for (const [index, pair] of newGallery.entries()) {
                 const galleryKey = `gallery/${nanoid()}.${getFileExtension(
                     pair.image.name
-                )}`
-                console.log(`ADDING NEW THUMBNAIL ${galleryKey}`)
-                console.dir(pair.image)
+                )}`;
+                console.log(`ADDING NEW THUMBNAIL ${galleryKey}`);
+                console.dir(pair.image);
                 await s3.send(
                     new PutObjectCommand({
                         Bucket: bucketName,
                         Key: galleryKey,
                         Body: pair.image,
                     })
-                )
-                console.log("SUCCESSFUL NEW GALLERY IMAGE")
+                );
+                console.log("SUCCESSFUL NEW GALLERY IMAGE");
 
                 galleryUrls.push({
                     image: `https://${bucketName}.s3.${region}.amazonaws.com/${galleryKey}`,
                     description: pair.description,
-                })
+                });
             }
 
             // Add galleryUrls to the projectData
-            projectData.gallery = galleryUrls
+            projectData.gallery = galleryUrls;
 
-            console.log("SENDING NEW PROJECT DATA: \n")
-            console.dir(projectData)
+            console.log("SENDING NEW PROJECT DATA: \n");
+            console.dir(projectData);
 
             // send POST request to store project in database
             await axios
                 .post("/api/update/project", projectData)
                 .then((res) => console.dir("RESPONSE\n\n", res))
-                .catch((err) => console.error("PRINTING ERROR\n\n", err))
+                .catch((err) => console.error("PRINTING ERROR\n\n", err));
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-    }
+    };
 
     return (
         <>
@@ -434,5 +434,5 @@ export default function UpdateProject({
                 </button>
             </form>
         </>
-    )
+    );
 }

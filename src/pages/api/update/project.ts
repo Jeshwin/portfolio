@@ -1,16 +1,16 @@
-import { PrismaClient } from "@prisma/client"
+import {PrismaClient} from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" })
+        return res.status(405).json({error: "Method not allowed"});
     }
 
-    const { id, title, tags, description, thumbnail, links, gallery } = req.body
+    const {id, title, tags, description, thumbnail, links, gallery} = req.body;
 
-    console.log("RECEIVED NEW PROJECT DATA: \n")
-    console.dir(req.body)
+    console.log("RECEIVED NEW PROJECT DATA: \n");
+    console.dir(req.body);
 
     try {
         const deleteRelations = prisma.project.update({
@@ -31,15 +31,15 @@ export default async function handler(req, res) {
                     deleteMany: {},
                 },
             },
-        })
+        });
 
         let updateQuery: any = {
             title,
             description,
             tags: {
                 connectOrCreate: tags.map((tag) => ({
-                    where: { title: tag },
-                    create: { title: tag },
+                    where: {title: tag},
+                    create: {title: tag},
                 })),
             },
             links: {
@@ -55,14 +55,14 @@ export default async function handler(req, res) {
                     description: item.description,
                 })),
             },
-        }
+        };
 
         if (thumbnail) {
             updateQuery.thumbnail = {
                 create: {
                     image: thumbnail,
                 },
-            }
+            };
         }
 
         const updateProject = prisma.project.update({
@@ -70,15 +70,15 @@ export default async function handler(req, res) {
                 id: parseInt(id),
             },
             data: updateQuery,
-        })
+        });
 
         const updatedProject = await prisma.$transaction([
             deleteRelations,
             updateProject,
-        ])
-        return res.status(200).json(updatedProject)
+        ]);
+        return res.status(200).json(updatedProject);
     } catch (error) {
-        console.error(error)
-        return res.status(500).json({ error })
+        console.error(error);
+        return res.status(500).json({error});
     }
 }

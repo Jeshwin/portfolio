@@ -1,13 +1,13 @@
-import { PrismaClient } from "@prisma/client"
+import {PrismaClient} from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" })
+        return res.status(405).json({error: "Method not allowed"});
     }
 
-    const { title, tags, description, links, thumbnail, gallery } = req.body
+    const {title, tags, description, links, thumbnail, gallery} = req.body;
 
     try {
         const newProject = await prisma.project.create({
@@ -16,8 +16,8 @@ export default async function handler(req, res) {
                 description,
                 tags: {
                     connectOrCreate: tags.map((tag) => ({
-                        where: { title: tag },
-                        create: { title: tag },
+                        where: {title: tag},
+                        create: {title: tag},
                     })),
                 },
                 links: {
@@ -39,9 +39,9 @@ export default async function handler(req, res) {
                     })),
                 },
             },
-        })
-        return res.status(201).json(newProject)
+        });
+        return res.status(201).json(newProject);
     } catch (error) {
-        return res.status(500).json({ error })
+        return res.status(500).json({error});
     }
 }

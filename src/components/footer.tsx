@@ -1,33 +1,29 @@
-import Link from "next/link"
-import Image from "next/image"
-import Logo from "../../public/logo.png"
-import {
-    LockClosedIcon,
-    LockOpenIcon,
-    RssIcon,
-} from "@heroicons/react/24/solid"
-import { useState, useEffect } from "react"
-import axios from "axios"
+import Link from "next/link";
+import Image from "next/image";
+import Logo from "../../public/logo.png";
+import {LockClosedIcon, LockOpenIcon, RssIcon} from "@heroicons/react/24/solid";
+import {useState, useEffect} from "react";
+import axios from "axios";
 
 export default function Footer() {
-    const [validToken, setValidToken] = useState(false)
+    const [validToken, setValidToken] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem("jwtToken")
+        const token = localStorage.getItem("jwtToken");
         async function validateToken(token) {
             try {
-                const response = await axios.post("/api/validateJWT", { token })
-                setValidToken(response.data.isValid)
+                const response = await axios.post("/api/validateJWT", {token});
+                setValidToken(response.data.isValid);
             } catch (error) {
                 // console.error('JWT validation failed: ', error)
-                setValidToken(false)
+                setValidToken(false);
             }
         }
-        validateToken(token)
-    })
+        validateToken(token);
+    });
 
-    const d = new Date()
-    const currentYear = d.getFullYear()
+    const d = new Date();
+    const currentYear = d.getFullYear();
 
     return (
         <footer className="footer footer-center p-10 bg-base-200 text-base-content">
@@ -100,5 +96,5 @@ export default function Footer() {
                 </div>
             </div>
         </footer>
-    )
+    );
 }

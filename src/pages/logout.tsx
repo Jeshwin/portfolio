@@ -1,15 +1,13 @@
-import { useEffect } from "react"
-import { useRouter } from "next/router"
+import {useEffect} from "react";
+import {useRouter} from "next/router";
 
 export default function NewPost() {
-  const router = useRouter()
+    const router = useRouter();
 
-  useEffect(() => {
-    localStorage.removeItem('jwtToken')
-    router.push('/')
-  })
+    useEffect(() => {
+        localStorage.removeItem("jwtToken");
+        router.push("/");
+    });
 
-  return (
-    <span className="loading loading-spinner loading-lg"></span>
-  )
+    return <span className="loading loading-spinner loading-lg"></span>;
 }

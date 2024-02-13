@@ -1,6 +1,6 @@
-import Link from "next/link"
+import Link from "next/link";
 
-export default function Drawer({ children }) {
+export default function Drawer({children}) {
     return (
         <>
             <div className="drawer">
@@ -48,5 +48,5 @@ export default function Drawer({ children }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
