@@ -9,15 +9,15 @@ export default function Boid() {
                 <span className="text-5xl font-bold">Boid Simulation</span>
                 <iframe
                     className="w-full aspect-video mx-auto"
-                    title="CodeNest Style Animation"
-                    src="https://codepen.io/jeshwin-the-bold/embed/preview/ExMOvZd?default-tab=result"
+                    title="Untitled"
+                    src="https://codepen.io/jeshwin-the-bold/embed/preview/GRewMjv?default-tab=result"
                     loading="lazy"
                     allowTransparency={true}
                     allowFullScreen={true}
                 >
                     See the Pen{" "}
-                    <a href="https://codepen.io/jeshwin-the-bold/pen/ExMOvZd">
-                        CodeNest Style Animation
+                    <a href="https://codepen.io/jeshwin-the-bold/pen/GRewMjv">
+                        Untitled
                     </a>{" "}
                     by Jeshwin Prince (
                     <a href="https://codepen.io/jeshwin-the-bold">
