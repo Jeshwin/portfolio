@@ -6,6 +6,8 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import CustomLinkIcon from "@/components/linkicon"
+import SWRLoading from "@/components/swrloading"
+import Badge from "@/components/badge"
 
 const fetcher = (url) => axios.get(url).then((res) => res.data)
 
@@ -32,122 +34,10 @@ export default function Project() {
     const { data, error } = useSWR(`/api/get/projects/${projectId}`, fetcher)
 
     if (error)
-        return (
-            <>
-                <MyHead title="Error" />
-                <div id="top" />
-                <div className="animate-pulse p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
-                    <div className="text-xl leading-loose">
-                        <div className="flex flex-row items-center gap-4 pb-12">
-                            <div className="w-32 aspect-square rounded-full bg-base-error" />
-                            <div className="h-32 bg-base-error rounded-lg w-96" />
-                        </div>
-                        <ul className="flex gap-3 mb-8">
-                            <li className="badge badge-lg badge-error py-4 px-10" />
-                            <li className="badge badge-lg badge-error py-4 px-12" />
-                            <li className="badge badge-lg badge-error py-4 px-9" />
-                            <li className="badge badge-lg badge-error py-4 px-10" />
-                            <li className="badge badge-lg badge-error py-4 px-8" />
-                        </ul>
-                        <div className="h-9 bg-base-error rounded-lg max-w-lg mb-8" />
-                        <div className="flex flex-col gap-2 mb-8">
-                            <div className="h-5 bg-base-error rounded-lg ml-40" />
-                            <div className="h-5 bg-base-error rounded-lg" />
-                            <div className="h-5 bg-base-error rounded-lg" />
-                            <div className="h-5 bg-base-error rounded-lg" />
-                            <div className="h-5 bg-base-error rounded-lg" />
-                            <div className="h-5 bg-base-error rounded-lg max-w-4xl" />
-                        </div>
-                        <div className="h-9 bg-base-error rounded-lg max-w-lg mb-8" />
-                        <ul className="flex flex-col gap-4 ml-12 mb-12 max-w-xl">
-                            <li className="h-5 bg-base-error rounded-lg" />
-                            <li className="h-5 bg-base-error rounded-lg" />
-                            <li className="h-5 bg-base-error rounded-lg" />
-                            <li className="h-5 bg-base-error rounded-lg" />
-                            <li className="h-5 bg-base-error rounded-lg" />
-                            <li className="h-5 bg-base-error rounded-lg" />
-                        </ul>
-                        <div className="h-9 bg-base-error rounded-lg max-w-lg mb-8" />
-                        <ul className="grid grid-cols-3 gap-6 mb-8">
-                            <li className="card card-compact w-full bg-base-error rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-error rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-error rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-error rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-error rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </>
-        )
+        return <SWRLoading head="Error" size={200} fillColor="fill-error" />
 
     if (!data)
-        return (
-            <>
-                <MyHead title="Loading" />
-                <div id="top" />
-                <div className="animate-pulse p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
-                    <div className="text-xl leading-loose">
-                        <div className="flex flex-row items-center gap-4 pb-12">
-                            <div className="w-32 aspect-square rounded-full bg-base-300" />
-                            <div className="h-32 bg-base-300 rounded-lg w-96" />
-                        </div>
-                        <ul className="flex gap-3 mb-8">
-                            <li className="badge badge-lg badge-ghost py-4 px-10" />
-                            <li className="badge badge-lg badge-ghost py-4 px-12" />
-                            <li className="badge badge-lg badge-ghost py-4 px-9" />
-                            <li className="badge badge-lg badge-ghost py-4 px-10" />
-                            <li className="badge badge-lg badge-ghost py-4 px-8" />
-                        </ul>
-                        <div className="h-9 bg-base-300 rounded-lg max-w-lg mb-8" />
-                        <div className="flex flex-col gap-2 mb-8">
-                            <div className="h-5 bg-base-300 rounded-lg ml-40" />
-                            <div className="h-5 bg-base-300 rounded-lg" />
-                            <div className="h-5 bg-base-300 rounded-lg" />
-                            <div className="h-5 bg-base-300 rounded-lg" />
-                            <div className="h-5 bg-base-300 rounded-lg" />
-                            <div className="h-5 bg-base-300 rounded-lg max-w-4xl" />
-                        </div>
-                        <div className="h-9 bg-base-300 rounded-lg max-w-lg mb-8" />
-                        <ul className="flex flex-col gap-4 ml-12 mb-12 max-w-xl">
-                            <li className="h-5 bg-base-300 rounded-lg" />
-                            <li className="h-5 bg-base-300 rounded-lg" />
-                            <li className="h-5 bg-base-300 rounded-lg" />
-                            <li className="h-5 bg-base-300 rounded-lg" />
-                            <li className="h-5 bg-base-300 rounded-lg" />
-                            <li className="h-5 bg-base-300 rounded-lg" />
-                        </ul>
-                        <div className="h-9 bg-base-300 rounded-lg max-w-lg mb-8" />
-                        <ul className="grid grid-cols-3 gap-6 mb-8">
-                            <li className="card card-compact w-full bg-base-300 rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-300 rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-300 rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-300 rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                            <li className="card card-compact w-full bg-base-300 rounded-lg shadow-xl">
-                                <div className="w-full aspect-square rounded-2xl" />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </>
-        )
+        return <SWRLoading head="Loading..." size={200} fillColor="fill-primary" />
 
     return (
         <>
@@ -204,12 +94,7 @@ export default function Project() {
                     </div>
                     <ul className="flex gap-3 mb-8">
                         {data.tags.map((tag) => (
-                            <li
-                                key={tag.title}
-                                className="badge badge-lg badge-primary p-4"
-                            >
-                                {tag.title}
-                            </li>
+                            <Badge key={tag.title} text={tag.title} />
                         ))}
                     </ul>
                     <div className="text-2xl font-semibold pb-8">

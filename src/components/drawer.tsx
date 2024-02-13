@@ -3,11 +3,11 @@ import Link from "next/link"
 export default function Drawer({ children }) {
     return (
         <>
-            <div className="drawer cursor-none">
+            <div className="drawer">
                 <input
                     id="my-drawer"
                     type="checkbox"
-                    className="drawer-toggle cursor-none"
+                    className="drawer-toggle"
                 />
                 <div className="drawer-content">{children}</div>
                 <div className="drawer-side">
@@ -16,7 +16,7 @@ export default function Drawer({ children }) {
                         className="drawer-overlay p-auto"
                     ></label>
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-                        <div className="btn btn-ghost btn-circle cursor-none">
+                        <div className="btn btn-ghost btn-circle">
                             <label htmlFor="my-drawer">
                                 <svg
                                     className="fill-base-content w-8 h-8"
