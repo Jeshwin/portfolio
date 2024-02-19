@@ -7,8 +7,8 @@ export default function Greeting() {
         <>
             <main className="flex flex-col lg:flex-row justify-items-center">
                 <div className="hero h-screen mx-auto py-12 lg:py-24 bg-gradient-to-t from-base-100 to-base-200">
-                    <div className="hero-content gap-6 max-x-5xl p-0 lg:p-1 px-auto mx-10 flex-col">
-                        <div className="relative -mt-24 w-48 lg:w-96 aspect-square">
+                    <div className="hero-content gap-6 p-0 lg:p-1 px-auto mx-10 flex-col">
+                        <div className="relative w-48 lg:w-96 aspect-square">
                             <Image fill src={Logo} alt="Astronaut Logo" />
                         </div>
                         <div className="mx-auto max-x-5xl text-center text-base-content">
@@ -32,6 +32,7 @@ export default function Greeting() {
                                 Let&apos;s Go!
                             </Link>
                         </div>
+                        <div className="h-24 w-1 bg-transparent"></div>
                     </div>
                 </div>
             </main>

@@ -2,7 +2,6 @@ import {useState, useEffect} from "react";
 
 export default function Cursor() {
     const [position, setPosition] = useState({x: 0, y: 0});
-    const [isPressed, setIsPressed] = useState(false);
     const [currentTheme, setCurrentTheme] = useState("light");
 
     // Listen to changes in the theme
@@ -36,7 +35,6 @@ export default function Cursor() {
 
     useEffect(() => {
         const handleThemeChange = (event) => {
-            console.log("Theme changed to:", event.detail);
             setCurrentTheme(event.detail);
         };
 
@@ -67,14 +65,6 @@ export default function Cursor() {
         };
     }, []);
 
-    const handleMouseDown = () => {
-        setIsPressed(true);
-    };
-
-    const handleMouseUp = () => {
-        setIsPressed(false);
-    };
-
     // If cursor is outside window bounds, don't render it
     if (position.x < 0 || position.y < 0) {
         return null;
@@ -84,22 +74,18 @@ export default function Cursor() {
         <div
             className="absolute z-50 pointer-events-none"
             style={{
-                left: position.x - (isPressed ? 10 : 15),
-                top: position.y - (isPressed ? 10 : 15),
+                left: position.x - 15,
+                top: position.y - 15,
             }}
         >
-            <svg
-                width={isPressed ? 20 : 30}
-                height={isPressed ? 20 : 30}
-                viewBox={`0 0 ${isPressed ? 20 : 30} ${isPressed ? 20 : 30}`}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-            >
+            <svg width={30} height={30} viewBox="0 0 30 30">
                 <circle
-                    cx={isPressed ? 10 : 15}
-                    cy={isPressed ? 10 : 15}
-                    r={isPressed ? 10 : 15}
-                    fill={currentTheme === "light" ? "#dc8a78" : "#f2d5cf"}
+                    cx={15}
+                    cy={15}
+                    r={10}
+                    fill="none"
+                    stroke={currentTheme === "light" ? "#4c4f69" : "#c6d0f5"}
+                    strokeWidth={4}
                 />
             </svg>
         </div>
