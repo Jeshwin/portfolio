@@ -5,7 +5,7 @@ import Logo from "../../public/logo.png";
 
 export default function Navbar() {
     return (
-        <nav className="navbar lg:px-2 bg-base-200 sticky z-50 top-0">
+        <nav className="navbar lg:px-2 bg-base-200 sticky z-10 top-0">
             <div className="flex-none">
                 <label
                     htmlFor="my-drawer"
@@ -30,7 +30,7 @@ export default function Navbar() {
             </div>
             <div className="flex-1">
                 <Link
-                    href="/#top"
+                    href="/"
                     className="btn btn-ghost normal-case text-xl"
                 >
                     <div className="relative w-10 aspect-square">

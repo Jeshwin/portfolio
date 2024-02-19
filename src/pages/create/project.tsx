@@ -53,10 +53,10 @@ export default function NewProject({
         async function validateToken(token) {
             try {
                 const response = await axios.post("/api/validateJWT", {token});
-                if (!response.data.isValid) router.push("/login#top");
+                if (!response.data.isValid) router.push("/login");
             } catch (error) {
                 console.error("JWT validation failed: ", error);
-                router.push("/login#top");
+                router.push("/login");
             }
         }
         validateToken(token);
@@ -193,7 +193,6 @@ export default function NewProject({
     return (
         <>
             <MyHead title="Create Project" />
-            <div id="top"></div>
             <form
                 className="m-12 lg:mx-auto max-w-5xl grid grid-cols-1 gap-6 bag-base-100"
                 onSubmit={handleSubmit}

@@ -44,7 +44,6 @@ export default function Project() {
     return (
         <>
             <MyHead title="Portfolio" />
-            <div id="top"></div>
             <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
                 <div className="text-xl leading-loose">
                     <div className="flex flex-row items-center gap-4 pb-6">

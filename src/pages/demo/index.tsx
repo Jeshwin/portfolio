@@ -9,12 +9,11 @@ export default function AllDemos() {
     return (
         <>
             <MyHead title="Blog" />
-            <div id="top" />
             <div className="p-5 mx-auto lg:w-3/4">
                 <div className="font-bold text-5xl mb-12">Blog</div>
                 <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
                     <li className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75">
-                        <Link href="/demo/sudoku#top">
+                        <Link href="/demo/sudoku">
                             <figure>
                                 <Image
                                     src={SudokuPng}
@@ -46,7 +45,7 @@ export default function AllDemos() {
                         </Link>
                     </li>
                     <li className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75">
-                        <Link href="/demo/bokeh#top">
+                        <Link href="/demo/bokeh">
                             <figure>
                                 <Image
                                     src={BokehPng}
@@ -84,7 +83,7 @@ export default function AllDemos() {
                         </Link>
                     </li>
                     <li className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75">
-                        <Link href="/demo/boid#top">
+                        <Link href="/demo/boid">
                             <figure>
                                 <Image
                                     src={BoidPng}
