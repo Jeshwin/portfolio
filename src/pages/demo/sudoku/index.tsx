@@ -14,7 +14,6 @@ export default function SudokuDemo() {
     return (
         <>
             <MyHead title="Sudoku Demo" />
-            <div id="top" />
             <div className="flex flex-col items-center gap-6 p-auto">
                 <div className="flex flex-col items-center gap-6 my-10">
                     <span className="text-5xl font-bold">Sudoku</span>

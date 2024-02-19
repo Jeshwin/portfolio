@@ -30,7 +30,7 @@ export default function Navbar() {
             </div>
             <div className="flex-1">
                 <Link
-                    href="/#top"
+                    href="/"
                     className="btn btn-ghost normal-case text-xl"
                 >
                     <div className="relative w-10 aspect-square">

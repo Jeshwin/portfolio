@@ -26,7 +26,6 @@ export default function Login() {
     return (
         <>
             <MyHead title="Create Post" />
-            <div id="top"></div>
             <form
                 className="m-12 lg:mx-auto max-w-5xl grid grid-cols-1 gap-6 bag-base-100"
                 onSubmit={handleLogin}

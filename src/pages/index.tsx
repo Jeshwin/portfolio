@@ -32,7 +32,7 @@ export default function Home() {
                         </p>
                         <div className="card-actions justify-end">
                             <Link
-                                href="/posts/16#top"
+                                href="/posts/16"
                                 className="btn btn-primary"
                             >
                                 See Resume
@@ -56,7 +56,7 @@ export default function Home() {
                         </p>
                         <div className="card-actions justify-end">
                             <Link
-                                href="/projects#top"
+                                href="/projects"
                                 className="btn btn-secondary"
                             >
                                 See Entries
@@ -83,7 +83,7 @@ export default function Home() {
                             demo.
                         </p>
                         <div className="card-actions justify-end">
-                            <Link href="/demo#top" className="btn btn-accent">
+                            <Link href="/demo" className="btn btn-accent">
                                 See Demos
                             </Link>
                         </div>
@@ -105,7 +105,7 @@ export default function Home() {
                             hope to post here regularly.
                         </p>
                         <div className="card-actions justify-end">
-                            <Link href="/posts#top" className="btn btn-neutral">
+                            <Link href="/posts" className="btn btn-neutral">
                                 See Posts
                             </Link>
                         </div>

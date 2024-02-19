@@ -4,7 +4,6 @@ export default function Boid() {
     return (
         <>
             <MyHead title="Boid Demo" />
-            <div id="top" />
             <div className="flex flex-col items-center gap-6 p-auto my-10 h-screen w-2/3 mx-auto">
                 <span className="text-5xl font-bold">Boid Simulation</span>
                 <iframe

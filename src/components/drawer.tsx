@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Drawer({children}) {
     return (
         <>
-            <div className="drawer">
+            <div className="drawer h-full">
                 <input
                     id="my-drawer"
                     type="checkbox"
@@ -33,16 +33,16 @@ export default function Drawer({children}) {
                             </label>
                         </div>
                         <li>
-                            <Link href="/#top">Home</Link>
+                            <Link href="/">Home</Link>
                         </li>
                         <li>
-                            <Link href="/posts/16#top">Resume</Link>
+                            <Link href="/posts/16">Resume</Link>
                         </li>
                         <li>
-                            <Link href="/projects#top">Portfolio</Link>
+                            <Link href="/projects">Portfolio</Link>
                         </li>
                         <li>
-                            <Link href="/posts#top">Blog</Link>
+                            <Link href="/posts">Blog</Link>
                         </li>
                     </ul>
                 </div>

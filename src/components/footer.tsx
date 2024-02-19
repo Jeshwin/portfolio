@@ -80,7 +80,7 @@ export default function Footer() {
                     </Link>
                     {!validToken ? (
                         <Link
-                            href="/login#top"
+                            href="/login"
                             className="btn btn-square btn-ghost rounded-full shadow"
                         >
                             <LockClosedIcon className="aspect-square w-6" />

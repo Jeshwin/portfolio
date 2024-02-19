@@ -43,7 +43,6 @@ export default function Post() {
     return (
         <>
             <MyHead title="Blog" />
-            <div id="top" />
             <div className="p-5 lg:px-48 2xl:px-96 lg:py-10 2xl:py-20">
                 <div className="flex w-full text-5xl font-bold mb-6">
                     {data.title}

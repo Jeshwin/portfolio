@@ -22,7 +22,6 @@ export default function AllProjects() {
     return (
         <>
             <MyHead title="Blog" />
-            <div id="top" />
             <div className="p-5 mx-auto lg:w-3/4">
                 <div className="font-bold text-5xl mb-12">Portfolio</div>
                 <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">

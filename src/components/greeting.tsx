@@ -26,13 +26,13 @@ export default function Greeting() {
                                 project demos, and blog posts right here!
                             </p>
                             <Link
-                                href="/posts/16#top"
+                                href="/posts/16"
                                 className="btn btn-primary lg:btn-lg lg:text-xl border-0 bg-gradient-to-br from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus"
                             >
                                 Let&apos;s Go!
                             </Link>
                         </div>
-                        <div className="h-24 w-1 bg-transparent"></div>
+                        <div className="h-16 w-1 bg-transparent"></div>
                     </div>
                 </div>
             </main>
