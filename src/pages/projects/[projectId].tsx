@@ -119,7 +119,7 @@ export default function Project() {
                         ))}
                     </ul>
                     <div className="text-2xl font-semibold pb-8">Gallery</div>
-                    <ul className="grid grid-cols-3 gap-6 mb-8">
+                    <ul className="grid grid-cols-3 gap-6 items-start mb-8">
                         {data.gallery.map((gal) => (
                             <li
                                 key={gal.id}
@@ -132,7 +132,7 @@ export default function Project() {
                                             width={500}
                                             height={500}
                                             alt={gal.description}
-                                            className="w-full aspect-square rounded-t-2xl"
+                                            className="w-full aspect-auto rounded-t-2xl"
                                         />
                                     </figure>
                                     <div className="card-body text-center">

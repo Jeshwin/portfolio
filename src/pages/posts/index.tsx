@@ -4,10 +4,28 @@ import Badge from "@/components/badge";
 import axios from "axios";
 import useSWR from "swr";
 import Link from "next/link";
+import {PlusIcon} from "@heroicons/react/24/solid";
+import {useEffect, useState} from "react";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function AllPosts() {
+    const [validToken, setValidToken] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem("jwtToken");
+        async function validateToken(token) {
+            try {
+                const response = await axios.post("/api/validateJWT", {token});
+                setValidToken(response.data.isValid);
+            } catch (error) {
+                // console.error('JWT validation failed: ', error)
+                setValidToken(false);
+            }
+        }
+        validateToken(token);
+    });
+
     const {data, error} = useSWR(`/api/get/posts`, fetcher);
 
     if (error)
@@ -22,7 +40,16 @@ export default function AllPosts() {
         <>
             <MyHead title="Blog" />
             <div className="p-5 mx-auto lg:w-3/4">
-                <div className="font-bold text-5xl mb-12">Blog</div>
+                <div className="mb-12 flex">
+                    <div className="font-bold text-5xl flex-grow">Blog</div>
+                    {validToken && (
+                        <Link href="/create/post">
+                            <button className="btn btn-primary btn-square p-2">
+                                <PlusIcon />
+                            </button>
+                        </Link>
+                    )}
+                </div>
                 <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
                     {data.map((post) => (
                         <li

@@ -5,10 +5,28 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
+import {PlusIcon} from "@heroicons/react/24/solid";
+import {useEffect, useState} from "react";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function AllProjects() {
+    const [validToken, setValidToken] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem("jwtToken");
+        async function validateToken(token) {
+            try {
+                const response = await axios.post("/api/validateJWT", {token});
+                setValidToken(response.data.isValid);
+            } catch (error) {
+                // console.error('JWT validation failed: ', error)
+                setValidToken(false);
+            }
+        }
+        validateToken(token);
+    });
+
     const {data, error} = useSWR(`/api/get/projects`, fetcher);
 
     if (error)
@@ -23,7 +41,18 @@ export default function AllProjects() {
         <>
             <MyHead title="Blog" />
             <div className="p-5 mx-auto lg:w-3/4">
-                <div className="font-bold text-5xl mb-12">Portfolio</div>
+                <div className="mb-12 flex">
+                    <div className="font-bold text-5xl flex-grow">
+                        Portfolio
+                    </div>
+                    {validToken && (
+                        <Link href="/create/project">
+                            <button className="btn btn-primary btn-square p-2">
+                                <PlusIcon />
+                            </button>
+                        </Link>
+                    )}
+                </div>
                 <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
                     {data.map((project) => (
                         <li

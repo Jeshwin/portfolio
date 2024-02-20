@@ -17,6 +17,20 @@ export default function UpdatePost() {
     const {postId} = router.query;
 
     useEffect(() => {
+        const token = localStorage.getItem("jwtToken");
+        async function validateToken(token) {
+            try {
+                const response = await axios.post("/api/validateJWT", {token});
+                if (!response.data.isValid) router.push("/login");
+            } catch (error) {
+                console.error("JWT validation failed: ", error);
+                router.push("/login");
+            }
+        }
+        validateToken(token);
+    });
+
+    useEffect(() => {
         async function getData() {
             try {
                 const response = await axios.get(`/api/get/posts/${postId}`);
