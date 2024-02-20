@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import MyHead from "@/components/head";
 import axios from "axios";
 import "dotenv/config";
@@ -54,6 +54,20 @@ export default function UpdateProject({
     const router = useRouter();
     const {projectId} = router.query;
     /////////////////////////////////////////////////////////////////////////////
+
+    useEffect(() => {
+        const token = localStorage.getItem("jwtToken");
+        async function validateToken(token) {
+            try {
+                const response = await axios.post("/api/validateJWT", {token});
+                if (!response.data.isValid) router.push("/login");
+            } catch (error) {
+                console.error("JWT validation failed: ", error);
+                router.push("/login");
+            }
+        }
+        validateToken(token);
+    });
 
     // Get Previous Project Data ////////////////////////////////////////////////
     useEffect(() => {

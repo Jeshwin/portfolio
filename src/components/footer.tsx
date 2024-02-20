@@ -26,7 +26,7 @@ export default function Footer() {
     const currentYear = d.getFullYear();
 
     return (
-        <footer className="footer footer-center p-10 bg-base-200 text-base-content">
+        <footer className="footer footer-center p-10 pb-24 bg-base-200 text-base-content">
             <div>
                 <div className="relative w-36 aspect-square">
                     <Image fill src={Logo} alt="Astronaut Logo" />

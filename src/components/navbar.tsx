@@ -29,10 +29,7 @@ export default function Navbar() {
                 </label>
             </div>
             <div className="flex-1">
-                <Link
-                    href="/"
-                    className="btn btn-ghost normal-case text-xl"
-                >
+                <Link href="/" className="btn btn-ghost normal-case text-xl">
                     <div className="relative w-10 aspect-square">
                         <Image fill src={Logo} alt="Astronaut Logo" />
                     </div>
