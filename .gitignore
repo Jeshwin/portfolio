@@ -33,6 +33,5 @@ yarn-error.log*
 .env*.local
 .env
 
-# vercel
-.vercel
-
+# custom
+/db_data/
