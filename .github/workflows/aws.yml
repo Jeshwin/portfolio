@@ -1,0 +1,152 @@
+name: Deploy Next.js to EC2
+
+on:
+  push:
+    branches: [production]
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js application
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Create deployment package
+        run: |
+          mkdir -p deploy
+          cp -r .next deploy/
+          cp -r public deploy/
+          cp package*.json deploy/
+          cp next.config.js deploy/ 2>/dev/null || true
+          # cp -r node_modules deploy/
+          tar -czf deploy.tar.gz -C deploy .
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT || 22 }}
+          script: |
+            # Set deployment variables
+            APP_DIR="/var/www/jeshwinprince"
+            BACKUP_DIR="/var/backups/jeshwinprince-$(date +%Y%m%d-%H%M%S)"
+            
+            # Create backup of current deployment
+            if [ -d "$APP_DIR" ]; then
+              sudo mkdir -p /var/backups
+              sudo cp -r $APP_DIR $BACKUP_DIR
+              echo "Backup created at $BACKUP_DIR"
+            fi
+            
+            # Create application directory
+            sudo mkdir -p $APP_DIR
+            sudo chown $USER:$USER $APP_DIR
+            
+            # Stop the application (assuming PM2)
+            pm2 stop jeshwinprince || echo "App not running"
+            
+            # Clear existing files
+            rm -rf $APP_DIR/*
+            
+            # Download and extract new deployment
+            cd $APP_DIR
+            
+      - name: Upload deployment package
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT || 22 }}
+          source: "deploy.tar.gz"
+          target: "/tmp/"
+
+      - name: Extract and start application
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT || 22 }}
+          script: |
+            APP_DIR="/var/www/jeshwinprince"
+            
+            # Extract deployment package
+            cd $APP_DIR
+            tar -xzf /tmp/deploy.tar.gz
+            rm /tmp/deploy.tar.gz
+            
+            # Install production dependencies (skip if node_modules copied)
+            npm ci --omit=dev
+            
+            # Set proper permissions
+            sudo chown -R $USER:$USER $APP_DIR
+            
+            # Start the application with PM2
+            pm2 start npm --name "jeshwinprince" -- start
+            pm2 save
+            
+            # Ensure PM2 starts on boot
+            pm2 startup || true
+            
+            echo "Deployment completed successfully"
+
+      - name: Health check
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT || 22 }}
+          script: |
+            # Wait for application to start
+            sleep 10
+            
+            # Check if application is running
+            if pm2 list | grep -q "jeshwinprince.*online"; then
+              echo "✅ Application is running successfully"
+              
+              # Optional: Test HTTP endpoint
+              if curl -f http://localhost:3000 > /dev/null 2>&1; then
+                echo "✅ Application health check passed"
+              else
+                echo "⚠️  Application started but health check failed"
+                exit 1
+              fi
+            else
+              echo "❌ Application failed to start"
+              pm2 logs jeshwinprince --lines 20
+              exit 1
+            fi
+
+      - name: Cleanup old backups
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT || 22 }}
+          script: |
+            # Keep only the 5 most recent backups
+            cd /var/backups
+            ls -dt jeshwinprince-* 2>/dev/null | tail -n +6 | sudo xargs rm -rf
+            echo "Cleaned up old backups"
