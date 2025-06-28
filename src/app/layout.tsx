@@ -1,6 +1,5 @@
 import {Inter, JetBrains_Mono} from "next/font/google";
 import "./globals.css";
-import Drawer from "@/components/drawer";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
@@ -15,8 +14,8 @@ const jetbrains_mono = JetBrains_Mono({
 });
 
 export const metadata = {
-    title: "CodeNest",
-    description: "A fully-featured, web-based coding environment",
+    title: "Jeshwin's Portfolio",
+    description: "Jeshwin Prince's portfolio website",
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -28,11 +27,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <head>
                 <link rel="icon" href="/favicon.ico" sizes="any" />
             </head>
-            <Drawer>
+            <body>
                 <Navbar />
-                <body className="min-h-[63%]">{children}</body>
+                {children}
                 <Footer />
-            </Drawer>
+            </body>
         </html>
     );
 }

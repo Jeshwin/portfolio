@@ -2,47 +2,44 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
 import {Github, Linkedin, Rss, Youtube} from "lucide-react";
+import {Button} from "./ui/button";
+
+const contactLinks = [
+    {
+        link: "https://github.com/Jeshwin",
+        icon: <Github />,
+    },
+    {
+        link: "https://www.youtube.com/@math-a-magic9820",
+        icon: <Youtube />,
+    },
+    {
+        link: "https://www.linkedin.com/in/jeshwinprince/",
+        icon: <Linkedin />,
+    },
+    {
+        link: "/rss",
+        icon: <Rss />,
+    },
+];
 
 export default function Footer() {
     const d = new Date();
     const currentYear = d.getFullYear();
 
     return (
-        <footer className="footer footer-center p-10 pb-24 bg-base-200 text-base-content">
-            <div>
-                <div className="relative w-36 aspect-square">
-                    <Image fill src={Logo} alt="Astronaut Logo" />
-                </div>
-                <p className="font-bold">Jeshwin Prince</p>
-                <p>Copyright © {currentYear} - All right reserved</p>
+        <footer className="fixed bottom-0 w-screen h-16 px-6 z-10 flex justify-between items-center">
+            <div className="px-3 py-2 rounded-full bg-purple-200 text-center">
+                © {currentYear} Jeshwin Prince. All rights reserved.
             </div>
-            <div>
-                <div className="grid grid-flow-col gap-4">
-                    <a
-                        href="https://github.com/Jeshwin"
-                        className="btn btn-square btn-ghost rounded-full shadow"
-                    >
-                        <Github />
-                    </a>
-                    <a
-                        href="https://www.youtube.com/@math-a-magic9820"
-                        className="btn btn-square btn-ghost rounded-full shadow"
-                    >
-                        <Youtube />
-                    </a>
-                    <a
-                        href="https://www.linkedin.com/in/jeshwinprince/"
-                        className="btn btn-square btn-ghost rounded-full shadow"
-                    >
-                        <Linkedin />
-                    </a>
-                    <Link
-                        href="/rss"
-                        className="btn btn-square btn-ghost rounded-full shadow"
-                    >
-                        <Rss className="aspect-square w-6" />
+            <div className="flex space-x-1">
+                {contactLinks.map((contact, index) => (
+                    <Link key={index} href={contact.link}>
+                        <Button size="icon" className="rounded-full size-10">
+                            {contact.icon}
+                        </Button>
                     </Link>
-                </div>
+                ))}
             </div>
         </footer>
     );

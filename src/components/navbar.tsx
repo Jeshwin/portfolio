@@ -1,49 +1,105 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
+import {useState, useRef, useEffect} from "react";
 import ThemeToggle from "./themetoggle";
-import Logo from "../../public/logo.png";
-import {Github, Menu, Youtube} from "lucide-react";
+
+interface NavItem {
+    id: string;
+    label: string;
+    href: string;
+}
+
+const navItems: NavItem[] = [
+    {id: "home", label: "Home", href: "/"},
+    {id: "blog", label: "Blog", href: "/blog"},
+    {id: "projects", label: "Projects", href: "/projects"},
+    {id: "about", label: "About", href: "/about"},
+];
+
+interface HighlightProps {
+    left: number;
+    width: number;
+}
 
 export default function Navbar() {
+    const [activeTab, setActiveTab] = useState<string>("home");
+    const [highlight, setHighlight] = useState<HighlightProps>({
+        left: 0,
+        width: 0,
+    });
+    const navRef = useRef<HTMLDivElement>(null);
+    const itemRefs = useRef<{[key: string]: HTMLButtonElement | null}>({});
+
+    const updateHighlight = (tabId: string) => {
+        const element = itemRefs.current[tabId];
+        if (element && navRef.current) {
+            const navRect = navRef.current.getBoundingClientRect();
+            const elementRect = element.getBoundingClientRect();
+
+            setHighlight({
+                left: elementRect.left - navRect.left,
+                width: elementRect.width,
+            });
+        }
+    };
+
+    useEffect(() => {
+        // Initialize highlight position
+        updateHighlight(activeTab);
+    }, [activeTab]);
+
+    useEffect(() => {
+        // Update highlight on window resize
+        const handleResize = () => updateHighlight(activeTab);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [activeTab]);
+
+    const handleTabClick = (tabId: string) => {
+        setActiveTab(tabId);
+        updateHighlight(tabId);
+    };
+
     return (
-        <nav className="navbar lg:px-2 bg-base-200 sticky z-10 top-0">
-            <div className="flex-none">
-                <label
-                    htmlFor="my-drawer"
-                    className="btn btn-ghost btn-circle drawer-button"
-                >
-                    <Menu />
-                </label>
-            </div>
-            <div className="flex-1">
-                <Link href="/" className="btn btn-ghost normal-case text-xl">
-                    <div className="relative w-10 aspect-square">
-                        <Image fill src={Logo} alt="Astronaut Logo" />
-                    </div>
-                    <span className="ml-3 h-6 hidden md:inline-block md:text-base-content">
-                        Jeshwin Prince
-                    </span>
-                </Link>
-            </div>
-            <div className="flex-2">
-                <a
-                    href="https://www.youtube.com/@math-a-magic9820"
-                    className="btn btn-ghost btn-circle fill-current"
-                >
-                    <Youtube />
-                </a>
-            </div>
-            <div className="flex-2">
-                <a
-                    href="https://github.com/Jeshwin/portfolio"
-                    className="btn btn-ghost btn-circle fill-current"
-                >
-                    <Github />
-                </a>
-            </div>
-            <div className="flex-2 mr-2 lg:mr-0">
+        <div className="fixed top-0 w-screen h-16 px-6 z-10 flex justify-center items-center">
+            <nav
+                ref={navRef}
+                className="h-9 relative flex items-center bg-gray-200 rounded-full p-0.5 shadow-sm"
+            >
+                {/* Animated highlight background */}
+                <div
+                    className="absolute top-0.5 bottom-0.5 bg-white rounded-full shadow-sm transition-all duration-300 ease-out"
+                    style={{
+                        left: `${highlight.left}px`,
+                        width: `${highlight.width}px`,
+                        transform: activeTab ? "scaleX(1)" : "scaleX(0.8)",
+                    }}
+                />
+
+                {/* Navigation items */}
+                {navItems.map((item) => (
+                    <Link key={item.id} href={item.href}>
+                        <button
+                            ref={(el) => (itemRefs.current[item.id] = el)}
+                            onClick={() => handleTabClick(item.id)}
+                            className={`
+              relative z-10 px-3 py-0.5 font-medium rounded-full transition-colors duration-200
+              ${
+                  activeTab === item.id
+                      ? "text-gray-900"
+                      : "text-gray-600 hover:text-gray-800"
+              }
+            `}
+                        >
+                            {item.label}
+                        </button>
+                    </Link>
+                ))}
+            </nav>
+            <div className="flex items-center absolute right-6 top-0 bottom-0">
                 <ThemeToggle />
             </div>
-        </nav>
+        </div>
     );
 }
