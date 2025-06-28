@@ -1,86 +1,47 @@
-import SWRLoading from "@/components/swrloading";
-import Badge from "@/components/badge";
-import Image from "next/image";
-import Link from "next/link";
-import axios from "axios";
-import useSWR from "swr";
+import AllProjects from "@/components/allProjects";
+import {Suspense} from "react";
+import {Post} from "src/lib/types";
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+function getPosts() {
+    // fetch("/api/get/projects");
+    console.log("Getting projects...");
+    const projects = [
+        {
+            id: "1",
+            title: "Project #1",
+            thumbnail:
+                "https://images.pexels.com/photos/13589781/pexels-photo-13589781.jpeg",
+            createdAt: new Date("2023-05-15T10:30:00Z"),
+            updatedAt: new Date("2023-11-20T15:45:00Z"),
+            tags: ["dev", "tmp"],
+        },
+        {
+            id: "2",
+            title: "Project Dos",
+            thumbnail:
+                "https://images.pexels.com/photos/32696235/pexels-photo-32696235.jpeg",
+            createdAt: new Date("2024-02-14T18:22:00Z"),
+            updatedAt: new Date("2023-09-03T11:47:00Z"),
+            tags: ["tmp", "spanish"],
+        },
+    ];
 
-export default function AllProjects() {
-    const {data, error} = useSWR(`/api/get/projects`, fetcher);
+    return Promise.resolve(projects);
+}
 
-    if (error) return <SWRLoading size={200} fillColor="fill-error" />;
-
-    if (!data) return <SWRLoading size={200} fillColor="fill-primary" />;
+export default function ProjectsPage() {
+    const posts = getPosts();
 
     return (
-        <>
-            <div className="p-5 mx-auto lg:w-3/4">
-                <div className="mb-12 flex">
-                    <div className="font-bold text-5xl flex-grow">
-                        Portfolio
-                    </div>
-                </div>
-                <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
-                    {data.map((project) => (
-                        <li
-                            key={project.id}
-                            className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75"
-                        >
-                            <Link href={`/projects/${project.id}`}>
-                                <figure>
-                                    <Image
-                                        src={project.thumbnail.image}
-                                        width={1024}
-                                        height={1024}
-                                        alt={project.title}
-                                        className="w-full aspect-square rounded-t-2xl"
-                                    />
-                                </figure>
-                                <div className="card-body">
-                                    <div className="card-title break-words text-3xl mb-3">
-                                        {project.title}
-                                    </div>
-                                    <div>
-                                        Created:{" "}
-                                        {new Date(
-                                            project.createdAt
-                                        ).toLocaleDateString(undefined, {
-                                            weekday: "long",
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
-                                    </div>
-                                    <div className="mb-3">
-                                        Last Updated:{" "}
-                                        {new Date(
-                                            project.updatedAt
-                                        ).toLocaleDateString(undefined, {
-                                            weekday: "long",
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
-                                    </div>
-                                    <div className="mb-3 h-36 overflow-scroll">
-                                        {project.description}
-                                    </div>
-                                    <ul className="flex flex-wrap gap-3 justify-end">
-                                        {project.tags.map((tag) => (
-                                            <Badge
-                                                key={tag.title}
-                                                text={tag.title}
-                                            />
-                                        ))}
-                                    </ul>
-                                </div>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+        <div className="p-5 mx-auto mt-16 lg:w-3/4">
+            <div className="mb-12 flex">
+                <div className="font-bold text-5xl flex-grow">Projects</div>
             </div>
-        </>
+            <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
+                <Suspense fallback={<div>Loading...</div>}>
+                    <AllProjects posts={posts} />
+                </Suspense>
+            </ul>
+        </div>
     );
 }

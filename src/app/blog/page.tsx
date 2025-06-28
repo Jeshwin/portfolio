@@ -1,5 +1,5 @@
 import SWRLoading from "@/components/swrloading";
-import Badge from "@/components/badge";
+import {Badge} from "@/components/ui/badge";
 import axios from "axios";
 import useSWR from "swr";
 import Link from "next/link";

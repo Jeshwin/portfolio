@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {useState, useRef, useEffect} from "react";
 import ThemeToggle from "./themetoggle";
+import {usePathname} from "next/navigation";
 
 interface NavItem {
     id: string;
@@ -23,7 +24,10 @@ interface HighlightProps {
 }
 
 export default function Navbar() {
-    const [activeTab, setActiveTab] = useState<string>("home");
+    const pathname = usePathname();
+    const [activeTab, setActiveTab] = useState<string>(
+        navItems.find((item) => item.href === pathname)?.id || "home"
+    );
     const [highlight, setHighlight] = useState<HighlightProps>({
         left: 0,
         width: 0,
@@ -45,12 +49,10 @@ export default function Navbar() {
     };
 
     useEffect(() => {
-        // Initialize highlight position
         updateHighlight(activeTab);
     }, [activeTab]);
 
     useEffect(() => {
-        // Update highlight on window resize
         const handleResize = () => updateHighlight(activeTab);
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
@@ -67,7 +69,6 @@ export default function Navbar() {
                 ref={navRef}
                 className="h-9 relative flex items-center bg-gray-200 rounded-full p-0.5 shadow-sm"
             >
-                {/* Animated highlight background */}
                 <div
                     className="absolute top-0.5 bottom-0.5 bg-white rounded-full shadow-sm transition-all duration-300 ease-out"
                     style={{
@@ -77,7 +78,6 @@ export default function Navbar() {
                     }}
                 />
 
-                {/* Navigation items */}
                 {navItems.map((item) => (
                     <Link key={item.id} href={item.href}>
                         <button
