@@ -1,75 +1,46 @@
-import SWRLoading from "@/components/swrloading";
-import {Badge} from "@/components/ui/badge";
-import axios from "axios";
-import useSWR from "swr";
-import Link from "next/link";
+import AllPosts from "@/components/allPosts";
+import {Suspense} from "react";
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+function getPosts() {
+    console.log("Getting posts...");
+    const posts = [
+        {
+            id: "1",
+            title: "Blog Post #1",
+            thumbnail:
+                "https://images.pexels.com/photos/13589781/pexels-photo-13589781.jpeg",
+            createdAt: new Date("2001-09-11T10:30:00Z"),
+            updatedAt: new Date("2020-03-21T15:45:00Z"),
+            tags: ["dev", "tmp"],
+        },
+        {
+            id: "2",
+            title: "Entrada de blog número dos",
+            description: "Por favor, no se encuentra las manos!",
+            thumbnail:
+                "https://images.pexels.com/photos/32696235/pexels-photo-32696235.jpeg",
+            createdAt: new Date("2000-02-22T18:22:00Z"),
+            updatedAt: new Date("2013-12-28T11:47:00Z"),
+            tags: ["tmp", "spanish"],
+        },
+    ];
 
-export default function AllPosts() {
-    const {data, error} = useSWR(`/api/get/posts`, fetcher);
+    return Promise.resolve(posts);
+}
 
-    if (error) return <SWRLoading size={200} fillColor="fill-error" />;
-
-    if (!data) return <SWRLoading size={200} fillColor="fill-primary" />;
+export default function PostsPage() {
+    const posts = getPosts();
 
     return (
-        <>
-            <div className="p-5 mx-auto lg:w-3/4">
-                <div className="mb-12 flex">
-                    <div className="font-bold text-5xl flex-grow">Blog</div>
-                </div>
-                <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
-                    {data.map((post) => (
-                        <li
-                            key={post.id}
-                            className="card bg-base-200 shadow-xl hover:opacity-70 active:scale-90 duration-75"
-                        >
-                            <Link
-                                href={`/posts/${post.id}`}
-                                className="card-body"
-                            >
-                                <div className="card-title break-words text-3xl mb-3">
-                                    {post.title}
-                                </div>
-                                <div>
-                                    Created:{" "}
-                                    {new Date(
-                                        post.createdAt
-                                    ).toLocaleDateString(undefined, {
-                                        weekday: "long",
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                    })}
-                                </div>
-                                <div className="mb-3">
-                                    Last Updated:{" "}
-                                    {new Date(
-                                        post.updatedAt
-                                    ).toLocaleDateString(undefined, {
-                                        weekday: "long",
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                    })}
-                                </div>
-                                <div className="text-lg mb-3">
-                                    {post.description}
-                                </div>
-                                <ul className="flex flex-wrap gap-3 justify-end">
-                                    {post.tags.map((tag) => (
-                                        <Badge
-                                            key={tag.title}
-                                            text={tag.title}
-                                        />
-                                    ))}
-                                </ul>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+        <div className="p-5 mx-auto my-16 lg:w-3/4">
+            <div className="mb-12 flex">
+                <div className="font-bold text-7xl flex-grow">Blog Posts</div>
             </div>
-        </>
+            <ul className="flex flex-col space-y-4">
+                <Suspense fallback={<div>Loading...</div>}>
+                    <AllPosts posts={posts} />
+                </Suspense>
+            </ul>
+        </div>
     );
 }

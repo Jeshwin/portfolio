@@ -1,9 +1,7 @@
 import AllProjects from "@/components/allProjects";
 import {Suspense} from "react";
-import {Post} from "src/lib/types";
 
-function getPosts() {
-    // fetch("/api/get/projects");
+function getProjects() {
     console.log("Getting projects...");
     const projects = [
         {
@@ -30,16 +28,16 @@ function getPosts() {
 }
 
 export default function ProjectsPage() {
-    const posts = getPosts();
+    const projects = getProjects();
 
     return (
-        <div className="p-5 mx-auto mt-16 lg:w-3/4">
+        <div className="p-5 mx-auto my-16 lg:w-3/4">
             <div className="mb-12 flex">
-                <div className="font-bold text-5xl flex-grow">Projects</div>
+                <div className="font-bold text-7xl flex-grow">Projects</div>
             </div>
             <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
                 <Suspense fallback={<div>Loading...</div>}>
-                    <AllProjects posts={posts} />
+                    <AllProjects projects={projects} />
                 </Suspense>
             </ul>
         </div>
