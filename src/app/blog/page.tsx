@@ -32,9 +32,9 @@ export default function PostsPage() {
     const posts = getPosts();
 
     return (
-        <div className="p-5 mx-auto my-16 lg:w-3/4">
-            <div className="mb-12 flex">
-                <div className="font-bold text-7xl flex-grow">Blog Posts</div>
+        <div className="container mx-auto my-16">
+            <div className="mb-12 flex font-bold text-7xl flex-grow">
+                Blog Posts
             </div>
             <ul className="flex flex-col space-y-4">
                 <Suspense fallback={<div>Loading...</div>}>

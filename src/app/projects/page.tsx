@@ -31,9 +31,9 @@ export default function ProjectsPage() {
     const projects = getProjects();
 
     return (
-        <div className="p-5 mx-auto my-16 lg:w-3/4">
-            <div className="mb-12 flex">
-                <div className="font-bold text-7xl flex-grow">Projects</div>
+        <div className="container mx-auto my-16">
+            <div className="mb-12 flex font-bold text-7xl flex-grow">
+                Projects
             </div>
             <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
                 <Suspense fallback={<div>Loading...</div>}>

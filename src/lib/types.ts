@@ -16,3 +16,10 @@ export interface Post {
     updatedAt: Date;
     tags: string[];
 }
+
+export interface Experience {
+    period: string;
+    company: string;
+    role: string;
+    description: string[];
+}
