@@ -1,17 +1,10 @@
-"use client";
-import {use} from "react";
 import ProjectCard from "./projectCard";
 import {Project} from "src/lib/types";
 
-export default function AllProjects({
-    projects,
-}: {
-    projects: Promise<Project[]>;
-}) {
-    const data = use(projects);
+export default function AllProjects({projects}: {projects: Project[]}) {
     return (
         <>
-            {data.map((project, index) => (
+            {projects.map((project, index) => (
                 <ProjectCard key={index} project={project} />
             ))}
         </>

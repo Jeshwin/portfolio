@@ -1,44 +1,74 @@
 import AllProjects from "@/components/allProjects";
-import {Suspense} from "react";
+import {PoolClient} from "pg";
+import {pool} from "src/lib/db";
+import {Project} from "src/lib/types";
 
-function getProjects() {
-    console.log("Getting projects...");
-    const projects = [
-        {
-            id: "1",
-            title: "Project #1",
-            thumbnail:
-                "https://images.pexels.com/photos/13589781/pexels-photo-13589781.jpeg",
-            createdAt: new Date("2023-05-15T10:30:00Z"),
-            updatedAt: new Date("2023-11-20T15:45:00Z"),
-            tags: ["dev", "tmp"],
-        },
-        {
-            id: "2",
-            title: "Project Dos",
-            thumbnail:
-                "https://images.pexels.com/photos/32696235/pexels-photo-32696235.jpeg",
-            createdAt: new Date("2024-02-14T18:22:00Z"),
-            updatedAt: new Date("2023-09-03T11:47:00Z"),
-            tags: ["tmp", "spanish"],
-        },
-    ];
-
-    return Promise.resolve(projects);
+interface ProjectRow {
+    id: number;
+    title: string;
+    thumbnail: string;
+    created_at: Date;
+    updated_at: Date;
+    tags: string | null;
 }
 
-export default function ProjectsPage() {
-    const projects = getProjects();
+// SQL query
+const GET_PROJECTS_QUERY = `
+SELECT 
+    p.id,
+    p.title,
+    p.thumbnail,
+    p.created_at,
+    p.updated_at,
+    STRING_AGG(t.name, ', ' ORDER BY t.name) as tags
+FROM projects p
+LEFT JOIN project_tags pt ON p.id = pt.project_id
+LEFT JOIN tags t ON pt.tag_id = t.id
+GROUP BY p.id, p.title, p.created_at
+ORDER BY p.created_at DESC;
+`;
 
+async function getProjects(): Promise<Project[]> {
+    let client: PoolClient;
+
+    try {
+        // Get database client from pool
+        client = await pool.connect();
+
+        // Execute query
+        const result = await client.query<ProjectRow>(GET_PROJECTS_QUERY);
+
+        // Transform database rows to API response format
+        const projects: Project[] = result.rows.map((row) => ({
+            ...row,
+            createdAt: row.created_at,
+            updatedAt: row.updated_at,
+            tags: row.tags
+                ? row.tags.split(", ").filter((tag) => tag.trim() !== "")
+                : [],
+        }));
+
+        return projects;
+    } catch (error) {
+        console.error("Database query error:", error);
+        throw new Error("Failed to fetch blog posts :(");
+    } finally {
+        // Always release the client back to the pool
+        if (client) {
+            client.release();
+        }
+    }
+}
+
+export default async function ProjectsPage() {
+    const projects = await getProjects();
     return (
         <div className="container mx-auto my-16">
             <div className="mb-12 flex font-bold text-7xl flex-grow">
                 Projects
             </div>
-            <ul className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-8">
-                <Suspense fallback={<div>Loading...</div>}>
-                    <AllProjects projects={projects} />
-                </Suspense>
+            <ul className="grid grid-cols-3 gap-4">
+                <AllProjects projects={projects} />
             </ul>
         </div>
     );

@@ -22,37 +22,30 @@ async function getPost(id: string): Promise<Post> {
 
         // Execute query
         const result = await client.query<BlogPostRow>(`
-            SELECT bp.id,
+            SELECT
+                bp.id,
                 bp.title,
                 bp.description,
                 bp.body,
                 bp.created_at,
                 bp.updated_at,
-                STRING_AGG(
-                    t.name,
-                    ', '
-                    ORDER BY t.name
-                ) as tags
+                STRING_AGG(t.name, ', ' ORDER BY t.name) as tags
             FROM blog_posts bp
                 LEFT JOIN blog_post_tags bpt ON bp.id = bpt.blog_post_id
                 LEFT JOIN tags t ON bpt.tag_id = t.id
             WHERE bp.id=${id}
-            GROUP BY bp.id,
-                bp.title,
-                bp.description,
-                bp.created_at
+            GROUP BY bp.id, bp.title, bp.description, bp.created_at
             ORDER BY bp.created_at DESC;
         `);
 
         // Transform database rows to API response format
+        const row = result.rows[0];
         const blogPost: Post = {
-            ...result.rows[0],
-            createdAt: result.rows[0].created_at,
-            updatedAt: result.rows[0].updated_at,
-            tags: result.rows[0].tags
-                ? result.rows[0].tags
-                      .split(", ")
-                      .filter((tag) => tag.trim() !== "")
+            ...row,
+            createdAt: row.created_at,
+            updatedAt: row.updated_at,
+            tags: row.tags
+                ? row.tags.split(", ").filter((tag) => tag.trim() !== "")
                 : [],
         };
 
@@ -113,7 +106,7 @@ export default async function PostPage({
                     </div>
                 )}
             </div>
-            <div className="mb-16"></div>
+            <div className="mb-12"></div>
             <div
                 className="prose min-w-full prose-xl dark:prose-invert prose-primary mx-auto"
                 dangerouslySetInnerHTML={{

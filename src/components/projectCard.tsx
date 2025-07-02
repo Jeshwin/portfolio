@@ -5,7 +5,7 @@ import {Project} from "src/lib/types";
 
 export default function ProjectCard({project}: {project: Project}) {
     return (
-        <div className="rounded-2xl bg-base-200 shadow-lg hover:opacity-70 active:scale-90 duration-75">
+        <div className="rounded-2xl bg-muted shadow-lg hover:opacity-70 active:scale-90 duration-75">
             <Link href={`/projects/${project.id}`}>
                 <figure>
                     <Image
@@ -19,7 +19,7 @@ export default function ProjectCard({project}: {project: Project}) {
                 <div className="p-4 flex flex-col items-start space-y-2">
                     <div className="break-words text-xl font-medium">
                         {project.title}
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-muted-foreground">
                             Last Updated:{" "}
                             {new Date(project.updatedAt).toLocaleDateString(
                                 undefined,

@@ -22,6 +22,8 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "dotenv": "^16.6.1",
+        "embla-carousel-react": "^8.6.0",
+        "embla-carousel-auto-height": "^8.6.0",
         "framer-motion": "^10.12.21",
         "isomorphic-dompurify": "^1.8.0",
         "jsonwebtoken": "^9.0.1",

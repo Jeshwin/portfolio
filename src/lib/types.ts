@@ -1,9 +1,23 @@
+export interface ProjectLink {
+    url: string;
+    title: string;
+}
+
+export interface ProjectArtifact {
+    url: string;
+    alt: string;
+    type: "image" | "pdf" | "iframe";
+}
+
 export interface Project {
-    id: string;
+    id: number;
     title: string;
     thumbnail: string;
     createdAt: Date;
     updatedAt: Date;
+    description?: string;
+    links?: ProjectLink[];
+    artifacts?: ProjectArtifact[];
     tags: string[];
 }
 
