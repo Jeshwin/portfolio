@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import {useState, useRef, useEffect} from "react";
-import ThemeToggle from "./themetoggle";
+import ThemeToggle from "./theme-toggle";
 import {usePathname} from "next/navigation";
 
 interface NavItem {
@@ -16,6 +16,7 @@ const navItems: NavItem[] = [
     {id: "blog", label: "Blog", href: "/blog"},
     {id: "projects", label: "Projects", href: "/projects"},
     {id: "about", label: "About", href: "/about"},
+    {id: "contact", label: "Contact", href: "/contact"},
 ];
 
 interface HighlightProps {
@@ -53,6 +54,13 @@ export default function Navbar() {
     }, [activeTab]);
 
     useEffect(() => {
+        const parentPath = `/${pathname.split("/")[1]}`;
+        updateHighlight(
+            navItems.find((item) => item.href === parentPath)?.id || "home"
+        );
+    }, [pathname]);
+
+    useEffect(() => {
         const handleResize = () => updateHighlight(activeTab);
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
@@ -67,10 +75,10 @@ export default function Navbar() {
         <div className="fixed top-0 w-screen h-16 px-6 z-10 flex justify-center items-center">
             <nav
                 ref={navRef}
-                className="h-9 relative flex items-center bg-gray-200 rounded-full p-0.5 shadow-sm"
+                className="h-9 relative flex items-center bg-muted rounded-full p-0.5 shadow-sm"
             >
                 <div
-                    className="absolute top-0.5 bottom-0.5 bg-white rounded-full shadow-sm transition-all duration-300 ease-out"
+                    className="absolute top-0.5 bottom-0.5 bg-popover rounded-full shadow-sm transition-all duration-300 ease-out"
                     style={{
                         left: `${highlight.left}px`,
                         width: `${highlight.width}px`,
@@ -87,8 +95,8 @@ export default function Navbar() {
               relative z-10 px-3 py-0.5 font-medium rounded-full transition-colors duration-200
               ${
                   activeTab === item.id
-                      ? "text-gray-900"
-                      : "text-gray-600 hover:text-gray-800"
+                      ? "text-popover-foreground"
+                      : "text-muted-foreground hover:text-popover-foreground"
               }
             `}
                         >

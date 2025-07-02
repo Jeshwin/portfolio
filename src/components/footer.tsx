@@ -29,13 +29,17 @@ export default function Footer() {
 
     return (
         <footer className="fixed bottom-0 w-screen h-16 px-6 z-10 flex justify-between items-center">
-            <div className="px-3 py-2 rounded-full bg-purple-200 text-center">
+            <div className="px-3 py-2 rounded-full bg-mantle text-mantle-foreground text-center">
                 © {currentYear} Jeshwin Prince. All rights reserved.
             </div>
             <div className="flex space-x-1">
                 {contactLinks.map((contact, index) => (
                     <Link key={index} href={contact.link}>
-                        <Button size="icon" className="rounded-full size-10">
+                        <Button
+                            size="icon"
+                            variant="mantle"
+                            className="rounded-full size-10"
+                        >
                             {contact.icon}
                         </Button>
                     </Link>

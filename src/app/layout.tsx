@@ -2,6 +2,7 @@ import {Inter, JetBrains_Mono} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import {ThemeProvider} from "next-themes";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -21,6 +22,7 @@ export const metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html
+            suppressHydrationWarning
             lang="en"
             className={`${inter.variable} ${jetbrains_mono.variable}`}
         >
@@ -28,9 +30,16 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <link rel="icon" href="/favicon.ico" sizes="any" />
             </head>
             <body>
-                <Navbar />
-                {children}
-                <Footer />
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <Navbar />
+                    {children}
+                    <Footer />
+                </ThemeProvider>
             </body>
         </html>
     );

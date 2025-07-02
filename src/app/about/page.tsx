@@ -3,11 +3,67 @@ import SCULogo from "../../../public/scu.png";
 import {Experience} from "src/lib/types";
 import ExperienceTimeline from "@/components/experienceTimeline";
 import {
+    SiArm,
+    SiArmHex,
+    SiC,
+    SiCanva,
+    SiCanvaHex,
+    SiCHex,
+    SiCplusplus,
+    SiCplusplusHex,
     SiCss,
     SiCssHex,
+    SiDocker,
+    SiDockerHex,
+    SiFigma,
+    SiFigmaHex,
+    SiFirebase,
+    SiFirebaseHex,
+    SiFlutter,
+    SiFlutterHex,
+    SiGit,
+    SiGitHex,
+    SiGithub,
+    SiGithubHex,
+    SiGnubash,
+    SiGnubashHex,
     SiHtml5,
     SiHtml5Hex,
+    SiJavascript,
+    SiJavascriptHex,
+    SiKotlin,
+    SiKotlinHex,
+    SiKubernetes,
+    SiKubernetesHex,
+    SiLatex,
+    SiLatexHex,
+    SiLinux,
+    SiLinuxHex,
+    SiMongodb,
+    SiMongodbHex,
+    SiPostgresql,
+    SiPostgresqlHex,
+    SiPython,
+    SiPythonHex,
+    SiReact,
+    SiReactHex,
+    SiRust,
+    SiRustHex,
+    SiTailwindcss,
+    SiTailwindcssHex,
+    SiTrello,
+    SiTrelloHex,
+    SiWebassembly,
+    SiWebassemblyHex,
 } from "@icons-pack/react-simple-icons";
+import {Cloud} from "lucide-react";
+import {
+    AWSLogo,
+    FusionLogo,
+    InDesignLogo,
+    OnshapeLogo,
+} from "@/components/logos";
+import {Badge} from "@/components/ui/badge";
 
 const coursework = [
     "Advanced Data Structures",
@@ -78,143 +134,143 @@ const skills = [
     },
     {
         label: "JavaScript",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiJavascript,
+        color: SiJavascriptHex,
     },
     {
         label: "React",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiReact,
+        color: SiReactHex,
     },
     {
         label: "SQL",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiPostgresql,
+        color: SiPostgresqlHex,
     },
     {
         label: "NoSQL",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiMongodb,
+        color: SiMongodbHex,
     },
     {
         label: "Tailwind",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiTailwindcss,
+        color: SiTailwindcssHex,
     },
     {
         label: "Flutter",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiFlutter,
+        color: SiFlutterHex,
     },
     {
         label: "Docker",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiDocker,
+        color: SiDockerHex,
     },
     {
         label: "Kubernetes",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiKubernetes,
+        color: SiKubernetesHex,
     },
     {
         label: "AWS",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: AWSLogo,
+        color: "#FF9900",
     },
     {
         label: "Firebase",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiFirebase,
+        color: SiFirebaseHex,
     },
     {
         label: "Git",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiGit,
+        color: SiGitHex,
     },
     {
         label: "Bash",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiGnubash,
+        color: SiGnubashHex,
     },
     {
         label: "Linux",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiLinux,
+        color: SiLinuxHex,
     },
     {
         label: "Python",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiPython,
+        color: SiPythonHex,
     },
     {
         label: "C",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiC,
+        color: SiCHex,
     },
     {
         label: "C++",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiCplusplus,
+        color: SiCplusplusHex,
     },
     {
         label: "Kotlin",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiKotlin,
+        color: SiKotlinHex,
     },
     {
         label: "Rust",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiRust,
+        color: SiRustHex,
     },
     {
         label: "WASM",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiWebassembly,
+        color: SiWebassemblyHex,
     },
     {
         label: "ARM",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiArm,
+        color: SiArmHex,
     },
     {
         label: "GitHub",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiGithub,
+        color: SiGithubHex,
     },
     {
         label: "Trello",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiTrello,
+        color: SiTrelloHex,
     },
     {
         label: "Figma",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiFigma,
+        color: SiFigmaHex,
     },
     {
         label: "InDesign",
-        icon: SiCss,
+        icon: InDesignLogo,
         color: SiCssHex,
     },
     {
         label: "Canva",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiCanva,
+        color: SiCanvaHex,
     },
     {
         label: "Fusion",
-        icon: SiCss,
+        icon: FusionLogo,
         color: SiCssHex,
     },
     {
         label: "Onshape",
-        icon: SiCss,
+        icon: OnshapeLogo,
         color: SiCssHex,
     },
     {
         label: "LaTeX",
-        icon: SiCss,
-        color: SiCssHex,
+        icon: SiLatex,
+        color: SiLatexHex,
     },
 ];
 
@@ -254,12 +310,7 @@ export default function AboutPage() {
             <div className="text-4xl font-semibold">Relevant Coursework</div>
             <div className="flex flex-wrap gap-x-1 gap-y-2 py-4">
                 {coursework.map((course, index) => (
-                    <div
-                        key={index}
-                        className="px-6 py-2 rounded-full bg-sky-100 text-sky-600"
-                    >
-                        {course}
-                    </div>
+                    <Badge key={index}>{course}</Badge>
                 ))}
             </div>
             <div className="text-5xl font-semibold">Experience</div>
@@ -267,14 +318,14 @@ export default function AboutPage() {
                 <ExperienceTimeline experiences={experiences} />
             </div>
             <div className="mb-6 text-5xl font-semibold">Skills</div>
-            <div className="grid grid-cols-6 gap-4 *:rounded-2xl *:p-4 *:bg-sky-200 *:flex *:flex-col *:space-y-4 *:items-center *:justify-center">
+            <div className="grid grid-cols-6 gap-4 *:p-4 *:flex *:flex-col *:space-y-4 *:items-center *:justify-center">
                 {skills.map((skill, index) => (
                     <div key={index}>
                         <skill.icon
                             color={skill.color}
-                            className="size-32 max-w-full"
+                            className="w-32 h-auto max-w-full"
                         />
-                        <div>{skill.label}</div>
+                        <div className="font-semibold">{skill.label}</div>
                     </div>
                 ))}
             </div>

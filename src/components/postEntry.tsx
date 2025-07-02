@@ -5,7 +5,7 @@ import {Post} from "src/lib/types";
 
 export default function PostEntry({post}: {post: Post}) {
     return (
-        <Link href={`/projects/${post.id}`} className="w-full flex space-x-4">
+        <Link href={`/blog/${post.id}`} className="w-full flex space-x-4">
             <figure>
                 <Image
                     src={post.thumbnail}
