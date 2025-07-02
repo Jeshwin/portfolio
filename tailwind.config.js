@@ -55,6 +55,15 @@ module.exports = {
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
             },
+            typography: () => ({
+                primary: {
+                    css: {
+                        "--tw-prose-links": "hsl(var(--primary-foreground))",
+                        "--tw-prose-invert-links":
+                            "hsl(var(--primary-foreground))",
+                    },
+                },
+            }),
         },
     },
     plugins: [

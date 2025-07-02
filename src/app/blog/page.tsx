@@ -8,6 +8,7 @@ interface BlogPostRow {
     title: string;
     description: string;
     created_at: Date;
+    updated_at: Date;
     tags: string | null;
 }
 
@@ -17,6 +18,7 @@ const GET_BLOG_POSTS_QUERY = `
       bp.title,
       bp.description,
       bp.created_at,
+      bp.updated_at,
       STRING_AGG(
           t.name,
           ', '
@@ -48,6 +50,7 @@ async function getPosts(): Promise<Post[]> {
             title: row.title,
             description: row.description,
             createdAt: row.created_at,
+            updatedAt: row.updated_at,
             tags: row.tags
                 ? row.tags.split(", ").filter((tag) => tag.trim() !== "")
                 : [],
