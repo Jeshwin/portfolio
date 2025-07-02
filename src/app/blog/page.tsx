@@ -1,45 +1,79 @@
 import AllPosts from "@/components/allPosts";
-import {Suspense} from "react";
+import {PoolClient} from "pg";
+import {pool} from "src/lib/db";
+import {Post} from "src/lib/types";
 
-function getPosts() {
-    console.log("Getting posts...");
-    const posts = [
-        {
-            id: "1",
-            title: "Blog Post #1",
-            thumbnail:
-                "https://images.pexels.com/photos/13589781/pexels-photo-13589781.jpeg",
-            createdAt: new Date("2001-09-11T10:30:00Z"),
-            updatedAt: new Date("2020-03-21T15:45:00Z"),
-            tags: ["dev", "tmp"],
-        },
-        {
-            id: "2",
-            title: "Entrada de blog número dos",
-            description: "Por favor, no se encuentra las manos!",
-            thumbnail:
-                "https://images.pexels.com/photos/32696235/pexels-photo-32696235.jpeg",
-            createdAt: new Date("2000-02-22T18:22:00Z"),
-            updatedAt: new Date("2013-12-28T11:47:00Z"),
-            tags: ["tmp", "spanish"],
-        },
-    ];
-
-    return Promise.resolve(posts);
+interface BlogPostRow {
+    id: number;
+    title: string;
+    description: string;
+    created_at: Date;
+    tags: string | null;
 }
 
-export default function PostsPage() {
-    const posts = getPosts();
+// SQL query
+const GET_BLOG_POSTS_QUERY = `
+  SELECT bp.id,
+      bp.title,
+      bp.description,
+      bp.created_at,
+      STRING_AGG(
+          t.name,
+          ', '
+          ORDER BY t.name
+      ) as tags
+  FROM blog_posts bp
+      LEFT JOIN blog_post_tags bpt ON bp.id = bpt.blog_post_id
+      LEFT JOIN tags t ON bpt.tag_id = t.id
+  GROUP BY bp.id,
+      bp.title,
+      bp.description,
+      bp.created_at
+  ORDER BY bp.created_at DESC;
+`;
 
+async function getPosts(): Promise<Post[]> {
+    let client: PoolClient;
+
+    try {
+        // Get database client from pool
+        client = await pool.connect();
+
+        // Execute query
+        const result = await client.query<BlogPostRow>(GET_BLOG_POSTS_QUERY);
+
+        // Transform database rows to API response format
+        const blogPosts: Post[] = result.rows.map((row) => ({
+            id: row.id,
+            title: row.title,
+            description: row.description,
+            createdAt: row.created_at,
+            tags: row.tags
+                ? row.tags.split(", ").filter((tag) => tag.trim() !== "")
+                : [],
+        }));
+
+        return blogPosts;
+    } catch (error) {
+        console.error("Database query error:", error);
+        throw new Error("Failed to fetch blog posts :(");
+    } finally {
+        // Always release the client back to the pool
+        if (client) {
+            client.release();
+        }
+    }
+}
+
+export default async function PostsPage() {
+    const posts = await getPosts();
     return (
         <div className="container mx-auto my-16">
             <div className="mb-12 flex font-bold text-7xl flex-grow">
                 Blog Posts
             </div>
             <ul className="flex flex-col space-y-4">
-                <Suspense fallback={<div>Loading...</div>}>
-                    <AllPosts posts={posts} />
-                </Suspense>
+                <AllPosts posts={posts} />
             </ul>
         </div>
     );

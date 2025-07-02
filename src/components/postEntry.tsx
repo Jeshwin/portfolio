@@ -5,16 +5,10 @@ import {Post} from "src/lib/types";
 
 export default function PostEntry({post}: {post: Post}) {
     return (
-        <Link href={`/blog/${post.id}`} className="w-full flex space-x-4">
-            <figure>
-                <Image
-                    src={post.thumbnail}
-                    width={1024}
-                    height={1024}
-                    alt={post.title}
-                    className="size-32 aspect-square object-cover rounded-xl"
-                />
-            </figure>
+        <Link
+            href={`/blog/${post.id}`}
+            className="w-full flex space-x-4 pb-4 border-b border-muted last:border-0"
+        >
             <div className="flex flex-col items-start justify-center">
                 <div className="font-semibold text-2xl">{post.title}</div>
                 {post.description && <div>{post.description}</div>}

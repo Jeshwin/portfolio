@@ -8,12 +8,11 @@ export interface Project {
 }
 
 export interface Post {
-    id: string;
+    id: number;
     title: string;
     description?: string;
-    thumbnail: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt?: Date;
     tags: string[];
 }
 
