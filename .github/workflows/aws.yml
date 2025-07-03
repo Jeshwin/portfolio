@@ -58,6 +58,8 @@ jobs:
             # Set deployment variables
             APP_DIR="/var/www/jeshwinprince"
             BACKUP_DIR="/var/backups/jeshwinprince-$(date +%Y%m%d-%H%M%S)"
+            ENV_DIR="/var/www/config/jeshwinprince"
+            ENV_FILE="$ENV_DIR/.env.production"
             
             # Check if Node.js and npm are available
             if ! command -v node &> /dev/null; then
@@ -81,6 +83,13 @@ jobs:
               npm install -g pm2
             fi
             
+            # Create persistent environment directory
+            sudo mkdir -p $ENV_DIR
+            sudo chown $USER:$USER $ENV_DIR
+            
+            # Use environment in config
+            echo "✅ Using existing environment file: $ENV_FILE"
+            
             # Create backup of current deployment
             if [ -d "$APP_DIR" ]; then
               sudo mkdir -p /var/backups
@@ -103,6 +112,10 @@ jobs:
             tar -xzf /tmp/deploy.tar.gz
             rm /tmp/deploy.tar.gz
             
+            # Create symlink to persistent environment file
+            ln -sf "$ENV_FILE" "$APP_DIR/.env.production"
+            echo "✅ Linked environment file: $APP_DIR/.env.production -> $ENV_FILE"
+            
             # Install dependencies
             echo "Installing dependencies..."
             npm ci --omit=dev
@@ -122,6 +135,7 @@ jobs:
             pm2 startup || true
             
             echo "Deployment completed successfully"
+            echo "Environment file location: $ENV_FILE"
 
       - name: Health check
         uses: appleboy/ssh-action@v1.0.3
