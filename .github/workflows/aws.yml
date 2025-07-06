@@ -17,7 +17,7 @@ jobs:
       - name: Create deployment package
         run: |
           # Create a clean package without node_modules or build artifacts
-          tar -czf deploy.tar.gz \
+          tar -czf ../deploy.tar.gz \
             --exclude=node_modules \
             --exclude=.next \
             --exclude=.git \
@@ -27,6 +27,7 @@ jobs:
             --exclude=coverage \
             --exclude=.nyc_output \
             .
+          mv ../deploy.tar.gz ./deploy.tar.gz
 
       - name: Upload source code to EC2
         uses: appleboy/scp-action@v0.1.7
@@ -35,6 +36,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_SSH_PORT || 22 }}
+          command_timeout: 200m
           source: "deploy.tar.gz"
           target: "/tmp/"
 
@@ -45,10 +47,50 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_SSH_PORT || 22 }}
+          command_timeout: 200m
           script: |
+            # Load Node.js environment (common paths)
+            export PATH="$PATH:/usr/local/bin:/opt/nvm/versions/node/v22.*/bin"
+            
+            # Try to source common Node.js environment files
+            [ -f ~/.bashrc ] && source ~/.bashrc
+            [ -f ~/.nvm/nvm.sh ] && source ~/.nvm/nvm.sh
+            [ -f ~/.profile ] && source ~/.profile
+            
             # Set deployment variables
             APP_DIR="/var/www/jeshwinprince"
             BACKUP_DIR="/var/backups/jeshwinprince-$(date +%Y%m%d-%H%M%S)"
+            ENV_DIR="/var/www/config/jeshwinprince"
+            ENV_FILE="$ENV_DIR/.env.production"
+            
+            # Check if Node.js and npm are available
+            if ! command -v node &> /dev/null; then
+              echo "❌ Node.js is not installed or not in PATH"
+              echo "Current PATH: $PATH"
+              echo "Please install Node.js 22 on your EC2 instance"
+              exit 1
+            fi
+            
+            if ! command -v npm &> /dev/null; then
+              echo "❌ npm is not available"
+              exit 1
+            fi
+            
+            echo "✅ Node.js version: $(node --version)"
+            echo "✅ npm version: $(npm --version)"
+            
+            # Check if PM2 is installed, install if not
+            if ! command -v pm2 &> /dev/null; then
+              echo "Installing PM2..."
+              npm install -g pm2
+            fi
+            
+            # Create persistent environment directory
+            sudo mkdir -p $ENV_DIR
+            sudo chown $USER:$USER $ENV_DIR
+            
+            # Use environment in config
+            echo "✅ Using existing environment file: $ENV_FILE"
             
             # Create backup of current deployment
             if [ -d "$APP_DIR" ]; then
@@ -72,6 +114,10 @@ jobs:
             tar -xzf /tmp/deploy.tar.gz
             rm /tmp/deploy.tar.gz
             
+            # Create symlink to persistent environment file
+            ln -sf "$ENV_FILE" "$APP_DIR/.env.production"
+            echo "✅ Linked environment file: $APP_DIR/.env.production -> $ENV_FILE"
+            
             # Install dependencies
             echo "Installing dependencies..."
             npm ci --omit=dev
@@ -91,6 +137,7 @@ jobs:
             pm2 startup || true
             
             echo "Deployment completed successfully"
+            echo "Environment file location: $ENV_FILE"
 
       - name: Health check
         uses: appleboy/ssh-action@v1.0.3
