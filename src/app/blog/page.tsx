@@ -1,4 +1,4 @@
-import AllPosts from "@/components/allPosts";
+import AllPosts from "@/components/all-posts";
 import {PoolClient} from "pg";
 import {pool} from "src/lib/db";
 import {Post} from "src/lib/types";

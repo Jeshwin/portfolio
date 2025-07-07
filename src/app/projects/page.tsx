@@ -1,4 +1,4 @@
-import AllProjects from "@/components/allProjects";
+import AllProjects from "@/components/all-projects";
 import {PoolClient} from "pg";
 import {pool} from "src/lib/db";
 import {Project} from "src/lib/types";
