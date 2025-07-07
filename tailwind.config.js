@@ -4,7 +4,8 @@ module.exports = {
     content: ["./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         fontFamily: {
-            sans: ["Helvetica", "Open Sans", "Arial", "sans-serif"],
+            sans: ["var(--font-inter)", "Helvetica", "Open Sans", "sans-serif"],
+            mono: ["var(--font-jetbrains-mono)"],
         },
         extend: {
             borderRadius: {
@@ -68,7 +69,6 @@ module.exports = {
     },
     plugins: [
         require("@tailwindcss/typography"),
-        require("@tailwindcss/forms"),
         require("tailwindcss-animate"),
     ],
 };

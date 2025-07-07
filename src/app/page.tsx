@@ -13,7 +13,7 @@ export default function HomePage() {
                         alt="Profile Photo"
                         width={256}
                         height={256}
-                        className="rounded-full drop-shadow-xl mb-8"
+                        className="rounded-full size-40 drop-shadow-xl mb-4"
                     />
 
                     <div className="text-2xl">👋 Hello, I&apos;m</div>
@@ -40,7 +40,6 @@ export default function HomePage() {
                             </Button>
                         </Link>
                     </div>
-                    <div className="size-64 bg-transparent"></div>
                 </div>
             </div>
         </div>
