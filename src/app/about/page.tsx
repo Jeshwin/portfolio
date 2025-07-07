@@ -1,7 +1,7 @@
 import Image from "next/image";
 import SCULogo from "../../../public/scu.png";
 import {Experience} from "src/lib/types";
-import ExperienceTimeline from "@/components/experienceTimeline";
+import ExperienceTimeline from "@/components/experience-timeline";
 import {
     SiArm,
     SiArmHex,

@@ -4,6 +4,7 @@ import Link from "next/link";
 import {useState, useRef, useEffect} from "react";
 import ThemeToggle from "./theme-toggle";
 import {usePathname} from "next/navigation";
+import LiquidGlass from "./liquid-glass";
 
 interface NavItem {
     id: string;
@@ -73,38 +74,45 @@ export default function Navbar() {
 
     return (
         <div className="fixed top-0 w-screen h-16 px-6 z-10 flex justify-center items-center">
-            <nav
-                ref={navRef}
-                className="h-9 relative flex items-center bg-muted rounded-full p-0.5 shadow-sm"
+            <LiquidGlass
+                color="(hsl(var(--muted))"
+                scale={-50}
+                chromaticAberration={0.2}
+                radius={18}
             >
-                <div
-                    className="absolute top-0.5 bottom-0.5 bg-popover rounded-full shadow-sm transition-all duration-300 ease-out"
-                    style={{
-                        left: `${highlight.left}px`,
-                        width: `${highlight.width}px`,
-                        transform: activeTab ? "scaleX(1)" : "scaleX(0.8)",
-                    }}
-                />
+                <nav
+                    ref={navRef}
+                    className="h-9 relative flex items-center rounded-full p-0.5"
+                >
+                    <div
+                        className="absolute top-0.5 bottom-0.5 bg-popover-foreground/20 rounded-full shadow-sm transition-all duration-300 ease-out"
+                        style={{
+                            left: `${highlight.left}px`,
+                            width: `${highlight.width}px`,
+                            transform: activeTab ? "scaleX(1)" : "scaleX(0.8)",
+                        }}
+                    />
 
-                {navItems.map((item) => (
-                    <Link key={item.id} href={item.href}>
-                        <button
-                            ref={(el) => (itemRefs.current[item.id] = el)}
-                            onClick={() => handleTabClick(item.id)}
-                            className={`
+                    {navItems.map((item) => (
+                        <Link key={item.id} href={item.href}>
+                            <button
+                                ref={(el) => (itemRefs.current[item.id] = el)}
+                                onClick={() => handleTabClick(item.id)}
+                                className={`
               relative z-10 px-3 py-0.5 font-medium rounded-full transition-colors duration-200
               ${
                   activeTab === item.id
-                      ? "text-popover-foreground"
-                      : "text-muted-foreground hover:text-popover-foreground"
+                      ? "text-sky-500"
+                      : "text-popover-foreground hover:text-sky-500"
               }
             `}
-                        >
-                            {item.label}
-                        </button>
-                    </Link>
-                ))}
-            </nav>
+                            >
+                                {item.label}
+                            </button>
+                        </Link>
+                    ))}
+                </nav>
+            </LiquidGlass>
             <div className="flex items-center absolute right-6 top-0 bottom-0">
                 <ThemeToggle />
             </div>

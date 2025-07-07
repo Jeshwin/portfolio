@@ -1,5 +1,5 @@
 import {Post} from "src/lib/types";
-import PostEntry from "./postEntry";
+import PostEntry from "./post-entry";
 
 export default function AllPosts({posts}: {posts: Post[]}) {
     return (

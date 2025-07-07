@@ -1,0 +1,32 @@
+.glassFilter {
+    --lg-highlight: rgba(255, 255, 255, 0.5);
+    width: fit-content;
+    height: fit-content;
+    background-color: color(from var(--bg-color) srgb r g b / var(--frost, 0));
+    z-index: 999999;
+    display: flex;
+    overflow: hidden;
+    backdrop-filter: saturate(1.5) brightness(1.1) contrast(0.8);
+    box-shadow:
+        inset 1px 1px 2px var(--lg-highlight),
+        inset -1px -1px 2px var(--lg-highlight),
+        inset 5px 5px 10px rgba(133, 172, 250, 0.1),
+        inset -5px -5px 10px rgba(240, 199, 142, 0.1);
+}
+
+.displacementDebug {
+    pointer-events: none;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    inset: 0;
+    translate: 0 calc((100% + 1rem) * -1);
+    scale: 0;
+    opacity: 0;
+}
+
+.displacementImage {
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+}

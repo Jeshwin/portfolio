@@ -1,4 +1,4 @@
-import AllProjects from "@/components/allProjects";
+import AllProjects from "@/components/all-projects";
 import ProjectGallery from "@/components/project-gallery";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";

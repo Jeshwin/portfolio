@@ -14,7 +14,7 @@ export default function ContactPage() {
                         alt="Profile Photo"
                         width={256}
                         height={256}
-                        className="rounded-full drop-shadow-xl"
+                        className="rounded-full size-40 drop-shadow-xl"
                     />
                     <span className="font-bold text-7xl">Contact</span>
                     <div className="text-2xl mb-4 text-center">
