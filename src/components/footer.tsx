@@ -3,6 +3,7 @@ import Image from "next/image";
 import Logo from "../../public/logo.png";
 import {Github, Linkedin, Rss, Youtube} from "lucide-react";
 import {Button} from "./ui/button";
+import LiquidGlass from "./liquid-glass";
 
 const contactLinks = [
     {
@@ -29,9 +30,21 @@ export default function Footer() {
 
     return (
         <footer className="fixed bottom-0 w-screen h-16 px-6 z-10 flex justify-between items-center">
-            <div className="px-3 py-2 rounded-full bg-mantle text-mantle-foreground text-center">
+            {/* <div className="px-3 py-2 rounded-full bg-mantle text-mantle-foreground text-center">
                 © {currentYear} Jeshwin Prince. All rights reserved.
-            </div>
+            </div> */}
+            <LiquidGlass
+                frost={0.5}
+                displace={2}
+                scale={-180}
+                blur={4}
+                radius={20}
+                className="bg-mantle"
+            >
+                <div className="px-3 py-2 text-mantle-foreground text-center">
+                    © {currentYear} Jeshwin Prince. All rights reserved.
+                </div>
+            </LiquidGlass>
             <div className="flex space-x-1">
                 {contactLinks.map((contact, index) => (
                     <Link key={index} href={contact.link}>

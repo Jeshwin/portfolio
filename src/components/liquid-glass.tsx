@@ -2,46 +2,7 @@
 
 import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
-
-// CSS Module styles
-const styles = `
-.glassFilter {
-  transition: opacity 0.26s ease-out;
-  width: fit-content;
-  height: fit-content;
-  background-color: oklch(12.9% 0.042 264.695 / var(--frost, 0));
-  z-index: 999999;
-  display: flex;
-  overflow: hidden;
-  backdrop-filter: url(#liquid-glass) saturate(1.5) brightness(1.1) contrast(0.8);
-  box-shadow: 
-    inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-    inset -1px -1px 2px rgba(255, 255, 255, 0.5),
-    inset 5px 5px 10px rgba(133, 172, 250, 0.1),
-    inset -5px -5px 10px rgba(240, 199, 142, 0.1);
-}
-
-.displacementDebug {
-  pointer-events: none;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  inset: 0;
-  translate: 0 calc(100% + 1rem);
-  scale: 0;
-  opacity: 0;
-  transition-property: translate, opacity, scale;
-  transition-duration: 0.26s;
-  transition-timing-function: ease-out;
-  z-index: -1;
-}
-
-.displacementImage {
-  height: 100%;
-  width: 100%;
-  pointer-events: none;
-}
-`;
+import styles from "./css/liquid-glass.module.css";
 
 interface LiquidGlassProps {
     children: React.ReactNode;
@@ -74,11 +35,12 @@ export default function LiquidGlass({
     className = "",
     ...restProps
 }: LiquidGlassProps) {
+    const containerRef = useRef<HTMLDivElement>(null);
     const glassRef = useRef<HTMLDivElement>(null);
     const debugRef = useRef<HTMLDivElement>(null);
-    const [dimensions, setDimensions] = useState({width: 384, height: 64});
+    const [dimensions, setDimensions] = useState({width: 100, height: 100});
     const [filterId] = useState(
-        () => `liquid-glass-${Math.random().toString(36).substr(2, 9)}`
+        () => `liquid-glass-${Math.random().toString(36).substring(2, 11)}`
     );
 
     // Calculate chromatic aberration values
@@ -91,8 +53,8 @@ export default function LiquidGlass({
             if (glassRef.current) {
                 const rect = glassRef.current.getBoundingClientRect();
                 setDimensions({
-                    width: rect.width || 384,
-                    height: rect.height || 64,
+                    width: rect.width || 100,
+                    height: rect.height || 100,
                 });
             }
         };
@@ -117,7 +79,7 @@ export default function LiquidGlass({
 
         // Create displacement map SVG
         const svgContent = `
-      <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+      <svg id="debug-${filterId}" class="${styles.displacementImage}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="red-${filterId}" x1="100%" y1="0%" x2="0%" y2="0%">
             <stop offset="0%" stop-color="#0000"/>
@@ -139,56 +101,50 @@ export default function LiquidGlass({
       </svg>
     `;
 
-        const encoded = encodeURIComponent(svgContent);
-        const dataUri = `data:image/svg+xml,${encoded}`;
+        debugRef.current.innerHTML = svgContent;
+        const encodedSVG = encodeURIComponent(svgContent);
+        const dataUri = `data:image/svg+xml,${encodedSVG}`;
 
         // Update feImage elements
-        const feImageEls = document.querySelectorAll(`#${filterId} feImage`);
+        const feImageEls = containerRef.current.querySelectorAll(`feImage`);
         feImageEls.forEach((el) => {
+            console.log("Found SVG Image");
             el.setAttribute("href", dataUri);
         });
 
         // Update displacement map elements
-        const feDisplacementMapEls = document.querySelectorAll(
-            `#${filterId} feDisplacementMap`
-        );
+        const feDisplacementMapEls =
+            containerRef.current.querySelectorAll(`feDisplacementMap`);
         feDisplacementMapEls.forEach((el) => {
+            console.log("Found SVG Displacement");
             el.setAttribute("xChannelSelector", "R");
             el.setAttribute("yChannelSelector", "B");
+            el.setAttribute("scale", scale.toString());
         });
 
         // Update individual channel scales
-        document
+        containerRef.current
             .querySelectorAll(`#${filterId} #redchannel-${filterId}`)
             .forEach((el) => {
                 el.setAttribute("scale", (scale + r).toString());
             });
-        document
+        containerRef.current
             .querySelectorAll(`#${filterId} #greenchannel-${filterId}`)
             .forEach((el) => {
                 el.setAttribute("scale", (scale + g).toString());
             });
-        document
+        containerRef.current
             .querySelectorAll(`#${filterId} #bluechannel-${filterId}`)
             .forEach((el) => {
                 el.setAttribute("scale", (scale + b).toString());
             });
 
         // Update blur
-        document
+        containerRef.current
             .querySelectorAll(`#${filterId} feGaussianBlur`)
             .forEach((el) => {
                 el.setAttribute("stdDeviation", displace.toString());
             });
-
-        // Update debug visualization
-        if (debugRef.current) {
-            debugRef.current.innerHTML = svgContent;
-            const svgEl = debugRef.current.querySelector("svg");
-            if (svgEl) {
-                svgEl.style.borderRadius = `${radius}px`;
-            }
-        }
     }, [
         dimensions,
         radius,
@@ -203,117 +159,106 @@ export default function LiquidGlass({
         g,
         b,
         filterId,
+        containerRef,
     ]);
 
     return (
-        <>
-            <style>{styles}</style>
-            <div className="relative">
-                <div
-                    ref={glassRef}
-                    className={`glassFilter ${className}`}
-                    style={
-                        {
-                            borderRadius: `${radius}px`,
-                            "--frost": frost.toString(),
-                        } as React.CSSProperties
-                    }
-                    {...restProps}
-                >
-                    {children}
-                </div>
+        <div className="relative" ref={containerRef}>
+            <div
+                ref={glassRef}
+                className={`${styles.glassFilter} ${className}`}
+                style={
+                    {
+                        borderRadius: `${radius}px`,
+                        "--frost": frost.toString(),
+                        backdropFilter: `url(#${filterId}) saturate(1.5) brightness(1.1) contrast(0.8)`,
+                    } as React.CSSProperties
+                }
+                {...restProps}
+            >
+                {children}
+            </div>
 
-                {/* SVG Filter Definition */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-0">
-                    <filter id={filterId} colorInterpolationFilters="sRGB">
-                        <feImage
-                            x="0"
-                            y="0"
-                            width="100%"
-                            height="100%"
-                            result="map"
-                        />
+            {/* SVG Filter Definition */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                <filter id={filterId} colorInterpolationFilters="sRGB">
+                    <feImage
+                        x="0"
+                        y="0"
+                        width="100%"
+                        height="100%"
+                        result="map"
+                    />
 
-                        {/* RED channel with strongest displacement */}
-                        <feDisplacementMap
-                            in="SourceGraphic"
-                            in2="map"
-                            id={`redchannel-${filterId}`}
-                            xChannelSelector="R"
-                            yChannelSelector="G"
-                            result="dispRed"
-                        />
-                        <feColorMatrix
-                            in="dispRed"
-                            type="matrix"
-                            values="1 0 0 0 0
+                    {/* RED channel with strongest displacement */}
+                    <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="map"
+                        id={`redchannel-${filterId}`}
+                        xChannelSelector="R"
+                        yChannelSelector="G"
+                        result="dispRed"
+                    />
+                    <feColorMatrix
+                        in="dispRed"
+                        type="matrix"
+                        values="1 0 0 0 0
                       0 0 0 0 0
                       0 0 0 0 0
                       0 0 0 1 0"
-                            result="red"
-                        />
+                        result="red"
+                    />
 
-                        {/* GREEN channel (reference / least displaced) */}
-                        <feDisplacementMap
-                            in="SourceGraphic"
-                            in2="map"
-                            id={`greenchannel-${filterId}`}
-                            xChannelSelector="R"
-                            yChannelSelector="G"
-                            result="dispGreen"
-                        />
-                        <feColorMatrix
-                            in="dispGreen"
-                            type="matrix"
-                            values="0 0 0 0 0
+                    {/* GREEN channel (reference / least displaced) */}
+                    <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="map"
+                        id={`greenchannel-${filterId}`}
+                        xChannelSelector="R"
+                        yChannelSelector="G"
+                        result="dispGreen"
+                    />
+                    <feColorMatrix
+                        in="dispGreen"
+                        type="matrix"
+                        values="0 0 0 0 0
                       0 1 0 0 0
                       0 0 0 0 0
                       0 0 0 1 0"
-                            result="green"
-                        />
+                        result="green"
+                    />
 
-                        {/* BLUE channel with medium displacement */}
-                        <feDisplacementMap
-                            in="SourceGraphic"
-                            in2="map"
-                            id={`bluechannel-${filterId}`}
-                            xChannelSelector="R"
-                            yChannelSelector="G"
-                            result="dispBlue"
-                        />
-                        <feColorMatrix
-                            in="dispBlue"
-                            type="matrix"
-                            values="0 0 0 0 0
+                    {/* BLUE channel with medium displacement */}
+                    <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="map"
+                        id={`bluechannel-${filterId}`}
+                        xChannelSelector="R"
+                        yChannelSelector="G"
+                        result="dispBlue"
+                    />
+                    <feColorMatrix
+                        in="dispBlue"
+                        type="matrix"
+                        values="0 0 0 0 0
                       0 0 0 0 0
                       0 0 1 0 0
                       0 0 0 1 0"
-                            result="blue"
-                        />
+                        result="blue"
+                    />
 
-                        {/* Blend channels back together */}
-                        <feBlend
-                            in="red"
-                            in2="green"
-                            mode="screen"
-                            result="rg"
-                        />
-                        <feBlend
-                            in="rg"
-                            in2="blue"
-                            mode="screen"
-                            result="output"
-                        />
+                    {/* Blend channels back together */}
+                    <feBlend in="red" in2="green" mode="screen" result="rg" />
+                    <feBlend in="rg" in2="blue" mode="screen" result="output" />
 
-                        {/* Final blur */}
-                        <feGaussianBlur in="output" stdDeviation={displace} />
-                    </filter>
-                </svg>
+                    {/* Final blur */}
+                    <feGaussianBlur in="output" stdDeviation={displace} />
+                </filter>
+            </svg>
 
-                {/* Debug visualization (hidden by default) */}
-                <div ref={debugRef} className="displacementDebug" />
-            </div>
-        </>
+            {/* Debug visualization (hidden by default) */}
+            <div ref={debugRef} className={styles.displacementDebug} />
+        </div>
     );
 }
 
