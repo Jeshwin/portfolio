@@ -17,6 +17,7 @@ interface LiquidGlassProps {
     scale?: number;
     chromaticAberration?: number;
     className?: string;
+    color?: string;
     [key: string]: any; // Allow arbitrary props
 }
 
@@ -27,12 +28,13 @@ export default function LiquidGlass({
     blend = "difference",
     lightness = 50,
     alpha = 0.9,
-    blur = 11,
-    frost = 0.75,
-    displace = 3,
-    scale = -100,
+    blur = 4,
+    frost = 0.5,
+    displace = 2,
+    scale = -180,
     chromaticAberration = 3,
     className = "",
+    color = "white",
     ...restProps
 }: LiquidGlassProps) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -42,6 +44,8 @@ export default function LiquidGlass({
     const [filterId] = useState(
         () => `liquid-glass-${Math.random().toString(36).substring(2, 11)}`
     );
+    // Add this hook at the top of your component, after the existing useEffect hooks
+    const [isFirefox, setIsFirefox] = useState(false);
 
     // Calculate chromatic aberration values
     const r = 0;
@@ -162,6 +166,13 @@ export default function LiquidGlass({
         containerRef,
     ]);
 
+    useEffect(() => {
+        setIsFirefox(
+            typeof navigator !== "undefined" &&
+                navigator.userAgent.toLowerCase().includes("firefox")
+        );
+    }, []);
+
     return (
         <div className="relative" ref={containerRef}>
             <div
@@ -171,7 +182,10 @@ export default function LiquidGlass({
                     {
                         borderRadius: `${radius}px`,
                         "--frost": frost.toString(),
-                        backdropFilter: `url(#${filterId}) saturate(1.5) brightness(1.1) contrast(0.8)`,
+                        "--bg-color": color,
+                        backdropFilter: isFirefox
+                            ? `blur(${blur}px) saturate(1.5) brightness(1.1) contrast(0.8)`
+                            : `url(#${filterId}) saturate(1.5) brightness(1.1) contrast(0.8)`,
                     } as React.CSSProperties
                 }
                 {...restProps}

@@ -2,6 +2,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import ProfilePhoto from "../../public/profile.jpg";
+import LiquidGlass from "@/components/liquid-glass";
 
 export default function HomePage() {
     return (
@@ -26,19 +27,39 @@ export default function HomePage() {
                         guitar, and making art!
                     </div>
                     <div className="flex space-x-2">
-                        <Link href="/projects">
-                            <Button size="lg">Explore Projects</Button>
-                        </Link>
-                        <Link href="/blog">
-                            <Button size="lg" variant="secondary">
-                                Read Blog
-                            </Button>
-                        </Link>
-                        <Link href="/contact">
-                            <Button variant="accent" size="lg">
-                                Contact
-                            </Button>
-                        </Link>
+                        <LiquidGlass color="hsl(var(--primary))">
+                            <Link href="/projects">
+                                <Button
+                                    size="lg"
+                                    className="bg-transparent shadow-none"
+                                >
+                                    Explore Projects
+                                </Button>
+                            </Link>
+                        </LiquidGlass>
+                        <LiquidGlass color="hsl(var(--secondary))">
+                            <Link href="/blog">
+                                <Button
+                                    size="lg"
+                                    variant="secondary"
+                                    className="bg-transparent shadow-none"
+                                >
+                                    Read Blog
+                                </Button>
+                            </Link>
+                        </LiquidGlass>
+
+                        <LiquidGlass color="hsl(var(--accent))">
+                            <Link href="/contact">
+                                <Button
+                                    variant="accent"
+                                    size="lg"
+                                    className="bg-transparent shadow-none"
+                                >
+                                    Contact
+                                </Button>
+                            </Link>
+                        </LiquidGlass>
                     </div>
                 </div>
             </div>

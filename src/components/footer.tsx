@@ -33,29 +33,24 @@ export default function Footer() {
             {/* <div className="px-3 py-2 rounded-full bg-mantle text-mantle-foreground text-center">
                 © {currentYear} Jeshwin Prince. All rights reserved.
             </div> */}
-            <LiquidGlass
-                frost={0.5}
-                displace={2}
-                scale={-180}
-                blur={4}
-                radius={20}
-                className="bg-mantle"
-            >
+            <LiquidGlass radius={20} color="var(--mantle)">
                 <div className="px-3 py-2 text-mantle-foreground text-center">
                     © {currentYear} Jeshwin Prince. All rights reserved.
                 </div>
             </LiquidGlass>
             <div className="flex space-x-1">
                 {contactLinks.map((contact, index) => (
-                    <Link key={index} href={contact.link}>
-                        <Button
-                            size="icon"
-                            variant="mantle"
-                            className="rounded-full size-10"
-                        >
-                            {contact.icon}
-                        </Button>
-                    </Link>
+                    <LiquidGlass key={index} color="var(--mantle)" radius={20}>
+                        <Link href={contact.link}>
+                            <Button
+                                size="icon"
+                                variant="mantle"
+                                className="rounded-full size-10 bg-transparent shadow-none"
+                            >
+                                {contact.icon}
+                            </Button>
+                        </Link>
+                    </LiquidGlass>
                 ))}
             </div>
         </footer>

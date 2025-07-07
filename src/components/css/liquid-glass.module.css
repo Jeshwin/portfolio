@@ -2,7 +2,7 @@
     --lg-highlight: rgba(255, 255, 255, 0.5);
     width: fit-content;
     height: fit-content;
-    background-color: oklch(12.9% 0.042 264.695 / var(--frost, 0));
+    background-color: color(from var(--bg-color) srgb r g b / var(--frost, 0));
     z-index: 999999;
     display: flex;
     overflow: hidden;

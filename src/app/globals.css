@@ -4,14 +4,14 @@
 
 @layer base {
     :root {
-        --background: 220deg, 23%, 95%;
-        --foreground: 232deg, 23%, 18%;
+        --background: 220deg 23% 95%;
+        --foreground: 232deg 23% 18%;
 
-        --card: 220deg, 23%, 95%;
+        --card: 220deg 23% 95%;
         --card-foreground: var(--foreground);
 
-        --popover: 223deg, 16%, 83%;
-        --popover-foreground: 232deg, 23%, 18%;
+        --popover: 223deg 16% 83%;
+        --popover-foreground: 232deg 23% 18%;
 
         --primary: 197deg 97% 90%;
         --primary-foreground: 197deg 97% 46%;
@@ -19,35 +19,35 @@
         --secondary: 266deg 85% 88%;
         --secondary-foreground: 266deg 85% 58%;
 
-        --muted: 225deg, 14%, 77%;
-        --muted-foreground: 233deg, 13%, 41%;
+        --muted: 225deg 14% 77%;
+        --muted-foreground: 233deg 13% 41%;
 
         --accent: 0deg 60% 88%;
         --accent-foreground: 0deg 60% 67%;
 
-        --destructive: 347deg, 87%, 44%;
-        --destructive-foreground: 347deg, 87%, 88%;
+        --destructive: 347deg 87% 44%;
+        --destructive-foreground: 347deg 87% 88%;
 
         --border: var(--muted-foreground);
         --input: var(--primary);
         --ring: var(--primary-foreground);
 
         /* Custom Colors */
-        --mantle: hsl(220deg, 22%, 92%);
-        --mantle-foreground: hsl(234deg, 16%, 35%);
-        --swap: hsl(35deg, 77%, 80%);
-        --swap-foreground: hsl(35deg, 77%, 49%);
+        --mantle: hsl(220deg 22% 92%);
+        --mantle-foreground: hsl(234deg 16% 35%);
+        --swap: hsl(35deg 77% 80%);
+        --swap-foreground: hsl(35deg 77% 49%);
 
         --radius: 0.5rem;
     }
     .dark {
-        --background: 232deg, 23%, 18%;
-        --foreground: 220deg, 23%, 95%;
+        --background: 232deg 23% 18%;
+        --foreground: 220deg 23% 95%;
 
-        --card: 232deg, 23%, 18%;
-        --card-foreground: 220deg, 23%, 95%;
+        --card: 232deg 23% 18%;
+        --card-foreground: 220deg 23% 95%;
 
-        --popover: 230deg, 19%, 26%;
+        --popover: 230deg 19% 26%;
         --popover-foreground: var(--foreground);
 
         --primary: 197deg 97% 46%;
@@ -56,20 +56,20 @@
         --secondary: 266deg 85% 58%;
         --secondary-foreground: 266deg 85% 88%;
 
-        --muted: 231deg, 16%, 34%;
-        --muted-foreground: 228deg, 39%, 80%;
+        --muted: 231deg 16% 34%;
+        --muted-foreground: 228deg 39% 80%;
 
         --accent: 0deg 60% 67%;
         --accent-foreground: 0deg 60% 88%;
 
-        --destructive: 347deg, 87%, 44%;
-        --destructive-foreground: 347deg, 87%, 88%;
+        --destructive: 347deg 87% 44%;
+        --destructive-foreground: 347deg 87% 88%;
 
         /* Custom Colors */
-        --mantle: hsl(233deg, 23%, 15%);
-        --mantle-foreground: hsl(227deg, 68%, 88%);
-        --swap: hsl(220deg, 91%, 54%);
-        --swap-foreground: hsl(220deg, 91%, 80%);
+        --mantle: hsl(233deg 23% 15%);
+        --mantle-foreground: hsl(227deg 68% 88%);
+        --swap: hsl(220deg 91% 54%);
+        --swap-foreground: hsl(220deg 91% 80%);
 
         --border: var(--muted-foreground);
         --input: var(--primary);
