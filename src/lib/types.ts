@@ -10,7 +10,7 @@ export interface ProjectArtifact {
 }
 
 export interface Project {
-    id: number;
+    id: string;
     title: string;
     thumbnail: string;
     createdAt: Date;
@@ -22,7 +22,7 @@ export interface Project {
 }
 
 export interface Post {
-    id: number;
+    id: string;
     title: string;
     description?: string;
     body?: string;
@@ -36,4 +36,36 @@ export interface Experience {
     company: string;
     role: string;
     description: string[];
+}
+
+export interface ProjectCSVRow {
+    id: string;
+    title: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    thumbnail: string;
+    tags: string;
+    filename: string;
+}
+
+export interface PostCSVRow {
+    id: string;
+    title: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    tags: string;
+    filename: string;
+}
+
+export interface ProjectYAML {
+    title: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    thumbnail: string;
+    tags: string[];
+    links?: ProjectLink[];
+    artifacts?: ProjectArtifact[];
 }

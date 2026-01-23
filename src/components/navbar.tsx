@@ -4,7 +4,6 @@ import Link from "next/link";
 import {useState, useRef, useEffect} from "react";
 import ThemeToggle from "./theme-toggle";
 import {usePathname} from "next/navigation";
-import LiquidGlass from "./liquid-glass";
 
 interface NavItem {
     id: string;
@@ -74,12 +73,7 @@ export default function Navbar() {
 
     return (
         <div className="fixed top-0 w-screen h-16 px-6 z-10 flex justify-center items-center">
-            <LiquidGlass
-                color="(hsl(var(--muted))"
-                scale={-50}
-                chromaticAberration={0.2}
-                radius={18}
-            >
+            <div className="bg-muted rounded-full">
                 <nav
                     ref={navRef}
                     className="h-9 relative flex items-center rounded-full p-0.5"
@@ -112,7 +106,7 @@ export default function Navbar() {
                         </Link>
                     ))}
                 </nav>
-            </LiquidGlass>
+            </div>
             <div className="flex items-center absolute right-6 top-0 bottom-0">
                 <ThemeToggle />
             </div>

@@ -1,74 +1,14 @@
-import AllProjects from "@/components/all-projects";
 import ProjectGallery from "@/components/project-gallery";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
 import DOMPurify from "isomorphic-dompurify";
 import Image from "next/image";
 import Link from "next/link";
-import {PoolClient} from "pg";
-import {pool} from "src/lib/db";
-import {ProjectArtifact, ProjectLink, Project} from "src/lib/types";
+import {getProject, getAllProjectIds} from "src/lib/s3";
 
-interface ProjectRow {
-    id: number;
-    title: string;
-    thumbnail: string;
-    created_at: Date;
-    updated_at: Date;
-    description: string;
-    links: ProjectLink[];
-    artifacts: ProjectArtifact[];
-    tags: string | null;
-}
-
-async function getProject(id: string): Promise<Project> {
-    let client: PoolClient;
-
-    try {
-        // Get database client from pool
-        client = await pool.connect();
-
-        // Execute query
-        const result = await client.query<ProjectRow>(`
-            SELECT 
-                p.id,
-                p.title,
-                p.thumbnail,
-                p.created_at,
-                p.updated_at,
-                p.description,
-                p.links,
-                p.artifacts,
-                STRING_AGG(t.name, ', ' ORDER BY t.name) as tags
-            FROM projects p
-                LEFT JOIN project_tags pt ON p.id = pt.project_id
-                LEFT JOIN tags t ON pt.tag_id = t.id
-            WHERE p.id=${id}
-            GROUP BY p.id, p.title, p.created_at
-            ORDER BY p.created_at DESC;
-        `);
-
-        // Transform database rows to API response format
-        const row = result.rows[0];
-        const project: Project = {
-            ...row,
-            createdAt: row.created_at,
-            updatedAt: row.updated_at,
-            tags: row.tags
-                ? row.tags.split(", ").filter((tag) => tag.trim() !== "")
-                : [],
-        };
-
-        return project;
-    } catch (error) {
-        console.error("Database query error:", error);
-        throw new Error("Failed to fetch blog posts :(");
-    } finally {
-        // Always release the client back to the pool
-        if (client) {
-            client.release();
-        }
-    }
+export async function generateStaticParams() {
+    const projectIds = await getAllProjectIds();
+    return projectIds.map((projectId) => ({projectId}));
 }
 
 export default async function ProjectPage({
@@ -132,12 +72,12 @@ export default async function ProjectPage({
                 <p
                     className="text-xl"
                     dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(project.description),
+                        __html: DOMPurify.sanitize(project.description || ""),
                     }}
                 />
                 <div className="text-5xl font-medium">Links</div>
                 <ul>
-                    {project.links.map((link, index) => (
+                    {project.links?.map((link, index) => (
                         <li key={index}>
                             <Link href={link.url}>
                                 <Button
