@@ -17,11 +17,11 @@ export default function HomePage() {
                     />
 
                     <div className="text-2xl">👋 Hello, I&apos;m</div>
-                    <span className="font-bold text-9xl bg-clip-text text-transparent bg-gradient-to-r from-[#04a5e5] via-[#8839ef] to-[#dd7878] drop-shadow-xl">
+                    <span className="font-bold text-6xl bg-clip-text text-transparent bg-gradient-to-r from-[#04a5e5] via-[#8839ef] to-[#dd7878] drop-shadow-xl">
                         Jeshwin Prince
                     </span>
-                    <div className="text-2xl mb-4 text-center">
-                        I am a third-year Computer Engineering student at Santa
+                    <div className="text-xl mb-4 text-center">
+                        I am a fourth-year Computer Engineering student at Santa
                         Clara University. I love programming, playing the
                         guitar, and making art!
                     </div>

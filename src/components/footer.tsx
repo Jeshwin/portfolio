@@ -15,10 +15,6 @@ const contactLinks = [
         link: "https://www.linkedin.com/in/jeshwinprince/",
         icon: <Linkedin />,
     },
-    {
-        link: "/rss",
-        icon: <Rss />,
-    },
 ];
 
 export default function Footer() {
@@ -30,7 +26,7 @@ export default function Footer() {
             <div className="px-3 py-2 rounded-full bg-mantle text-mantle-foreground text-center">
                 © {currentYear} Jeshwin Prince. All rights reserved.
             </div>
-            <div className="flex space-x-1">
+            <div className="flex space-x-4">
                 {contactLinks.map((contact, index) => (
                     <Link key={index} href={contact.link}>
                         <Button
