@@ -3,6 +3,7 @@ require("dotenv").config();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: "standalone",
     pageExtensions: ["ts", "tsx", "js", "jsx"],
     reactStrictMode: true,
     images: {
