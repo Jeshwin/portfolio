@@ -36,15 +36,15 @@ export default async function ProjectPage({
                     className="size-40 object-cover rounded-full"
                 />
                 <div>
-                    <div className="flex flex-grow items-center gap-4 font-bold text-7xl">
+                    <div className="flex flex-grow items-center gap-4 font-bold text-6xl">
                         <div>{project.title}</div>
                     </div>
-                    <ul className="w-full flex flex-wrap gap-1 my-2 *:text-xl *:font-normal *:px-3 -ml-2">
+                    <ul className="w-full flex flex-wrap gap-2 my-2 *:text-base *:font-normal *:px-3 -ml-1">
                         {project.tags.map((tag, index) => (
                             <Badge key={index}>{tag}</Badge>
                         ))}
                     </ul>
-                    <div className="text-xl text-muted-foreground flex space-x-4">
+                    <div className="text-base flex space-x-4">
                         <div>
                             {createdDate.toLocaleDateString(undefined, {
                                 year: "numeric",
@@ -66,16 +66,16 @@ export default async function ProjectPage({
                 </div>
             </div>
             <div className="flex flex-col gap-6">
-                <div className="text-5xl font-medium">Gallery</div>
+                <div className="text-4xl font-medium">Gallery</div>
                 <ProjectGallery artifacts={project.artifacts} />
-                <div className="text-5xl font-medium">Description</div>
+                <div className="text-4xl font-medium">Description</div>
                 <p
-                    className="text-xl"
+                    className="text-base"
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(project.description || ""),
                     }}
                 />
-                <div className="text-5xl font-medium">Links</div>
+                <div className="text-4xl font-medium">Links</div>
                 <ul>
                     {project.links?.map((link, index) => (
                         <li key={index}>
@@ -83,7 +83,7 @@ export default async function ProjectPage({
                                 <Button
                                     variant="link"
                                     size="lg"
-                                    className="text-xl"
+                                    className="text-base"
                                 >
                                     {link.title}
                                 </Button>
