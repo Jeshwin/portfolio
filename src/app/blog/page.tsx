@@ -5,7 +5,7 @@ export default async function PostsPage() {
     const posts = await getPosts();
     return (
         <div className="container mx-auto my-16">
-            <div className="mb-12 flex font-bold text-7xl flex-grow">
+            <div className="mb-12 flex font-bold text-6xl flex-grow">
                 Blog Posts
             </div>
             <ul className="flex flex-col space-y-4">

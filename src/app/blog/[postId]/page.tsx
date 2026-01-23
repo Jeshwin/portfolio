@@ -25,15 +25,15 @@ export default async function PostPage({
 
     return (
         <div className="container mx-auto my-16">
-            <div className="mb-4 flex font-bold text-7xl flex-grow">
+            <div className="mb-4 flex font-bold text-6xl flex-grow">
                 {blogPost.title}
             </div>
-            <ul className="w-full flex flex-wrap gap-1 my-2 *:text-xl *:font-normal *:px-3 -ml-2">
+            <ul className="w-full flex flex-wrap gap-2 my-4 *:text-base *:font-normal *:px-3 -ml-1">
                 {blogPost.tags.map((tag, index) => (
                     <Badge key={index}>{tag}</Badge>
                 ))}
             </ul>
-            <div className="text-xl text-muted-foreground flex space-x-4">
+            <div className="text-base flex space-x-4">
                 <div>
                     {createdDate.toLocaleDateString(undefined, {
                         year: "numeric",
@@ -52,9 +52,9 @@ export default async function PostPage({
                     </div>
                 )}
             </div>
-            <div className="mb-12"></div>
+            <div className="mb-6"></div>
             <div
-                className="prose min-w-full prose-xl dark:prose-invert prose-primary mx-auto"
+                className="prose dark:prose-invert prose-primary mx-auto"
                 dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(blogPost.body || ""),
                 }}

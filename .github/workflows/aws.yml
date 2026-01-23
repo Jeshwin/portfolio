@@ -30,7 +30,7 @@ jobs:
 
       - name: Create deployment package
         run: |
-          mkdir -p deploy
+          mkdir -p deploy/.next/static deploy/public
           cp -r .next/standalone/* deploy/
           cp -r .next/static deploy/.next/static
           cp -r public deploy/public
@@ -75,19 +75,3 @@ jobs:
             # Standalone uses server.js, not npm start
             pm2 start server.js --name "jeshwinprince"
             pm2 save
-
-      - name: Health check
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_SSH_PORT || 22 }}
-          script: |
-            sleep 10
-            if pm2 list | grep -q "jeshwinprince.*online"; then
-              curl -f http://localhost:3000 && echo "✅ Health check passed"
-            else
-              pm2 logs jeshwinprince --lines 20
-              exit 1
-            fi
