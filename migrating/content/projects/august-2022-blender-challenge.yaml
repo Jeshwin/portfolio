@@ -1,0 +1,25 @@
+title: "August 2022 Blender Challenge"
+description: "In August 2022, I participate in a small online competition to create a new summer-related scene in Blender for each week of August. I was able to complete three of the four weeks, and along the way I learned more about 3d rendering, especially in Blender. For two of my three finished scenes, I used Blender's Eevee rendering engine, which prioritizes speed and style over realism. Instead of trying to make something that looked real, I tried to many something unique that was only possible with 3d rendering software. I ended up making a summer drink, a beach chair, and a sandcastle, each using different styles, textures, and rendering methods. From this project, I learned how to think outside the box when designing renders and use computer rendering software in a way that no other medium can."
+created_at: 2023-08-03T03:37:49.330Z
+updated_at: 2023-08-03T18:20:26.602Z
+thumbnail: "https://jeshwin-portfolio-bucket.s3.us-west-1.amazonaws.com/thumbnails/fAJt4m33oFUpoCou4iteT.png"
+tags:
+  - blender
+  - 3d
+  - summer
+  - "2022"
+links:
+  - title: "Tutorial for the rendering technique I used"
+    url: "https://www.youtube.com/watch?v=n9ZNGVvMOSQ"
+  - title: "Learn more about Blender"
+    url: "https://www.blender.org/"
+artifacts:
+  - type: image
+    url: "https://jeshwin-portfolio-bucket.s3.us-west-1.amazonaws.com/gallery/3UUzU9n-fS6-Y83wGvvsG.png"
+    alt: "Summer Drink"
+  - type: image
+    url: "https://jeshwin-portfolio-bucket.s3.us-west-1.amazonaws.com/gallery/YbnHSei4E6g7qo8xka0jm.png"
+    alt: "Beach Chair"
+  - type: image
+    url: "https://jeshwin-portfolio-bucket.s3.us-west-1.amazonaws.com/gallery/2pWOVbn6L_3jJD-5gWhW2.png"
+    alt: "Sandcastle"
