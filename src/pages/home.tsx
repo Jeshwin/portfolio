@@ -1,20 +1,22 @@
 import {Button} from "@/components/ui/button";
 import {Link} from "react-router-dom";
 import {Helmet} from "react-helmet-async";
-import ProfilePhoto from "/profile.jpg";
 
 export default function HomePage() {
     return (
         <>
             <Helmet>
                 <title>Jeshwin's Portfolio</title>
-                <meta name="description" content="Jeshwin Prince's portfolio website" />
+                <meta
+                    name="description"
+                    content="Jeshwin Prince's portfolio website"
+                />
             </Helmet>
             <div className="w-screen h-screen">
                 <div className="w-full h-full cgrid place-content-center">
                     <div className="flex flex-col items-center container mx-auto">
                         <img
-                            src={ProfilePhoto}
+                            src="profile.jpg"
                             alt="Profile Photo"
                             className="rounded-full size-40 drop-shadow-xl mb-4 object-cover"
                         />
@@ -24,9 +26,9 @@ export default function HomePage() {
                             Jeshwin Prince
                         </span>
                         <div className="text-xl mb-4 text-center">
-                            I am a fourth-year Computer Engineering student at Santa
-                            Clara University. I love programming, playing the
-                            guitar, and making art!
+                            I am a fourth-year Computer Engineering student at
+                            Santa Clara University. I love programming, playing
+                            the guitar, and making art!
                         </div>
                         <div className="flex space-x-2">
                             <Link to="/projects">
