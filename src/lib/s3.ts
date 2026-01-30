@@ -1,6 +1,5 @@
 import Papa from "papaparse";
 import yaml from "yaml";
-import matter from "gray-matter";
 import {remark} from "remark";
 import html from "remark-html";
 import {
@@ -125,7 +124,15 @@ export async function getPost(id: string): Promise<Post> {
     }
 
     const mdText = await response.text();
-    const {data: frontmatter, content} = matter(mdText);
+
+    // Parse frontmatter manually (format: ---\nyaml\n---\ncontent)
+    const frontmatterMatch = mdText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+    if (!frontmatterMatch) {
+        throw new Error(`Invalid markdown format for post ${id}`);
+    }
+
+    const frontmatter = yaml.parse(frontmatterMatch[1]);
+    const content = frontmatterMatch[2];
 
     // Convert markdown to HTML
     const processedContent = await remark().use(html).process(content);
