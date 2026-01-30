@@ -15,9 +15,6 @@ import {
 const S3_BASE_URL = "https://jeshwin-portfolio-bucket.s3.us-west-1.amazonaws.com";
 const CONTENT_BASE = `${S3_BASE_URL}/content`;
 
-// Revalidation time for ISR (in seconds)
-const REVALIDATE_TIME = 3600; // 1 hour
-
 // ==================== Projects ====================
 
 /**
@@ -26,9 +23,7 @@ const REVALIDATE_TIME = 3600; // 1 hour
 export async function getProjects(): Promise<Project[]> {
     const csvUrl = `${CONTENT_BASE}/projects/projects.csv`;
 
-    const response = await fetch(csvUrl, {
-        next: {revalidate: REVALIDATE_TIME},
-    });
+    const response = await fetch(csvUrl);
 
     if (!response.ok) {
         throw new Error(`Failed to fetch projects CSV: ${response.status}`);
@@ -63,9 +58,7 @@ export async function getProjects(): Promise<Project[]> {
 export async function getProject(id: string): Promise<Project> {
     const yamlUrl = `${CONTENT_BASE}/projects/${id}.yaml`;
 
-    const response = await fetch(yamlUrl, {
-        next: {revalidate: REVALIDATE_TIME},
-    });
+    const response = await fetch(yamlUrl);
 
     if (!response.ok) {
         throw new Error(`Failed to fetch project ${id}: ${response.status}`);
@@ -95,9 +88,7 @@ export async function getProject(id: string): Promise<Project> {
 export async function getPosts(): Promise<Post[]> {
     const csvUrl = `${CONTENT_BASE}/blog/posts.csv`;
 
-    const response = await fetch(csvUrl, {
-        next: {revalidate: REVALIDATE_TIME},
-    });
+    const response = await fetch(csvUrl);
 
     if (!response.ok) {
         throw new Error(`Failed to fetch posts CSV: ${response.status}`);
@@ -127,9 +118,7 @@ export async function getPosts(): Promise<Post[]> {
 export async function getPost(id: string): Promise<Post> {
     const mdUrl = `${CONTENT_BASE}/blog/${id}.md`;
 
-    const response = await fetch(mdUrl, {
-        next: {revalidate: REVALIDATE_TIME},
-    });
+    const response = await fetch(mdUrl);
 
     if (!response.ok) {
         throw new Error(`Failed to fetch post ${id}: ${response.status}`);

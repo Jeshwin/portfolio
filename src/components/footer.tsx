@@ -1,5 +1,4 @@
-import Link from "next/link";
-import {Github, Linkedin, Rss, Youtube} from "lucide-react";
+import {Github, Linkedin, Youtube} from "lucide-react";
 import {Button} from "./ui/button";
 
 const contactLinks = [
@@ -28,7 +27,7 @@ export default function Footer() {
             </div>
             <div className="flex space-x-4">
                 {contactLinks.map((contact, index) => (
-                    <Link key={index} href={contact.link}>
+                    <a key={index} href={contact.link} target="_blank" rel="noopener noreferrer">
                         <Button
                             size="icon"
                             variant="mantle"
@@ -36,7 +35,7 @@ export default function Footer() {
                         >
                             {contact.icon}
                         </Button>
-                    </Link>
+                    </a>
                 ))}
             </div>
         </footer>

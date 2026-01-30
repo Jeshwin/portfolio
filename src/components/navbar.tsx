@@ -1,9 +1,6 @@
-"use client";
-
-import Link from "next/link";
+import {Link, useLocation} from "react-router-dom";
 import {useState, useRef, useEffect} from "react";
 import ThemeToggle from "./theme-toggle";
-import {usePathname} from "next/navigation";
 
 interface NavItem {
     id: string;
@@ -25,7 +22,7 @@ interface HighlightProps {
 }
 
 export default function Navbar() {
-    const pathname = usePathname();
+    const {pathname} = useLocation();
     const [activeTab, setActiveTab] = useState<string>(
         navItems.find((item) => item.href === pathname)?.id || "home"
     );
@@ -88,7 +85,7 @@ export default function Navbar() {
                     />
 
                     {navItems.map((item) => (
-                        <Link key={item.id} href={item.href}>
+                        <Link key={item.id} to={item.href}>
                             <button
                                 ref={(el) => (itemRefs.current[item.id] = el)}
                                 onClick={() => handleTabClick(item.id)}

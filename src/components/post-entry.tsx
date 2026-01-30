@@ -1,18 +1,19 @@
-import Link from "next/link";
+import {Link} from "react-router-dom";
 import {Badge} from "./ui/badge";
 import {Post} from "src/lib/types";
 
 export default function PostEntry({post}: {post: Post}) {
     const createdDate = new Date(post.createdAt);
-    const updatedDate = new Date(post.updatedAt);
+    const updatedDate = post.updatedAt ? new Date(post.updatedAt) : null;
 
     // Check if the dates are different days
-    const isDifferentDay =
-        createdDate.toDateString() !== updatedDate.toDateString();
+    const isDifferentDay = updatedDate
+        ? createdDate.toDateString() !== updatedDate.toDateString()
+        : false;
 
     return (
         <Link
-            href={`/blog/${post.id}`}
+            to={`/blog/${post.id}`}
             className="w-full flex space-x-4 pb-4 border-b border-muted last:border-0"
         >
             <div className="flex flex-col items-start justify-center">
@@ -31,7 +32,7 @@ export default function PostEntry({post}: {post: Post}) {
                             day: "numeric",
                         })}
                     </div>
-                    {isDifferentDay && (
+                    {isDifferentDay && updatedDate && (
                         <div>
                             Updated:{" "}
                             {updatedDate.toLocaleDateString(undefined, {
