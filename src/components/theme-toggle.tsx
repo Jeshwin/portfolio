@@ -15,7 +15,7 @@ export default function ThemeToggle() {
         <Button
             size="icon"
             onClick={toggleTheme}
-            className="size-10 rounded-full text-swap-foreground bg-swap hover:bg-swap/80"
+            className="size-9 rounded-full text-swap-foreground bg-swap hover:bg-swap/80"
         >
             {theme === "light" ? <Sun /> : <Moon />}
         </Button>

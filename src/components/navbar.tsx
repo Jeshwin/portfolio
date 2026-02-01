@@ -13,7 +13,6 @@ const navItems: NavItem[] = [
     {id: "blog", label: "Blog", href: "/blog"},
     {id: "projects", label: "Projects", href: "/projects"},
     {id: "about", label: "About", href: "/about"},
-    {id: "contact", label: "Contact", href: "/contact"},
 ];
 
 interface HighlightProps {
@@ -93,8 +92,8 @@ export default function Navbar() {
               relative z-10 px-3 py-0.5 font-medium rounded-full transition-colors duration-200
               ${
                   activeTab === item.id
-                      ? "text-sky-500"
-                      : "text-popover-foreground hover:text-sky-500"
+                      ? "text-primary-foreground"
+                      : "text-popover-foreground hover:text-primary"
               }
             `}
                             >
@@ -104,7 +103,7 @@ export default function Navbar() {
                     ))}
                 </nav>
             </div>
-            <div className="flex items-center absolute right-6 top-0 bottom-0">
+            <div className="flex items-center absolute right-4 top-0 bottom-0">
                 <ThemeToggle />
             </div>
         </div>

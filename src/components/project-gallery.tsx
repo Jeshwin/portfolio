@@ -63,7 +63,7 @@ export default function ProjectGallery({
     }, [api]);
 
     return (
-        <div className="w-1/2 mx-auto">
+        <div className="w-3/4 mx-auto">
             <Carousel
                 setApi={setApi}
                 className="w-full"

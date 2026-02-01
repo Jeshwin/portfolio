@@ -108,12 +108,11 @@ export default function AboutPage() {
                     content="Learn about Jeshwin Prince's education, experience, and skills"
                 />
             </Helmet>
-            <div className="container mx-auto my-16">
-                <div className="mb-8 flex font-bold text-7xl flex-grow">
-                    About Me
-                </div>
-                <div className="text-5xl font-semibold">Education</div>
-                <div className="flex space-x-6 py-6">
+            <div className="mb-8 flex font-bold text-7xl flex-grow">
+                About Me
+            </div>
+            <div className="text-5xl font-semibold">Education</div>
+            <div className="flex space-x-6 py-6">
                     <img
                         src="scu.png"
                         alt="SCU Logo"
@@ -137,21 +136,21 @@ export default function AboutPage() {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="text-4xl font-semibold">
-                    Relevant Coursework
-                </div>
-                <div className="flex flex-wrap gap-x-1 gap-y-2 py-4">
+            </div>
+            <div className="text-4xl font-semibold">
+                Relevant Coursework
+            </div>
+            <div className="flex flex-wrap gap-x-1 gap-y-2 py-4">
                     {coursework.map((course, index) => (
                         <Badge key={index}>{course}</Badge>
                     ))}
-                </div>
-                <div className="text-5xl font-semibold">Experience</div>
-                <div className="py-6">
+            </div>
+            <div className="text-5xl font-semibold">Experience</div>
+            <div className="py-6">
                     <ExperienceTimeline experiences={experiences} />
-                </div>
-                <div className="mb-6 text-5xl font-semibold">Skills</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            </div>
+            <div className="mb-6 text-5xl font-semibold">Skills</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {Object.entries(skills).map(([category, items]) => (
                         <div key={category}>
                             <div className="text-2xl font-semibold mb-3">
@@ -169,8 +168,7 @@ export default function AboutPage() {
                                 ))}
                             </div>
                         </div>
-                    ))}
-                </div>
+                ))}
             </div>
         </>
     );

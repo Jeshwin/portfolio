@@ -23,17 +23,13 @@ export default function PostPage() {
 
     if (loading) {
         return (
-            <div className="container mx-auto my-16">
-                <div className="text-xl text-muted-foreground">Loading post...</div>
-            </div>
+            <div className="text-xl text-muted-foreground">Loading post...</div>
         );
     }
 
     if (error || !blogPost) {
         return (
-            <div className="container mx-auto my-16">
-                <div className="text-xl text-destructive">Error: {error || "Post not found"}</div>
-            </div>
+            <div className="text-xl text-destructive">Error: {error || "Post not found"}</div>
         );
     }
 
@@ -49,8 +45,7 @@ export default function PostPage() {
                 <title>{blogPost.title} | Jeshwin's Portfolio</title>
                 <meta name="description" content={blogPost.description} />
             </Helmet>
-            <div className="container mx-auto my-16">
-                <div className="mb-4 flex font-bold text-6xl flex-grow">
+            <div className="mb-4 flex font-bold text-6xl flex-grow">
                     {blogPost.title}
                 </div>
                 <ul className="w-full flex flex-wrap gap-2 my-4 *:text-base *:font-normal *:px-3 -ml-1">
@@ -84,7 +79,6 @@ export default function PostPage() {
                         __html: DOMPurify.sanitize(blogPost.body || ""),
                     }}
                 />
-            </div>
         </>
     );
 }

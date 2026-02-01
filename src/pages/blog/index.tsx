@@ -18,23 +18,23 @@ export default function BlogPage() {
 
     if (loading) {
         return (
-            <div className="container mx-auto my-16">
+            <>
                 <div className="mb-12 flex font-bold text-6xl flex-grow">
                     Blog Posts
                 </div>
                 <div className="text-xl text-muted-foreground">Loading posts...</div>
-            </div>
+            </>
         );
     }
 
     if (error) {
         return (
-            <div className="container mx-auto my-16">
+            <>
                 <div className="mb-12 flex font-bold text-6xl flex-grow">
                     Blog Posts
                 </div>
                 <div className="text-xl text-destructive">Error: {error}</div>
-            </div>
+            </>
         );
     }
 
@@ -44,14 +44,12 @@ export default function BlogPage() {
                 <title>Blog | Jeshwin's Portfolio</title>
                 <meta name="description" content="Read Jeshwin Prince's blog posts" />
             </Helmet>
-            <div className="container mx-auto my-16">
-                <div className="mb-12 flex font-bold text-6xl flex-grow">
-                    Blog Posts
-                </div>
-                <ul className="flex flex-col space-y-4">
-                    <AllPosts posts={posts} />
-                </ul>
+            <div className="mb-12 flex font-bold text-6xl flex-grow">
+                Blog Posts
             </div>
+            <ul className="flex flex-col space-y-4">
+                <AllPosts posts={posts} />
+            </ul>
         </>
     );
 }

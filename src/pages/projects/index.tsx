@@ -18,23 +18,25 @@ export default function ProjectsPage() {
 
     if (loading) {
         return (
-            <div className="container mx-auto my-16">
+            <>
                 <div className="mb-12 flex font-bold text-6xl flex-grow">
                     Projects
                 </div>
-                <div className="text-xl text-muted-foreground">Loading projects...</div>
-            </div>
+                <div className="text-xl text-muted-foreground">
+                    Loading projects...
+                </div>
+            </>
         );
     }
 
     if (error) {
         return (
-            <div className="container mx-auto my-16">
+            <>
                 <div className="mb-12 flex font-bold text-6xl flex-grow">
                     Projects
                 </div>
                 <div className="text-xl text-destructive">Error: {error}</div>
-            </div>
+            </>
         );
     }
 
@@ -42,16 +44,17 @@ export default function ProjectsPage() {
         <>
             <Helmet>
                 <title>Projects | Jeshwin's Portfolio</title>
-                <meta name="description" content="Explore Jeshwin Prince's projects" />
+                <meta
+                    name="description"
+                    content="Explore Jeshwin Prince's projects"
+                />
             </Helmet>
-            <div className="container mx-auto my-16">
-                <div className="mb-12 flex font-bold text-6xl flex-grow">
-                    Projects
-                </div>
-                <ul className="grid grid-cols-3 gap-4">
-                    <AllProjects projects={projects} />
-                </ul>
+            <div className="mb-12 flex font-bold text-6xl flex-grow">
+                Projects
             </div>
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <AllProjects projects={projects} />
+            </ul>
         </>
     );
 }
