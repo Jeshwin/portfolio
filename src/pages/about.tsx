@@ -112,62 +112,60 @@ export default function AboutPage() {
                 About Me
             </div>
             <div className="text-5xl font-semibold">Education</div>
-            <div className="flex space-x-6 py-6">
-                    <img
-                        src="scu.png"
-                        alt="SCU Logo"
-                        className="size-32 object-contain"
-                    />
-                    <div>
-                        <div className="font-semibold text-xl mb-2">
-                            Santa Clara University
+            <div className="flex gap-4 py-6">
+                <img
+                    src="scu.png"
+                    alt="SCU Logo"
+                    className="size-20 sm:size-32 object-contain"
+                />
+                <div>
+                    <div className="font-semibold text-xl mb-2">
+                        Santa Clara University
+                    </div>
+                    <div className="space-y-1 *:leading-5">
+                        <div>
+                            Bachelor of Science in Computer Science and
+                            Engineering, Minor in Mathematics
                         </div>
-                        <div className="space-y-1 *:leading-5">
-                            <div>
-                                Bachelor of Science in Computer Science and
-                                Engineering, Minor in Mathematics
-                            </div>
-                            <div>Graduating June 2026</div>
-                            <div>GPA: 3.9/4.0</div>
-                            <div>
-                                Academic honors: Dean's List Scholarship,
-                                University Honors Program, Tau Beta Pi, Putnam
-                                Competition Participant
-                            </div>
+                        <div>Graduating June 2026</div>
+                        <div>GPA: 3.9/4.0</div>
+                        <div>
+                            Academic honors: Dean's List Scholarship, University
+                            Honors Program, Tau Beta Pi, Putnam Competition
+                            Participant
                         </div>
                     </div>
+                </div>
             </div>
-            <div className="text-4xl font-semibold">
-                Relevant Coursework
-            </div>
+            <div className="text-4xl font-semibold">Relevant Coursework</div>
             <div className="flex flex-wrap gap-x-1 gap-y-2 py-4">
-                    {coursework.map((course, index) => (
-                        <Badge key={index}>{course}</Badge>
-                    ))}
+                {coursework.map((course, index) => (
+                    <Badge key={index}>{course}</Badge>
+                ))}
             </div>
             <div className="text-5xl font-semibold">Experience</div>
             <div className="py-6">
-                    <ExperienceTimeline experiences={experiences} />
+                <ExperienceTimeline experiences={experiences} />
             </div>
             <div className="mb-6 text-5xl font-semibold">Skills</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {Object.entries(skills).map(([category, items]) => (
-                        <div key={category}>
-                            <div className="text-2xl font-semibold mb-3">
-                                {category}
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {items.map((skill) => (
-                                    <Badge
-                                        key={skill}
-                                        variant="secondary"
-                                        className="text-sm"
-                                    >
-                                        {skill}
-                                    </Badge>
-                                ))}
-                            </div>
+                {Object.entries(skills).map(([category, items]) => (
+                    <div key={category}>
+                        <div className="text-2xl font-semibold mb-3">
+                            {category}
                         </div>
+                        <div className="flex flex-wrap gap-2">
+                            {items.map((skill) => (
+                                <Badge
+                                    key={skill}
+                                    variant="secondary"
+                                    className="text-sm"
+                                >
+                                    {skill}
+                                </Badge>
+                            ))}
+                        </div>
+                    </div>
                 ))}
             </div>
         </>

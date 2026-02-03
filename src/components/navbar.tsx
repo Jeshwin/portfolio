@@ -75,7 +75,7 @@ export default function Navbar() {
                     className="h-9 relative flex items-center rounded-full p-0.5"
                 >
                     <div
-                        className="absolute top-0.5 bottom-0.5 bg-popover-foreground/20 rounded-full shadow-sm transition-all duration-300 ease-out"
+                        className="absolute top-0.5 bottom-0.5 bg-primary/20 rounded-full shadow-sm transition-all duration-300 ease-out"
                         style={{
                             left: `${highlight.left}px`,
                             width: `${highlight.width}px`,
@@ -103,7 +103,7 @@ export default function Navbar() {
                     ))}
                 </nav>
             </div>
-            <div className="flex items-center absolute right-4 top-0 bottom-0">
+            <div className="ml-1">
                 <ThemeToggle />
             </div>
         </div>
