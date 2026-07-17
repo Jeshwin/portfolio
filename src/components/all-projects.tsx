@@ -1,5 +1,5 @@
 import ProjectCard from "./project-card";
-import {Project} from "src/lib/types";
+import type {Project} from "@/lib/types";
 
 export default function AllProjects({projects}: {projects: Project[]}) {
     return (

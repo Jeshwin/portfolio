@@ -38,34 +38,27 @@ export interface Experience {
     description: string[];
 }
 
-export interface ProjectCSVRow {
-    id: string;
+/**
+ * Frontmatter shape for blog post markdown files under content/blog/*.md
+ */
+export interface PostFrontmatter {
     title: string;
-    description: string;
+    description?: string;
+    created_at: string;
+    updated_at?: string;
+    tags?: string[];
+}
+
+/**
+ * Frontmatter shape for project markdown files under content/projects/*.md
+ */
+export interface ProjectFrontmatter {
+    title: string;
+    description?: string;
     created_at: string;
     updated_at: string;
     thumbnail: string;
-    tags: string;
-    filename: string;
-}
-
-export interface PostCSVRow {
-    id: string;
-    title: string;
-    description: string;
-    created_at: string;
-    updated_at: string;
-    tags: string;
-    filename: string;
-}
-
-export interface ProjectYAML {
-    title: string;
-    description: string;
-    created_at: string;
-    updated_at: string;
-    thumbnail: string;
-    tags: string[];
+    tags?: string[];
     links?: ProjectLink[];
     artifacts?: ProjectArtifact[];
 }

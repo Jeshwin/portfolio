@@ -1,0 +1,27 @@
+---
+title: "CodeNest"
+description: "A fully-featured, web-based code editor."
+created_at: 2024-02-19T22:59:07.128Z
+updated_at: 2024-02-19T22:59:07.128Z
+thumbnail: /images/projects/codenest/thumbnail.png
+tags:
+  - web
+  - programming
+  - website
+links:
+  - title: "CodeNest"
+    url: "https://www.codenest.space/"
+  - title: "Source Code"
+    url: "https://github.com/Jeshwin/codenest"
+artifacts:
+  - type: image
+    url: /images/projects/codenest/landing-page.png
+    alt: "Landing page I designed with colorful moving background"
+  - type: image
+    url: /images/projects/codenest/editor-mockup.png
+    alt: "Prototype design for the code editor, made in Figma"
+---
+
+CodeNest is a fully-featured, web-based code editor that allows anyone to implement their ideas without any need to install new software. Through our platform, you can access any development environment, create a new project in any programming language, and run it hassle-free on the cloud, all without leaving your browser window.
+
+We initially started CodeNest to gain experience working on a large project as a group. Eventually, CodeNest became a proof-of-concept, an idea that we could keep building into a reality. Our goal is that CodeNest becomes a gateway to new programmers, making coding more accessible to the world.
