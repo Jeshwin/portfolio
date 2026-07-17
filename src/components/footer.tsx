@@ -18,9 +18,13 @@ const contactLinks = [
 
 export default function Footer() {
     const d = new Date();
+    const currentYear = d.getFullYear();
 
     return (
-        <footer className="fixed bottom-0 w-screen h-16 px-6 z-10 flex items-center">
+        <footer className="fixed bottom-0 w-screen h-16 px-6 z-10 flex justify-between items-center">
+            <div className="px-3 py-2 rounded-full bg-mantle text-mantle-foreground text-center">
+                © {currentYear} Jeshwin Prince. All rights reserved.
+            </div>
             <div className="flex space-x-4">
                 {contactLinks.map((contact, index) => (
                     <a

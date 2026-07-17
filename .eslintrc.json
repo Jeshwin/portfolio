@@ -1,20 +1,28 @@
 {
-    "env": {
-        "browser": true,
-        "es2020": true
-    },
+    "root": true,
+    "env": {"browser": true, "es2022": true, "node": true},
     "extends": [
         "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:react-hooks/recommended",
         "prettier"
     ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "settings": {
-        "react": {
-            "version": "18.3"
-        }
-    },
-    "rules": {}
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["react-refresh"],
+    "settings": {"react": {"version": "18.3"}},
+    "ignorePatterns": ["dist", "node_modules", ".eslintrc.json"],
+    "rules": {
+        "react-refresh/only-export-components": [
+            "warn",
+            {"allowConstantExport": true}
+        ],
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {"argsIgnorePattern": "^_"}
+        ],
+        "react/prop-types": "off"
+    }
 }

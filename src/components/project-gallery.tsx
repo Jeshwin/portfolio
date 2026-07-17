@@ -1,4 +1,4 @@
-import {ProjectArtifact} from "src/lib/types";
+import type {ProjectArtifact} from "@/lib/types";
 import {Card} from "@/components/ui/card";
 import AutoHeight from "embla-carousel-auto-height";
 
@@ -25,8 +25,11 @@ function RenderArtifact({
                 <img
                     src={artifact.url}
                     alt={artifact.alt}
+                    height={1080}
+                    width={1920}
                     className="rounded-2xl h-auto max-w-full"
                     onLoad={onImageLoad}
+                    loading="eager"
                 />
             </div>
         );
@@ -63,7 +66,7 @@ export default function ProjectGallery({
     }, [api]);
 
     return (
-        <div className="w-3/4 mx-auto">
+        <div className="w-1/2 mx-auto">
             <Carousel
                 setApi={setApi}
                 className="w-full"

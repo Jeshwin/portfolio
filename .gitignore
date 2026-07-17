@@ -10,6 +10,8 @@
 
 # vite
 /dist/
+/dist-ssr/
+*.local
 
 # rust
 /src/lib/*/target/

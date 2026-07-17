@@ -13,6 +13,7 @@ const navItems: NavItem[] = [
     {id: "blog", label: "Blog", href: "/blog"},
     {id: "projects", label: "Projects", href: "/projects"},
     {id: "about", label: "About", href: "/about"},
+    {id: "contact", label: "Contact", href: "/contact"},
 ];
 
 interface HighlightProps {
@@ -51,9 +52,10 @@ export default function Navbar() {
 
     useEffect(() => {
         const parentPath = `/${pathname.split("/")[1]}`;
-        updateHighlight(
-            navItems.find((item) => item.href === parentPath)?.id || "home"
-        );
+        const nextTab =
+            navItems.find((item) => item.href === parentPath)?.id || "home";
+        setActiveTab(nextTab);
+        updateHighlight(nextTab);
     }, [pathname]);
 
     useEffect(() => {
@@ -75,7 +77,7 @@ export default function Navbar() {
                     className="h-9 relative flex items-center rounded-full p-0.5"
                 >
                     <div
-                        className="absolute top-0.5 bottom-0.5 bg-primary/20 rounded-full shadow-sm transition-all duration-300 ease-out"
+                        className="absolute top-0.5 bottom-0.5 bg-popover-foreground/20 rounded-full shadow-sm transition-all duration-300 ease-out"
                         style={{
                             left: `${highlight.left}px`,
                             width: `${highlight.width}px`,
@@ -86,14 +88,16 @@ export default function Navbar() {
                     {navItems.map((item) => (
                         <Link key={item.id} to={item.href}>
                             <button
-                                ref={(el) => (itemRefs.current[item.id] = el)}
+                                ref={(el) => {
+                                    itemRefs.current[item.id] = el;
+                                }}
                                 onClick={() => handleTabClick(item.id)}
                                 className={`
               relative z-10 px-3 py-0.5 font-medium rounded-full transition-colors duration-200
               ${
                   activeTab === item.id
-                      ? "text-primary-foreground"
-                      : "text-popover-foreground hover:text-primary"
+                      ? "text-sky-500"
+                      : "text-popover-foreground hover:text-sky-500"
               }
             `}
                             >
@@ -103,7 +107,7 @@ export default function Navbar() {
                     ))}
                 </nav>
             </div>
-            <div className="ml-1">
+            <div className="flex items-center absolute right-6 top-0 bottom-0">
                 <ThemeToggle />
             </div>
         </div>

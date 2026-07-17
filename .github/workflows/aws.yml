@@ -1,4 +1,4 @@
-name: Deploy Vite to EC2
+name: Deploy portfolio to EC2
 
 on:
   push:
@@ -23,12 +23,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Vite
+      - name: Build static site (Vite + vite-react-ssg)
         run: npm run build
         env:
           NODE_ENV: production
 
-      - name: Create deployment package
+      - name: Package dist/
         run: tar -czf deploy.tar.gz -C dist .
 
       - name: Upload to EC2
@@ -41,7 +41,7 @@ jobs:
           source: "deploy.tar.gz"
           target: "/tmp/"
 
-      - name: Deploy on EC2
+      - name: Deploy on EC2 (atomic swap + nginx reload)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -49,19 +49,22 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_SSH_PORT || 22 }}
           script: |
+            set -euo pipefail
             APP_DIR="/var/www/jeshwinprince"
+            RELEASE="$APP_DIR/releases/$(date +%Y%m%d%H%M%S)"
 
-            # Stop PM2 process if still running from old setup
-            pm2 stop jeshwinprince 2>/dev/null || true
-            pm2 delete jeshwinprince 2>/dev/null || true
-
-            sudo mkdir -p $APP_DIR
-            sudo chown $USER:$USER $APP_DIR
-            rm -rf $APP_DIR/*
-
-            cd $APP_DIR
-            tar -xzf /tmp/deploy.tar.gz
+            sudo mkdir -p "$APP_DIR/releases"
+            sudo mkdir -p "$RELEASE"
+            sudo tar -xzf /tmp/deploy.tar.gz -C "$RELEASE"
             rm /tmp/deploy.tar.gz
 
-            # Reload Nginx to serve new static files
-            sudo systemctl reload nginx
+            # Atomically swap the `dist` symlink to the new release, so nginx
+            # never sees a half-uploaded directory.
+            sudo ln -sfn "$RELEASE" "$APP_DIR/dist.new"
+            sudo mv -Tf "$APP_DIR/dist.new" "$APP_DIR/dist"
+
+            # Trim old releases, keep the last 5 for quick rollback.
+            ls -1dt "$APP_DIR/releases"/*/ | tail -n +6 | xargs -r sudo rm -rf
+
+            # nginx serves $APP_DIR/dist directly, so a reload is enough.
+            sudo nginx -t && sudo systemctl reload nginx

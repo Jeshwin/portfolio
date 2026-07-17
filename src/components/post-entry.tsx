@@ -1,15 +1,16 @@
 import {Link} from "react-router-dom";
 import {Badge} from "./ui/badge";
-import {Post} from "src/lib/types";
+import type {Post} from "@/lib/types";
 
 export default function PostEntry({post}: {post: Post}) {
     const createdDate = new Date(post.createdAt);
-    const updatedDate = post.updatedAt ? new Date(post.updatedAt) : null;
+    const updatedDate = post.updatedAt
+        ? new Date(post.updatedAt)
+        : createdDate;
 
     // Check if the dates are different days
-    const isDifferentDay = updatedDate
-        ? createdDate.toDateString() !== updatedDate.toDateString()
-        : false;
+    const isDifferentDay =
+        createdDate.toDateString() !== updatedDate.toDateString();
 
     return (
         <Link
@@ -32,7 +33,7 @@ export default function PostEntry({post}: {post: Post}) {
                             day: "numeric",
                         })}
                     </div>
-                    {isDifferentDay && updatedDate && (
+                    {isDifferentDay && (
                         <div>
                             Updated:{" "}
                             {updatedDate.toLocaleDateString(undefined, {

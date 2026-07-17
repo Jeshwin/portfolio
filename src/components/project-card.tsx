@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {Badge} from "./ui/badge";
-import {Project} from "src/lib/types";
+import type {Project} from "@/lib/types";
 
 export default function ProjectCard({project}: {project: Project}) {
     return (
@@ -9,6 +9,8 @@ export default function ProjectCard({project}: {project: Project}) {
                 <figure>
                     <img
                         src={project.thumbnail}
+                        width={1024}
+                        height={1024}
                         alt={project.title}
                         className="w-full aspect-video object-cover rounded-t-2xl"
                     />

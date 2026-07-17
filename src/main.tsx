@@ -1,22 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import {RouterProvider} from "react-router-dom";
-import {HelmetProvider} from "react-helmet-async";
-import {ThemeProvider} from "next-themes";
-import {router} from "./router";
-import "./globals.css";
+import "@fontsource/inter/latin.css";
+import "@fontsource/jetbrains-mono/latin.css";
+import "@/styles/globals.css";
+import {ViteReactSSG} from "vite-react-ssg";
+import {routes} from "@/routes";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-        <HelmetProvider>
-            <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-            >
-                <RouterProvider router={router} />
-            </ThemeProvider>
-        </HelmetProvider>
-    </React.StrictMode>
-);
+export const createRoot = ViteReactSSG({
+    routes,
+    basename: "/",
+});
