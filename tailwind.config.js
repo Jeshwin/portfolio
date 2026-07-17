@@ -1,7 +1,10 @@
+import typography from "@tailwindcss/typography";
+import tailwindcssAnimate from "tailwindcss-animate";
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     darkMode: ["class"],
-    content: ["./src/**/*.{js,ts,jsx,tsx}"],
+    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         fontFamily: {
             sans: ["var(--font-inter)", "Helvetica", "Open Sans", "sans-serif"],
@@ -67,8 +70,5 @@ module.exports = {
             }),
         },
     },
-    plugins: [
-        require("@tailwindcss/typography"),
-        require("tailwindcss-animate"),
-    ],
+    plugins: [typography, tailwindcssAnimate],
 };

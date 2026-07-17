@@ -1,9 +1,6 @@
-"use client";
-
-import Link from "next/link";
+import {Link, useLocation} from "react-router-dom";
 import {useState, useRef, useEffect} from "react";
 import ThemeToggle from "./theme-toggle";
-import {usePathname} from "next/navigation";
 
 interface NavItem {
     id: string;
@@ -25,7 +22,7 @@ interface HighlightProps {
 }
 
 export default function Navbar() {
-    const pathname = usePathname();
+    const {pathname} = useLocation();
     const [activeTab, setActiveTab] = useState<string>(
         navItems.find((item) => item.href === pathname)?.id || "home"
     );
@@ -55,9 +52,10 @@ export default function Navbar() {
 
     useEffect(() => {
         const parentPath = `/${pathname.split("/")[1]}`;
-        updateHighlight(
-            navItems.find((item) => item.href === parentPath)?.id || "home"
-        );
+        const nextTab =
+            navItems.find((item) => item.href === parentPath)?.id || "home";
+        setActiveTab(nextTab);
+        updateHighlight(nextTab);
     }, [pathname]);
 
     useEffect(() => {
@@ -88,9 +86,11 @@ export default function Navbar() {
                     />
 
                     {navItems.map((item) => (
-                        <Link key={item.id} href={item.href}>
+                        <Link key={item.id} to={item.href}>
                             <button
-                                ref={(el) => (itemRefs.current[item.id] = el)}
+                                ref={(el) => {
+                                    itemRefs.current[item.id] = el;
+                                }}
                                 onClick={() => handleTabClick(item.id)}
                                 className={`
               relative z-10 px-3 py-0.5 font-medium rounded-full transition-colors duration-200

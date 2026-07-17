@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 export function AWSLogo({...props}) {
     return (
         <img

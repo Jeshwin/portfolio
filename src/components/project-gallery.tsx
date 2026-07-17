@@ -1,7 +1,5 @@
-"use client";
-
-import {ProjectArtifact} from "src/lib/types";
-import {Card, CardContent} from "@/components/ui/card";
+import type {ProjectArtifact} from "@/lib/types";
+import {Card} from "@/components/ui/card";
 import AutoHeight from "embla-carousel-auto-height";
 
 import {
@@ -13,7 +11,6 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel";
 import {useEffect, useState} from "react";
-import Image from "next/image";
 
 function RenderArtifact({
     artifact,
@@ -25,14 +22,14 @@ function RenderArtifact({
     if (artifact.type === "image") {
         return (
             <div className="flex justify-center">
-                <Image
+                <img
                     src={artifact.url}
                     alt={artifact.alt}
                     height={1080}
                     width={1920}
                     className="rounded-2xl h-auto max-w-full"
                     onLoad={onImageLoad}
-                    priority={true}
+                    loading="eager"
                 />
             </div>
         );

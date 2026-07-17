@@ -1,4 +1,4 @@
-import {Experience} from "src/lib/types";
+import type {Experience} from "@/lib/types";
 
 export default function ExperienceTimeline({
     experiences,

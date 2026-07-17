@@ -1,14 +1,13 @@
-import Link from "next/link";
-import Image from "next/image";
+import {Link} from "react-router-dom";
 import {Badge} from "./ui/badge";
-import {Project} from "src/lib/types";
+import type {Project} from "@/lib/types";
 
 export default function ProjectCard({project}: {project: Project}) {
     return (
         <div className="rounded-2xl bg-muted shadow-lg hover:opacity-70 active:scale-90 duration-75">
-            <Link href={`/projects/${project.id}`}>
+            <Link to={`/projects/${project.id}`}>
                 <figure>
-                    <Image
+                    <img
                         src={project.thumbnail}
                         width={1024}
                         height={1024}
