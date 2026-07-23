@@ -1,15 +1,10 @@
 import {Link} from "react-router-dom";
-import {Head} from "vite-react-ssg";
 import {Button} from "@/components/ui/button";
 
 export function Component() {
     return (
-        <div className="w-screen h-screen">
-            <Head>
-                <title>Not Found - Jeshwin&apos;s Portfolio</title>
-                <meta name="robots" content="noindex" />
-            </Head>
-            <div className="w-full h-full cgrid place-content-center">
+        <div className="w-full h-full overflow-auto">
+            <div className="w-full min-h-full grid place-content-center p-8">
                 <div className="flex flex-col items-center container mx-auto">
                     <div className="relative -mt-24 w-[14rem] lg:w-[24rem] aspect-square">
                         <img

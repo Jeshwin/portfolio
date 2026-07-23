@@ -1,4 +1,3 @@
-import {Head} from "vite-react-ssg";
 import type {Experience} from "@/lib/types";
 import ExperienceTimeline from "@/components/experience-timeline";
 import {
@@ -153,13 +152,11 @@ const skills = [
 
 export function Component() {
     return (
-        <div className="container mx-auto my-16">
-            <Head>
-                <title>About - Jeshwin&apos;s Portfolio</title>
-            </Head>
-            <div className="mb-8 flex font-bold text-7xl flex-grow">
-                About Me
-            </div>
+        <div className="w-full h-full overflow-auto">
+            <div className="container mx-auto p-8">
+                <div className="mb-8 flex font-bold text-7xl flex-grow">
+                    About Me
+                </div>
             <div className="text-5xl font-semibold">Education</div>
             <div className="flex space-x-6 py-6">
                 <img
@@ -198,7 +195,7 @@ export function Component() {
                 <ExperienceTimeline experiences={experiences} />
             </div>
             <div className="mb-6 text-5xl font-semibold">Skills</div>
-            <div className="grid grid-cols-6 gap-4 *:p-4 *:flex *:flex-col *:space-y-4 *:items-center *:justify-center">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 *:p-4 *:flex *:flex-col *:space-y-4 *:items-center *:justify-center">
                 {skills.map((skill, index) => (
                     <div key={index}>
                         <skill.icon
@@ -208,6 +205,7 @@ export function Component() {
                         <div className="font-semibold">{skill.label}</div>
                     </div>
                 ))}
+            </div>
             </div>
         </div>
     );

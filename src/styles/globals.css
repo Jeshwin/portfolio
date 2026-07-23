@@ -4,9 +4,6 @@
 
 @layer base {
     :root {
-        /* Font family CSS variables. In the Next.js version these were injected
-         * by next/font/google onto <html>. With Vite we bring in @fontsource/*
-         * (which registers @font-face rules) and expose the family names here. */
         --font-inter: "Inter", "Helvetica", "Open Sans", sans-serif;
         --font-jetbrains-mono: "JetBrains Mono", ui-monospace, monospace;
 
@@ -89,5 +86,60 @@
     }
     body {
         @apply bg-background text-foreground font-sans;
+    }
+    :root {
+        /*** Separators ***/
+        /* Color of the handle on the separator */
+        /* --separator-handle-color: rgb(var(--primary)); */
+        --separator-handle-color: #cccccc;
+
+        /* Thickness of the separator between windows */
+        --separator-thickness: 8px;
+
+        /* Length of the separator handle */
+        --separator-handle-length: 32px;
+
+        /*** Windows ***/
+        /* Background color of the window */
+        /* --window-bg-color: rgb(var(--background)); */
+        --window-bg-color: #1e1e1e;
+
+        /* Border radius for window corners */
+        --border-radius: 16px;
+
+        /*** Window Toolbars ***/
+        /* Background color of the toolbar */
+        /* --toolbar-bg-color: rgb(var(--accent)); */
+        --toolbar-bg-color: #252526;
+
+        /* Background color of the toolbar on hover */
+        /* --toolbar-hover-bg-color: rgb(var(--muted)); */
+        --toolbar-hover-bg-color: #2d2d2d;
+
+        /* Background color for toolbar buttons on hover */
+        /* --toolbar-button-hover-bg-color: rgb(var(--muted)); */
+        --toolbar-button-hover-bg-color: #2d2d2d;
+
+        /* Height of the toolbar at the top of each window */
+        --toolbar-height: 32px;
+
+        /*** Tabs ***/
+        /* Text color of tab titles */
+        /* --tab-text-color: rgb(var(--foreground)); */
+        --tab-text-color: #cccccc;
+
+        /* Color of the 'close' icon in tabs, with opacity */
+        /* --close-tab-color: rgb(var(--destructive)); */
+        --close-tab-color: #f88070;
+
+        /* Color of indicators (e.g., focus indicator)) */
+        /* --indicator-color: rgb(var(--primary)); */
+        --indicator-color: #007acc;
+
+        /* Thickness of indicators (e.g., focus indicator)) */
+        --indicator-thickness: 1px;
+
+        /* Font size for text in tabs */
+        --tab-font-size: 16px;
     }
 }

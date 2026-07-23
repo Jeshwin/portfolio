@@ -16,7 +16,7 @@ export const routes: RouteRecord[] = [
         children: [
             {
                 index: true,
-                lazy: () => import("@/pages/HomePage"),
+                lazy: () => import("@/pages/LayoutPage"),
             },
             {
                 path: "about",
@@ -29,6 +29,10 @@ export const routes: RouteRecord[] = [
             {
                 path: "blog",
                 lazy: () => import("@/pages/BlogListPage"),
+            },
+            {
+                path: "layout",
+                lazy: () => import("@/pages/LayoutPage"),
             },
             {
                 path: "blog/:postId",

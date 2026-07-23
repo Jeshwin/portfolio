@@ -1,14 +1,10 @@
-import {Head} from "vite-react-ssg";
 import {Linkedin, Mail} from "lucide-react";
 import {Button} from "@/components/ui/button";
 
 export function Component() {
     return (
-        <div className="w-screen h-screen">
-            <Head>
-                <title>Contact - Jeshwin&apos;s Portfolio</title>
-            </Head>
-            <div className="w-full h-full cgrid place-content-center">
+        <div className="w-full h-full overflow-auto">
+            <div className="w-full min-h-full grid place-content-center p-8">
                 <div className="flex flex-col items-center container mx-auto">
                     <img
                         src="/images/site/profile.jpg"
