@@ -1,8 +1,10 @@
-import {Link} from "react-router-dom";
 import {Badge} from "./ui/badge";
 import type {Post} from "@/lib/types";
+import {makeTab, useOpenTab, useTabDrag} from "@/lib/tabs";
 
 export default function PostEntry({post}: {post: Post}) {
+    const openTab = useOpenTab();
+    const dragRef = useTabDrag(() => makeTab(post.title, "blog-post", post.id));
     const createdDate = new Date(post.createdAt);
     const updatedDate = post.updatedAt
         ? new Date(post.updatedAt)
@@ -13,9 +15,10 @@ export default function PostEntry({post}: {post: Post}) {
         createdDate.toDateString() !== updatedDate.toDateString();
 
     return (
-        <Link
-            to={`/blog/${post.id}`}
-            className="w-full flex space-x-4 pb-4 border-b border-muted last:border-0"
+        <button
+            ref={dragRef}
+            onClick={() => openTab(makeTab(post.title, "blog-post", post.id))}
+            className="w-full flex space-x-4 pb-4 border-b border-muted last:border-0 text-left cursor-grab active:cursor-grabbing"
         >
             <div className="flex flex-col items-start justify-center">
                 <div className="font-semibold text-2xl">{post.title}</div>
@@ -45,6 +48,6 @@ export default function PostEntry({post}: {post: Post}) {
                     )}
                 </div>
             </div>
-        </Link>
+        </button>
     );
 }

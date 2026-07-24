@@ -1,7 +1,8 @@
-import {Link} from "react-router-dom";
 import {Button} from "@/components/ui/button";
+import {makeTab, useOpenTab} from "@/lib/tabs";
 
 export function Component() {
+    const openTab = useOpenTab();
     return (
         <div className="w-full h-full overflow-auto">
             <div className="w-full min-h-full grid place-content-center p-8">
@@ -24,19 +25,30 @@ export function Component() {
                         guitar, and making art!
                     </div>
                     <div className="flex space-x-2">
-                        <Link to="/projects">
-                            <Button size="lg">Explore Projects</Button>
-                        </Link>
-                        <Link to="/blog">
-                            <Button size="lg" variant="secondary">
-                                Read Blog
-                            </Button>
-                        </Link>
-                        <Link to="/contact">
-                            <Button variant="accent" size="lg">
-                                Contact
-                            </Button>
-                        </Link>
+                        <Button
+                            size="lg"
+                            onClick={() =>
+                                openTab(makeTab("Projects", "projects"))
+                            }
+                        >
+                            Explore Projects
+                        </Button>
+                        <Button
+                            size="lg"
+                            variant="secondary"
+                            onClick={() => openTab(makeTab("Blog", "blog"))}
+                        >
+                            Read Blog
+                        </Button>
+                        <Button
+                            variant="accent"
+                            size="lg"
+                            onClick={() =>
+                                openTab(makeTab("Contact", "contact"))
+                            }
+                        >
+                            Contact
+                        </Button>
                     </div>
                 </div>
             </div>

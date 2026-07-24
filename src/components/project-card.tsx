@@ -1,11 +1,17 @@
-import {Link} from "react-router-dom";
 import {Badge} from "./ui/badge";
 import type {Project} from "@/lib/types";
+import {makeTab, useOpenTab, useTabDrag} from "@/lib/tabs";
 
 export default function ProjectCard({project}: {project: Project}) {
+    const openTab = useOpenTab();
+    const dragRef = useTabDrag(() => makeTab(project.title, "project", project.id));
     return (
         <div className="rounded-2xl bg-muted shadow-lg hover:opacity-70 active:scale-90 duration-75">
-            <Link to={`/projects/${project.id}`}>
+            <button
+                ref={dragRef}
+                onClick={() => openTab(makeTab(project.title, "project", project.id))}
+                className="w-full text-left cursor-grab active:cursor-grabbing"
+            >
                 <figure>
                     <img
                         src={project.thumbnail}
@@ -36,7 +42,7 @@ export default function ProjectCard({project}: {project: Project}) {
                         ))}
                     </ul>
                 </div>
-            </Link>
+            </button>
         </div>
     );
 }

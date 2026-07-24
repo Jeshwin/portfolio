@@ -1,7 +1,8 @@
-import {Link} from "react-router-dom";
 import {Button} from "@/components/ui/button";
+import {makeTab, useOpenTab} from "@/lib/tabs";
 
 export function Component() {
+    const openTab = useOpenTab();
     return (
         <div className="w-full h-full overflow-auto">
             <div className="w-full min-h-full grid place-content-center p-8">
@@ -18,11 +19,13 @@ export function Component() {
                         about that, you should go home. The button below should
                         help you!
                     </div>
-                    <Link to="/">
-                        <Button size="lg" variant="destructive">
-                            Go Home
-                        </Button>
-                    </Link>
+                    <Button
+                        size="lg"
+                        variant="destructive"
+                        onClick={() => openTab(makeTab("Home", "home"))}
+                    >
+                        Go Home
+                    </Button>
                 </div>
             </div>
         </div>

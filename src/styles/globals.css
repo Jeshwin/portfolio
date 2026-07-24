@@ -2,81 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Color scheme uses the VS Code default themes, stored as space-separated
+ * RGB channels so they compose with Tailwind's alpha syntax, i.e.
+ * `rgb(var(--background) / <alpha>)` (see tailwind.config.js).
+ *
+ * :root  = VS Code default *light* theme (Light Modern)
+ * .dark  = VS Code default *dark*  theme (Dark+)
+ */
 @layer base {
     :root {
         --font-inter: "Inter", "Helvetica", "Open Sans", sans-serif;
         --font-jetbrains-mono: "JetBrains Mono", ui-monospace, monospace;
 
-        --background: 220deg 23% 95%;
-        --foreground: 232deg 23% 18%;
+        --background: 255 255 255; /* #ffffff editor.background */
+        --foreground: 51 51 51; /* #333333 foreground */
 
-        --card: 220deg 23% 95%;
+        --card: 243 243 243; /* #f3f3f3 */
         --card-foreground: var(--foreground);
 
-        --popover: 223deg 16% 83%;
-        --popover-foreground: 232deg 23% 18%;
+        --popover: 243 243 243; /* #f3f3f3 */
+        --popover-foreground: 51 51 51;
 
-        --primary: 197deg 97% 90%;
-        --primary-foreground: 197deg 97% 46%;
+        --primary: 0 121 203; /* #0079cc accent blue */
+        --primary-foreground: 255 255 255; /* #ffffff */
 
-        --secondary: 266deg 85% 88%;
-        --secondary-foreground: 266deg 85% 58%;
+        --secondary: 104 33 122; /* #68217A */
+        --secondary-foreground: 255 255 255;
 
-        --muted: 225deg 14% 77%;
-        --muted-foreground: 233deg 13% 41%;
+        --muted: 232 232 232; /* #e8e8e8 hover */
+        --muted-foreground: 97 97 97; /* #616161 */
 
-        --accent: 0deg 60% 88%;
-        --accent-foreground: 0deg 60% 67%;
+        --accent: 243 243 243; /* #f3f3f3 tabs background */
+        --accent-foreground: 51 51 51;
 
-        --destructive: 347deg 87% 44%;
-        --destructive-foreground: 347deg 87% 88%;
+        --destructive: 205 49 49; /* #cd3131 error red */
+        --destructive-foreground: 255 255 255;
 
-        --border: var(--muted-foreground);
-        --input: var(--primary);
-        --ring: var(--primary-foreground);
+        --border: 212 212 212; /* #d4d4d4 */
+        --input: 206 206 206; /* #cecece */
+        --ring: 0 121 203; /* #0079cc */
 
         /* Custom Colors */
-        --mantle: hsl(220deg 22% 92%);
-        --mantle-foreground: hsl(234deg 16% 35%);
-        --swap: hsl(35deg 77% 80%);
-        --swap-foreground: hsl(35deg 77% 49%);
+        --mantle: rgb(248 248 248); /* #f8f8f8 */
+        --mantle-foreground: rgb(51 51 51);
+        --swap: rgb(0 121 203); /* #0079cc */
+        --swap-foreground: rgb(255 255 255);
 
         --radius: 0.5rem;
     }
     .dark {
-        --background: 232deg 23% 18%;
-        --foreground: 220deg 23% 95%;
+        --background: 30 30 30; /* #1e1e1e editor.background */
+        --foreground: 204 204 204; /* #cccccc foreground */
 
-        --card: 232deg 23% 18%;
-        --card-foreground: 220deg 23% 95%;
+        --card: 37 37 38; /* #252526 */
+        --card-foreground: 204 204 204;
 
-        --popover: 230deg 19% 26%;
+        --popover: 37 37 38; /* #252526 */
         --popover-foreground: var(--foreground);
 
-        --primary: 197deg 97% 46%;
-        --primary-foreground: 197deg 97% 90%;
+        --primary: 0 121 203; /* #007acc accent blue */
+        --primary-foreground: 255 255 255; /* #ffffff */
 
-        --secondary: 266deg 85% 58%;
-        --secondary-foreground: 266deg 85% 88%;
+        --secondary: 104 33 122; /* #68217A button.secondaryBackground */
+        --secondary-foreground: 255 255 255;
 
-        --muted: 231deg 16% 34%;
-        --muted-foreground: 228deg 39% 80%;
+        --muted: 45 45 45; /* #2d2d2d hover */
+        --muted-foreground: 160 160 160; /* #a0a0a0 */
 
-        --accent: 0deg 60% 67%;
-        --accent-foreground: 0deg 60% 88%;
+        --accent: 37 37 38; /* #252526 tabs background */
+        --accent-foreground: 204 204 204;
 
-        --destructive: 347deg 87% 44%;
-        --destructive-foreground: 347deg 87% 88%;
+        --destructive: 248 128 112; /* #f88070 error red */
+        --destructive-foreground: 30 30 30;
+
+        --border: 60 60 60; /* #3c3c3c */
+        --input: 60 60 60; /* #3c3c3c */
+        --ring: 0 121 203; /* #007acc */
 
         /* Custom Colors */
-        --mantle: hsl(233deg 23% 15%);
-        --mantle-foreground: hsl(227deg 68% 88%);
-        --swap: hsl(220deg 91% 54%);
-        --swap-foreground: hsl(220deg 91% 80%);
-
-        --border: var(--muted-foreground);
-        --input: var(--primary);
-        --ring: var(--primary-foreground);
+        --mantle: rgb(24 24 24); /* #181818 */
+        --mantle-foreground: rgb(204 204 204);
+        --swap: rgb(0 121 203); /* #007acc */
+        --swap-foreground: rgb(255 255 255);
     }
 }
 
@@ -87,11 +95,15 @@
     body {
         @apply bg-background text-foreground font-sans;
     }
+    /*
+     * react-layman theming. Color variables now derive from the theme tokens
+     * above, so the layout automatically follows the VS Code light/dark
+     * palettes. Non-color dimensions are theme-independent.
+     */
     :root {
         /*** Separators ***/
         /* Color of the handle on the separator */
-        /* --separator-handle-color: rgb(var(--primary)); */
-        --separator-handle-color: #cccccc;
+        --separator-handle-color: rgb(var(--foreground));
 
         /* Thickness of the separator between windows */
         --separator-thickness: 8px;
@@ -101,45 +113,38 @@
 
         /*** Windows ***/
         /* Background color of the window */
-        /* --window-bg-color: rgb(var(--background)); */
-        --window-bg-color: #1e1e1e;
+        --window-bg-color: rgb(var(--background));
 
         /* Border radius for window corners */
         --border-radius: 16px;
 
         /*** Window Toolbars ***/
         /* Background color of the toolbar */
-        /* --toolbar-bg-color: rgb(var(--accent)); */
-        --toolbar-bg-color: #252526;
+        --toolbar-bg-color: rgb(var(--accent));
 
         /* Background color of the toolbar on hover */
-        /* --toolbar-hover-bg-color: rgb(var(--muted)); */
-        --toolbar-hover-bg-color: #2d2d2d;
+        --toolbar-hover-bg-color: rgb(var(--muted));
 
         /* Background color for toolbar buttons on hover */
-        /* --toolbar-button-hover-bg-color: rgb(var(--muted)); */
-        --toolbar-button-hover-bg-color: #2d2d2d;
+        --toolbar-button-hover-bg-color: rgb(var(--muted));
 
         /* Height of the toolbar at the top of each window */
         --toolbar-height: 32px;
 
         /*** Tabs ***/
         /* Text color of tab titles */
-        /* --tab-text-color: rgb(var(--foreground)); */
-        --tab-text-color: #cccccc;
+        --tab-text-color: rgb(var(--foreground));
 
         /* Color of the 'close' icon in tabs, with opacity */
-        /* --close-tab-color: rgb(var(--destructive)); */
-        --close-tab-color: #f88070;
+        --close-tab-color: rgb(var(--destructive));
 
         /* Color of indicators (e.g., focus indicator)) */
-        /* --indicator-color: rgb(var(--primary)); */
-        --indicator-color: #007acc;
+        --indicator-color: rgb(var(--primary));
 
         /* Thickness of indicators (e.g., focus indicator)) */
         --indicator-thickness: 1px;
 
         /* Font size for text in tabs */
-        --tab-font-size: 16px;
+        --tab-font-size: 13px;
     }
 }
