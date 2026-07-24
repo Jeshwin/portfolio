@@ -5,23 +5,23 @@ import {
     Home,
     User,
     Mail,
-    FolderGit2,
     Notebook,
+    Bookmark,
     FileText,
     Box,
     FilePlus2,
     FileQuestion,
     type LucideIcon,
 } from "lucide-react";
-import {Component as HomePage} from "@/pages/HomePage";
-import {Component as AboutPage} from "@/pages/AboutPage";
-import {Component as ContactPage} from "@/pages/ContactPage";
-import {Component as ProjectListPage} from "@/pages/ProjectListPage";
-import {Component as BlogListPage} from "@/pages/BlogListPage";
-import {Component as BlogPostPage} from "@/pages/BlogPostPage";
-import {Component as ProjectPage} from "@/pages/ProjectPage";
-import {Component as NewTabPage} from "@/pages/NewTabPage";
-import {Component as NotFoundPage} from "@/pages/NotFoundPage";
+import {Home as HomePage} from "@/pages/Home";
+import {About} from "@/pages/About";
+import {Contact} from "@/pages/Contact";
+import {ProjectList} from "@/pages/ProjectList";
+import {BlogList} from "@/pages/BlogList";
+import {BlogPost} from "@/pages/BlogPost";
+import {Project} from "@/pages/Project";
+import {NewTab} from "@/pages/NewTab";
+import {NotFound} from "@/pages/NotFound";
 
 /**
  * Every "page" that used to be a route is now identified by a `page` id (and
@@ -80,9 +80,9 @@ export function tabIcon(tab: TabData): LucideIcon {
         case "contact":
             return Mail;
         case "projects":
-            return FolderGit2;
-        case "blog":
             return Notebook;
+        case "blog":
+            return Bookmark;
         case "blog-post":
             return FileText;
         case "project":
@@ -91,6 +91,28 @@ export function tabIcon(tab: TabData): LucideIcon {
             return FilePlus2;
         default:
             return FileQuestion;
+    }
+}
+
+/** Icon color shown in the tab title, matching the sidebar's per-page colors. */
+export function tabIconColor(tab: TabData): string | undefined {
+    switch (pageOf(tab)) {
+        case "home":
+            return "#EF5B5B";
+        case "blog":
+            return "#FF6719";
+        case "blog-post":
+            return "#C0FFEE";
+        case "projects":
+            return "#4D5D9A";
+        case "project":
+            return "#B07E34";
+        case "about":
+            return "#cdcddc";
+        case "contact":
+            return "#fafeff";
+        default:
+            return undefined;
     }
 }
 
@@ -105,30 +127,31 @@ export function renderPane(tab: TabData): JSX.Element {
         case "home":
             return <HomePage />;
         case "about":
-            return <AboutPage />;
+            return <About />;
         case "contact":
-            return <ContactPage />;
+            return <Contact />;
         case "projects":
-            return <ProjectListPage />;
+            return <ProjectList />;
         case "blog":
-            return <BlogListPage />;
+            return <BlogList />;
         case "blog-post":
-            return <BlogPostPage postId={slug ?? ""} />;
+            return <BlogPost postId={slug ?? ""} />;
         case "project":
-            return <ProjectPage projectId={slug ?? ""} />;
+            return <Project projectId={slug ?? ""} />;
         case "blank":
-            return <NewTabPage />;
+            return <NewTab />;
         default:
-            return <NotFoundPage />;
+            return <NotFound />;
     }
 }
 
 /** Tab title: icon + label. */
 export function renderTab(tab: TabData): JSX.Element {
     const Icon = tabIcon(tab);
+    const color = tabIconColor(tab);
     return (
         <span className="flex items-center gap-1.5">
-            <Icon className="size-4 shrink-0" />
+            <Icon className="size-4 shrink-0" style={{color}} />
             {tab.name}
         </span>
     );

@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button";
 import {makeTab, useOpenTab} from "@/lib/tabs";
 
-export function Component() {
+export function Home() {
     const openTab = useOpenTab();
     return (
         <div className="w-full h-full overflow-auto">
@@ -15,11 +15,11 @@ export function Component() {
                         className="rounded-full size-40 drop-shadow-xl mb-4"
                     />
 
-                    <div className="text-2xl">👋 Hello, I&apos;m</div>
-                    <span className="font-bold text-6xl bg-clip-text text-transparent bg-gradient-to-r from-[#04a5e5] via-[#8839ef] to-[#dd7878] drop-shadow-xl">
+                    <div className="text-lg">👋 Hello, I&apos;m</div>
+                    <span className="font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary drop-shadow-xl">
                         Jeshwin Prince
                     </span>
-                    <div className="text-xl mb-4 text-center">
+                    <div className="text-lg mb-4 text-center">
                         I am a fourth-year Computer Engineering student at Santa
                         Clara University. I love programming, playing the
                         guitar, and making art!

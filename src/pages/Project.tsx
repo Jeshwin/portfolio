@@ -1,9 +1,8 @@
 import ProjectGallery from "@/components/project-gallery";
-import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
 import {getProject} from "@/lib/content";
 
-export function Component({projectId}: {projectId: string}) {
+export function Project({projectId}: {projectId: string}) {
     const project = getProject(projectId);
     const createdDate = new Date(project.createdAt);
     const updatedDate = new Date(project.updatedAt);
@@ -27,11 +26,6 @@ export function Component({projectId}: {projectId: string}) {
                         <div className="flex flex-grow items-center gap-4 font-bold text-6xl">
                             <div>{project.title}</div>
                         </div>
-                        <ul className="w-full flex flex-wrap gap-2 my-2 *:text-base *:font-normal *:px-3 -ml-1">
-                            {project.tags.map((tag, index) => (
-                                <Badge key={index}>{tag}</Badge>
-                            ))}
-                        </ul>
                         <div className="text-base flex space-x-4">
                             <div>
                                 {createdDate.toLocaleDateString(undefined, {

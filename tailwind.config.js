@@ -1,5 +1,6 @@
 import typography from "@tailwindcss/typography";
 import tailwindcssAnimate from "tailwindcss-animate";
+import containerQueries from "@tailwindcss/container-queries";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -70,5 +71,5 @@ export default {
             }),
         },
     },
-    plugins: [typography, tailwindcssAnimate],
+    plugins: [typography, tailwindcssAnimate, containerQueries],
 };

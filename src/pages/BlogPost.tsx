@@ -1,7 +1,6 @@
-import {Badge} from "@/components/ui/badge";
 import {getPost} from "@/lib/content";
 
-export function Component({postId}: {postId: string}) {
+export function BlogPost({postId}: {postId: string}) {
     const blogPost = getPost(postId);
     const createdDate = new Date(blogPost.createdAt);
     const updatedDate = blogPost.updatedAt
@@ -18,11 +17,6 @@ export function Component({postId}: {postId: string}) {
                 <div className="mb-4 flex font-bold text-6xl flex-grow">
                     {blogPost.title}
                 </div>
-                <ul className="w-full flex flex-wrap gap-2 my-4 *:text-base *:font-normal *:px-3 -ml-1">
-                    {blogPost.tags.map((tag, index) => (
-                        <Badge key={index}>{tag}</Badge>
-                    ))}
-                </ul>
                 <div className="text-base flex space-x-4">
                     <div>
                         {createdDate.toLocaleDateString(undefined, {

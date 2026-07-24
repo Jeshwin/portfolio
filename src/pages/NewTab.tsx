@@ -3,7 +3,7 @@
  * That button always creates a `TabData("blank")`, so `renderPane` in
  * `LayoutPage.tsx` maps the `"blank"` tab name to this page.
  */
-export function Component() {
+export function NewTab() {
     return (
         <div className="w-full h-full overflow-auto">
             <div className="w-full min-h-full grid place-content-center p-8">

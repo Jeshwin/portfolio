@@ -59,7 +59,6 @@ import {
     InDesignLogo,
     OnshapeLogo,
 } from "@/components/logos";
-import {Badge} from "@/components/ui/badge";
 
 const coursework = [
     "Advanced Data Structures",
@@ -150,62 +149,59 @@ const skills = [
     {label: "LaTeX", icon: SiLatex, color: SiLatexHex},
 ];
 
-export function Component() {
+export function About() {
     return (
-        <div className="w-full h-full overflow-auto">
+        <div className="w-full h-full overflow-auto @container">
             <div className="container mx-auto p-8">
                 <div className="mb-8 flex font-bold text-7xl flex-grow">
                     About Me
                 </div>
-            <div className="text-5xl font-semibold">Education</div>
-            <div className="flex space-x-6 py-6">
-                <img
-                    src="/images/site/scu.png"
-                    width={512}
-                    height={512}
-                    alt="SCU Logo"
-                    className="size-32"
-                />
-                <div>
-                    <div className="font-semibold text-xl mb-2">
-                        Santa Clara University
-                    </div>
-                    <div className="space-y-1 *:leading-5">
-                        <div>
-                            Bachelor of Science in Computer Science and
-                            Engineering, Minor in Mathematics
+                <div className="text-5xl font-semibold">Education</div>
+                <div className="flex space-x-6 py-6">
+                    <img
+                        src="/images/site/scu.png"
+                        width={512}
+                        height={512}
+                        alt="SCU Logo"
+                        className="size-32"
+                    />
+                    <div>
+                        <div className="font-semibold text-xl mb-2">
+                            Santa Clara University
                         </div>
-                        <div>Graduating June 2026</div>
-                        <div>GPA: 3.9/4.0</div>
-                        <div>
-                            Academic honors: Dean&apos;s List Scholarship,
-                            University Honors Program, Tau Beta Pi
+                        <div className="space-y-1 *:leading-5">
+                            <div>
+                                Bachelor of Science in Computer Science and
+                                Engineering, Minor in Mathematics
+                            </div>
+                            <div>Graduating June 2026</div>
+                            <div>GPA: 3.9/4.0</div>
+                            <div>
+                                Academic honors: Dean&apos;s List Scholarship,
+                                University Honors Program, Tau Beta Pi
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="text-4xl font-semibold">Relevant Coursework</div>
-            <div className="flex flex-wrap gap-x-1 gap-y-2 py-4">
-                {coursework.map((course, index) => (
-                    <Badge key={index}>{course}</Badge>
-                ))}
-            </div>
-            <div className="text-5xl font-semibold">Experience</div>
-            <div className="py-6">
-                <ExperienceTimeline experiences={experiences} />
-            </div>
-            <div className="mb-6 text-5xl font-semibold">Skills</div>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 *:p-4 *:flex *:flex-col *:space-y-4 *:items-center *:justify-center">
-                {skills.map((skill, index) => (
-                    <div key={index}>
-                        <skill.icon
-                            color={skill.color}
-                            className="w-32 h-auto max-w-full"
-                        />
-                        <div className="font-semibold">{skill.label}</div>
-                    </div>
-                ))}
-            </div>
+                <div className="text-4xl font-semibold">
+                    Relevant Coursework
+                </div>
+                <div className="text-5xl font-semibold">Experience</div>
+                <div className="py-6">
+                    <ExperienceTimeline experiences={experiences} />
+                </div>
+                <div className="mb-6 text-5xl font-semibold">Skills</div>
+                <div className="grid grid-cols-3 @sm:grid-cols-4 @md:grid-cols-6 gap-4 *:p-4 *:flex *:flex-col *:space-y-4 *:items-center *:justify-center">
+                    {skills.map((skill, index) => (
+                        <div key={index}>
+                            <skill.icon
+                                color={skill.color}
+                                className="w-32 h-auto max-w-full"
+                            />
+                            <div className="font-semibold">{skill.label}</div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -23,7 +23,9 @@ export default function App() {
                     content="Jeshwin Prince's portfolio website"
                 />
             </Head>
-            <ClientOnly fallback={<div className="h-screen w-screen bg-background" />}>
+            <ClientOnly
+                fallback={<div className="h-screen w-screen bg-background" />}
+            >
                 {() => <Workspace />}
             </ClientOnly>
         </ThemeProvider>

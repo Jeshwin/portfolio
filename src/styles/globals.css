@@ -106,7 +106,7 @@
         --separator-handle-color: rgb(var(--foreground));
 
         /* Thickness of the separator between windows */
-        --separator-thickness: 8px;
+        --separator-thickness: 4px;
 
         /* Length of the separator handle */
         --separator-handle-length: 32px;
@@ -116,7 +116,7 @@
         --window-bg-color: rgb(var(--background));
 
         /* Border radius for window corners */
-        --border-radius: 16px;
+        --border-radius: 0;
 
         /*** Window Toolbars ***/
         /* Background color of the toolbar */

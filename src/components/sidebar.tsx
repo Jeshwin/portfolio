@@ -1,8 +1,6 @@
 import {useState} from "react";
 import {
     Home,
-    Notebook,
-    FolderGit2,
     User,
     Mail,
     RotateCcw,
@@ -13,6 +11,8 @@ import {
     FileText,
     Box,
     type LucideIcon,
+    Bookmark,
+    Notebook,
 } from "lucide-react";
 import {Button} from "./ui/button";
 import {cn} from "@/lib/utils";
@@ -48,6 +48,7 @@ const contactLinks = [
  */
 function TreeRow({
     icon: Icon,
+    iconColor,
     label,
     indent = 0,
     leading,
@@ -55,6 +56,7 @@ function TreeRow({
     onClick,
 }: {
     icon: LucideIcon;
+    iconColor: string;
     label: string;
     indent?: number;
     leading?: React.ReactNode;
@@ -74,7 +76,12 @@ function TreeRow({
             )}
         >
             {leading ?? <span className="size-4 shrink-0" />}
-            <Icon className="size-4 shrink-0" />
+            <Icon
+                className="size-4 shrink-0"
+                style={{
+                    color: iconColor,
+                }}
+            />
             <span className="truncate">{label}</span>
         </button>
     );
@@ -89,16 +96,20 @@ function SidebarFolder({
     label,
     page,
     icon,
+    iconColor,
     itemPage,
     itemIcon,
+    itemIconColor,
     items,
     onOpenChild,
 }: {
     label: string;
     page: PageId;
     icon: LucideIcon;
+    iconColor: string;
     itemPage: PageId;
     itemIcon: LucideIcon;
+    itemIconColor: string;
     items: {id: string; title: string}[];
     onOpenChild: () => void;
 }) {
@@ -110,6 +121,7 @@ function SidebarFolder({
             <TreeRow
                 icon={icon}
                 label={label}
+                iconColor={iconColor}
                 leading={
                     <ChevronRight
                         className={cn(
@@ -134,15 +146,14 @@ function SidebarFolder({
                         <TreeRow
                             key={item.id}
                             icon={itemIcon}
+                            iconColor={itemIconColor}
                             label={item.title}
                             indent={1}
                             makeDragTab={() =>
                                 makeTab(item.title, itemPage, item.id)
                             }
                             onClick={() => {
-                                openTab(
-                                    makeTab(item.title, itemPage, item.id)
-                                );
+                                openTab(makeTab(item.title, itemPage, item.id));
                                 onOpenChild();
                             }}
                         />
@@ -152,12 +163,13 @@ function SidebarFolder({
     );
 }
 
-interface SidebarProps {
+export default function Sidebar({
+    isOpen,
+    onClose,
+}: {
     isOpen: boolean;
     onClose: () => void;
-}
-
-export default function Sidebar({isOpen, onClose}: SidebarProps) {
+}) {
     const openTab = useOpenTab();
     const currentYear = new Date().getFullYear();
     const posts = getPosts();
@@ -232,36 +244,44 @@ export default function Sidebar({isOpen, onClose}: SidebarProps) {
                     <nav className="mt-2 flex min-h-0 flex-1 flex-col overflow-y-auto">
                         <TreeRow
                             icon={Home}
+                            iconColor="#EF5B5B"
                             label="Home"
                             makeDragTab={() => makeTab("Home", "home")}
                             onClick={() => openLeaf("Home", "home")}
                         />
+                        {/** https://jeshwinprince.substack.com/ */}
                         <SidebarFolder
                             label="Blog"
                             page="blog"
-                            icon={Notebook}
+                            icon={Bookmark}
+                            iconColor="#FF6719"
                             itemPage="blog-post"
                             itemIcon={FileText}
+                            itemIconColor="#C0FFEE"
                             items={posts}
                             onOpenChild={closeIfMobile}
                         />
                         <SidebarFolder
                             label="Projects"
                             page="projects"
-                            icon={FolderGit2}
+                            icon={Notebook}
+                            iconColor="#4D5D9A"
                             itemPage="project"
                             itemIcon={Box}
+                            itemIconColor="#B07E34"
                             items={projects}
                             onOpenChild={closeIfMobile}
                         />
                         <TreeRow
                             icon={User}
+                            iconColor="#cdcddc"
                             label="About"
                             makeDragTab={() => makeTab("About", "about")}
                             onClick={() => openLeaf("About", "about")}
                         />
                         <TreeRow
                             icon={Mail}
+                            iconColor="#fafeff"
                             label="Contact"
                             makeDragTab={() => makeTab("Contact", "contact")}
                             onClick={() => openLeaf("Contact", "contact")}
@@ -279,11 +299,7 @@ export default function Sidebar({isOpen, onClose}: SidebarProps) {
                                     rel="noopener noreferrer"
                                     aria-label={contact.label}
                                 >
-                                    <Button
-                                        size="icon"
-                                        variant="mantle"
-                                        className="size-10 rounded-full bg-mantle"
-                                    >
+                                    <Button size="icon" variant="mantle">
                                         {contact.icon}
                                     </Button>
                                 </a>

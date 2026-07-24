@@ -40,23 +40,11 @@ export default function Workspace() {
                 selectedIndex: 0,
             },
             {
-                direction: "column",
-                children: [
-                    {
-                        tabs: [
-                            makeTab("About", "about"),
-                            makeTab("Contact", "contact"),
-                        ],
-                        selectedIndex: 0,
-                    },
-                    {
-                        tabs: [
-                            makeTab("Projects", "projects"),
-                            makeTab("Blog", "blog"),
-                        ],
-                        selectedIndex: 1,
-                    },
+                tabs: [
+                    makeTab("About", "about"),
+                    makeTab("Contact", "contact"),
                 ],
+                selectedIndex: 0,
             },
         ],
     };
