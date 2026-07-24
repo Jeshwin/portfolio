@@ -1,14 +1,10 @@
-import {Head} from "vite-react-ssg";
 import {Linkedin, Mail} from "lucide-react";
 import {Button} from "@/components/ui/button";
 
-export function Component() {
+export function Contact() {
     return (
-        <div className="w-screen h-screen">
-            <Head>
-                <title>Contact - Jeshwin&apos;s Portfolio</title>
-            </Head>
-            <div className="w-full h-full cgrid place-content-center">
+        <div className="w-full h-full overflow-auto">
+            <div className="w-full min-h-full grid place-content-center p-8">
                 <div className="flex flex-col items-center container mx-auto">
                     <img
                         src="/images/site/profile.jpg"
@@ -17,8 +13,8 @@ export function Component() {
                         height={256}
                         className="rounded-full size-40 drop-shadow-xl"
                     />
-                    <span className="font-bold text-7xl">Contact</span>
-                    <div className="text-2xl mb-4 text-center">
+                    <span className="font-bold text-4xl">Contact</span>
+                    <div className="text-lg w-96 mb-4 text-center">
                         I&apos;d love to hear from you! Shoot me an email or
                         send a message on LinkedIn!
                     </div>

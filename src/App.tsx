@@ -1,19 +1,12 @@
-import {Outlet} from "react-router-dom";
 import {ThemeProvider} from "next-themes";
-import {Head} from "vite-react-ssg";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import {ClientOnly, Head} from "vite-react-ssg";
+import Workspace from "@/components/workspace";
 
 /**
- * Root layout for every route. Provides theming (next-themes) and the
- * persistent nav/footer chrome.
- *
- * Head management (title / meta) is handled per-page with vite-react-ssg's
- * built-in <Head> component - no provider needed at the root.
- *
- * next-themes is framework-agnostic; we keep `attribute="class"`,
- * `defaultTheme="system"`, `enableSystem`, and `disableTransitionOnChange`
- * to match the previous behavior exactly.
+ * The whole site is a single page: a react-layman workspace (see
+ * <Workspace/>). There is no router - navigation happens by opening pages as
+ * tabs. `ThemeProvider` (next-themes) supplies light/dark theming and the
+ * workspace is client-only because react-layman needs browser APIs.
  */
 export default function App() {
     return (
@@ -23,8 +16,6 @@ export default function App() {
             enableSystem
             disableTransitionOnChange
         >
-            {/* Site-wide defaults - per-page <Head> in each route overrides
-             * these when duplicate keys are present (title, description, etc.) */}
             <Head>
                 <title>Jeshwin&apos;s Portfolio</title>
                 <meta
@@ -32,9 +23,11 @@ export default function App() {
                     content="Jeshwin Prince's portfolio website"
                 />
             </Head>
-            <Navbar />
-            <Outlet />
-            <Footer />
+            <ClientOnly
+                fallback={<div className="h-screen w-screen bg-background" />}
+            >
+                {() => <Workspace />}
+            </ClientOnly>
         </ThemeProvider>
     );
 }

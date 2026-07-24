@@ -16,4 +16,11 @@ export default defineConfig({
             "@": path.resolve(__dirname, "src"),
         },
     },
+    ssr: {
+        // react-layman ships a bare `import "./index.css"`. During SSG the
+        // route tree is imported in Node, which can't load `.css` files.
+        // Bundling react-layman through Vite (instead of leaving it external)
+        // lets Vite handle/strip the CSS import so prerendering works.
+        noExternal: ["react-layman"],
+    },
 });

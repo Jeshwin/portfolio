@@ -1,29 +1,29 @@
 ---
-title: "August 2022 Blender Challenge"
+title: "Blender Challenge 2022"
 description: "A weekly summer-themed Blender rendering competition."
 created_at: 2023-08-03T03:37:49.330Z
 updated_at: 2023-08-03T18:20:26.602Z
-thumbnail: /images/projects/august-2022-blender-challenge/thumbnail.png
+thumbnail: /images/projects/blender-challenge-2022/thumbnail.png
 tags:
-  - blender
-  - 3d
-  - summer
-  - "2022"
+    - blender
+    - 3d
+    - summer
+    - "2022"
 links:
-  - title: "Tutorial for the rendering technique I used"
-    url: "https://www.youtube.com/watch?v=n9ZNGVvMOSQ"
-  - title: "Learn more about Blender"
-    url: "https://www.blender.org/"
+    - title: "Tutorial for the rendering technique I used"
+      url: "https://www.youtube.com/watch?v=n9ZNGVvMOSQ"
+    - title: "Learn more about Blender"
+      url: "https://www.blender.org/"
 artifacts:
-  - type: image
-    url: /images/projects/august-2022-blender-challenge/summer-drink.png
-    alt: "Summer Drink"
-  - type: image
-    url: /images/projects/august-2022-blender-challenge/beach-chair.png
-    alt: "Beach Chair"
-  - type: image
-    url: /images/projects/august-2022-blender-challenge/sandcastle.png
-    alt: "Sandcastle"
+    - type: image
+      url: /images/projects/blender-challenge-2022/summer-drink.png
+      alt: "Summer Drink"
+    - type: image
+      url: /images/projects/blender-challenge-2022/beach-chair.png
+      alt: "Beach Chair"
+    - type: image
+      url: /images/projects/blender-challenge-2022/sandcastle.png
+      alt: "Sandcastle"
 ---
 
 In August 2022, I participated in a small online competition to create a new summer-related scene in Blender for each week of August. I was able to complete three of the four weeks, and along the way I learned more about 3d rendering, especially in Blender.

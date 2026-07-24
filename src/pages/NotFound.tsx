@@ -1,17 +1,13 @@
-import {Link} from "react-router-dom";
-import {Head} from "vite-react-ssg";
 import {Button} from "@/components/ui/button";
+import {makeTab, useOpenTab} from "@/lib/tabs";
 
-export function Component() {
+export function NotFound() {
+    const openTab = useOpenTab();
     return (
-        <div className="w-screen h-screen">
-            <Head>
-                <title>Not Found - Jeshwin&apos;s Portfolio</title>
-                <meta name="robots" content="noindex" />
-            </Head>
-            <div className="w-full h-full cgrid place-content-center">
+        <div className="w-full h-full overflow-auto @container">
+            <div className="w-full min-h-full grid place-content-center p-8">
                 <div className="flex flex-col items-center container mx-auto">
-                    <div className="relative -mt-24 w-[14rem] lg:w-[24rem] aspect-square">
+                    <div className="relative -mt-24 w-[14rem] @lg:w-[24rem] aspect-square">
                         <img
                             src="/images/site/404.png"
                             alt="404 Astronaut"
@@ -23,11 +19,13 @@ export function Component() {
                         about that, you should go home. The button below should
                         help you!
                     </div>
-                    <Link to="/">
-                        <Button size="lg" variant="destructive">
-                            Go Home
-                        </Button>
-                    </Link>
+                    <Button
+                        size="lg"
+                        variant="destructive"
+                        onClick={() => openTab(makeTab("Home", "home"))}
+                    >
+                        Go Home
+                    </Button>
                 </div>
             </div>
         </div>
