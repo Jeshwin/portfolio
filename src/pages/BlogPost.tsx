@@ -14,10 +14,10 @@ export function BlogPost({postId}: {postId: string}) {
     return (
         <div className="h-full w-full overflow-auto">
             <div className="container mx-auto p-8">
-                <div className="mb-4 flex font-bold text-6xl flex-grow">
+                <div className="mb-2 flex font-bold text-4xl flex-grow">
                     {blogPost.title}
                 </div>
-                <div className="text-base flex space-x-4">
+                <div className="mb-6 text-base flex space-x-4">
                     <div>
                         {createdDate.toLocaleDateString(undefined, {
                             year: "numeric",
@@ -36,9 +36,8 @@ export function BlogPost({postId}: {postId: string}) {
                         </div>
                     )}
                 </div>
-                <div className="mb-6"></div>
                 <div
-                    className="prose dark:prose-invert prose-primary mx-auto"
+                    className="prose dark:prose-invert prose-a:text-primary mx-auto"
                     dangerouslySetInnerHTML={{__html: blogPost.body || ""}}
                 />
             </div>

@@ -150,9 +150,9 @@ export function renderTab(tab: TabData): JSX.Element {
     const Icon = tabIcon(tab);
     const color = tabIconColor(tab);
     return (
-        <span className="flex items-center gap-1.5">
+        <span className="flex items-center gap-1.5 min-w-0">
             <Icon className="size-4 shrink-0" style={{color}} />
-            {tab.name}
+            <span className="truncate">{tab.name}</span>
         </span>
     );
 }

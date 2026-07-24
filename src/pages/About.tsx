@@ -1,64 +1,5 @@
 import type {Experience} from "@/lib/types";
 import ExperienceTimeline from "@/components/experience-timeline";
-import {
-    SiArm,
-    SiArmHex,
-    SiC,
-    SiCHex,
-    SiCplusplus,
-    SiCplusplusHex,
-    SiCss,
-    SiCssHex,
-    SiDocker,
-    SiDockerHex,
-    SiFigma,
-    SiFigmaHex,
-    SiFirebase,
-    SiFirebaseHex,
-    SiFlutter,
-    SiFlutterHex,
-    SiGit,
-    SiGitHex,
-    SiGithub,
-    SiGithubHex,
-    SiGnubash,
-    SiGnubashHex,
-    SiHtml5,
-    SiHtml5Hex,
-    SiJavascript,
-    SiJavascriptHex,
-    SiKotlin,
-    SiKotlinHex,
-    SiKubernetes,
-    SiKubernetesHex,
-    SiLatex,
-    SiLatexHex,
-    SiLinux,
-    SiLinuxHex,
-    SiMongodb,
-    SiMongodbHex,
-    SiPostgresql,
-    SiPostgresqlHex,
-    SiPython,
-    SiPythonHex,
-    SiReact,
-    SiReactHex,
-    SiRust,
-    SiRustHex,
-    SiTailwindcss,
-    SiTailwindcssHex,
-    SiTrello,
-    SiTrelloHex,
-    SiWebassembly,
-    SiWebassemblyHex,
-} from "@icons-pack/react-simple-icons";
-import {Palette} from "lucide-react";
-import {
-    AWSLogo,
-    FusionLogo,
-    InDesignLogo,
-    OnshapeLogo,
-} from "@/components/logos";
 
 const coursework = [
     "Advanced Data Structures",
@@ -70,11 +11,12 @@ const coursework = [
     "Machine Learning",
     "Computer Architecture",
     "Introduction to Compilers",
+    "Foundations of Computational Data Science",
 ];
 
 const experiences: Experience[] = [
     {
-        period: "June 2024 - Present",
+        period: "June 2024 - June 2026",
         company: "Human-Computer Interaction Lab at SCU",
         role: "Fullstack Developer",
         description: [
@@ -116,47 +58,89 @@ const experiences: Experience[] = [
     },
 ];
 
-const skills = [
-    {label: "HTML", icon: SiHtml5, color: SiHtml5Hex},
-    {label: "CSS", icon: SiCss, color: SiCssHex},
-    {label: "JavaScript", icon: SiJavascript, color: SiJavascriptHex},
-    {label: "React", icon: SiReact, color: SiReactHex},
-    {label: "SQL", icon: SiPostgresql, color: SiPostgresqlHex},
-    {label: "NoSQL", icon: SiMongodb, color: SiMongodbHex},
-    {label: "Tailwind", icon: SiTailwindcss, color: SiTailwindcssHex},
-    {label: "Flutter", icon: SiFlutter, color: SiFlutterHex},
-    {label: "Docker", icon: SiDocker, color: SiDockerHex},
-    {label: "Kubernetes", icon: SiKubernetes, color: SiKubernetesHex},
-    {label: "AWS", icon: AWSLogo, color: "#FF9900"},
-    {label: "Firebase", icon: SiFirebase, color: SiFirebaseHex},
-    {label: "Git", icon: SiGit, color: SiGitHex},
-    {label: "Bash", icon: SiGnubash, color: SiGnubashHex},
-    {label: "Linux", icon: SiLinux, color: SiLinuxHex},
-    {label: "Python", icon: SiPython, color: SiPythonHex},
-    {label: "C", icon: SiC, color: SiCHex},
-    {label: "C++", icon: SiCplusplus, color: SiCplusplusHex},
-    {label: "Kotlin", icon: SiKotlin, color: SiKotlinHex},
-    {label: "Rust", icon: SiRust, color: SiRustHex},
-    {label: "WASM", icon: SiWebassembly, color: SiWebassemblyHex},
-    {label: "ARM", icon: SiArm, color: SiArmHex},
-    {label: "GitHub", icon: SiGithub, color: SiGithubHex},
-    {label: "Trello", icon: SiTrello, color: SiTrelloHex},
-    {label: "Figma", icon: SiFigma, color: SiFigmaHex},
-    {label: "InDesign", icon: InDesignLogo, color: SiCssHex},
-    {label: "Canva", icon: Palette, color: "#00C4CC"},
-    {label: "Fusion", icon: FusionLogo, color: SiCssHex},
-    {label: "Onshape", icon: OnshapeLogo, color: SiCssHex},
-    {label: "LaTeX", icon: SiLatex, color: SiLatexHex},
+const skillCategories = [
+    {
+        category: "Languages",
+        skills: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Python",
+            "C",
+            "C++",
+            "Rust",
+            "Kotlin",
+            "Dart",
+            "LaTeX",
+        ],
+    },
+    {
+        category: "Frameworks",
+        skills: ["React", "Tailwind", "Flutter"],
+    },
+    {
+        category: "Machine Learning",
+        skills: ["Tensorflow", "Pytorch", "scikit-learn", "numpy", "pandas"],
+    },
+    {
+        category: "Databases",
+        skills: ["PostgreSQL", "SQLite", "MongoDB", "NoSQL"],
+    },
+    {
+        category: "Cloud & DevOps",
+        skills: [
+            "Docker",
+            "Kubernetes",
+            "AWS",
+            "Azure",
+            "Firebase",
+            "Git",
+            "GitHub",
+            "Bash",
+            "Linux",
+        ],
+    },
+    {
+        category: "Systems & Hardware",
+        skills: ["WASM", "ARM", "RISC-V"],
+    },
+    {
+        category: "Design",
+        skills: ["Figma", "InDesign", "Canva", "Fusion", "Onshape"],
+    },
 ];
 
 export function About() {
     return (
         <div className="w-full h-full overflow-auto @container">
             <div className="container mx-auto p-8">
-                <div className="mb-8 flex font-bold text-7xl flex-grow">
+                <div className="mb-8 flex font-bold text-4xl flex-grow">
                     About Me
                 </div>
-                <div className="text-5xl font-semibold">Education</div>
+                <div className="text-3xl font-semibold">Education</div>
+                <div className="flex space-x-6 py-6">
+                    <img
+                        src="/images/site/cmu.png"
+                        width={512}
+                        height={512}
+                        alt="CMU Logo"
+                        className="size-32"
+                    />
+                    <div>
+                        <div className="font-semibold text-xl mb-2">
+                            Carnegie Mellon University
+                        </div>
+                        <div className="space-y-1 *:leading-5">
+                            <div>Master of Computational Data Science</div>
+                            <div>August 2026 - Present</div>
+                            {/* <div>GPA: 3.9/4.0</div> */}
+                            {/* <div>
+                                Academic honors: Dean&apos;s List Scholarship,
+                                University Honors Program, Tau Beta Pi
+                            </div> */}
+                        </div>
+                    </div>
+                </div>
                 <div className="flex space-x-6 py-6">
                     <img
                         src="/images/site/scu.png"
@@ -174,7 +158,7 @@ export function About() {
                                 Bachelor of Science in Computer Science and
                                 Engineering, Minor in Mathematics
                             </div>
-                            <div>Graduating June 2026</div>
+                            <div>September 2022 - June 2026</div>
                             <div>GPA: 3.9/4.0</div>
                             <div>
                                 Academic honors: Dean&apos;s List Scholarship,
@@ -183,22 +167,41 @@ export function About() {
                         </div>
                     </div>
                 </div>
-                <div className="text-4xl font-semibold">
+                <div className="text-3xl font-semibold mb-6">
                     Relevant Coursework
                 </div>
-                <div className="text-5xl font-semibold">Experience</div>
-                <div className="py-6">
+                <ul className="mb-6 columns-2 gap-x-8">
+                    {coursework.map((course, index) => (
+                        <li
+                            key={index}
+                            className="py-1 flex items-start break-inside-avoid"
+                        >
+                            <span className="mr-4 mt-2 text-sm">•</span>
+                            <span className="leading-relaxed">{course}</span>
+                        </li>
+                    ))}
+                </ul>
+                <div className="text-3xl font-semibold mb-6">Experience</div>
+                <div className="mb-6">
                     <ExperienceTimeline experiences={experiences} />
                 </div>
-                <div className="mb-6 text-5xl font-semibold">Skills</div>
-                <div className="grid grid-cols-3 @sm:grid-cols-4 @md:grid-cols-6 gap-4 *:p-4 *:flex *:flex-col *:space-y-4 *:items-center *:justify-center">
-                    {skills.map((skill, index) => (
-                        <div key={index}>
-                            <skill.icon
-                                color={skill.color}
-                                className="w-32 h-auto max-w-full"
-                            />
-                            <div className="font-semibold">{skill.label}</div>
+                <div className="mb-6 text-3xl font-semibold">Skills</div>
+                <div className="space-y-6">
+                    {skillCategories.map((group) => (
+                        <div key={group.category}>
+                            <div className="mb-2 text-lg font-bold">
+                                {group.category}
+                            </div>
+                            <div className="flex flex-wrap gap-x-2 gap-y-2">
+                                {group.skills.map((skill) => (
+                                    <div
+                                        key={skill}
+                                        className="py-1 px-3 rounded bg-secondary"
+                                    >
+                                        <span>{skill}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ))}
                 </div>

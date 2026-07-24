@@ -14,16 +14,16 @@ export function Project({projectId}: {projectId: string}) {
     return (
         <div className="h-full w-full overflow-auto">
             <div className="container mx-auto p-8">
-                <div className="mb-12 flex gap-8 items-center">
+                <div className="mb-8 flex gap-8 items-center">
                     <img
                         src={project.thumbnail}
                         alt={project.title}
                         width={256}
                         height={256}
-                        className="size-40 object-cover rounded-full"
+                        className="size-20 object-cover rounded-full"
                     />
                     <div>
-                        <div className="flex flex-grow items-center gap-4 font-bold text-6xl">
+                        <div className="flex flex-grow items-center gap-4 font-bold text-4xl mb-2">
                             <div>{project.title}</div>
                         </div>
                         <div className="text-base flex space-x-4">
@@ -48,18 +48,18 @@ export function Project({projectId}: {projectId: string}) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-6">
-                    <div className="text-4xl font-medium">Gallery</div>
+                    <div className="text-3xl font-bold">Gallery</div>
                     {project.artifacts && project.artifacts.length > 0 && (
                         <ProjectGallery artifacts={project.artifacts} />
                     )}
-                    <div className="text-4xl font-medium">Description</div>
+                    <div className="text-3xl font-bold">Description</div>
                     <div
                         className="prose dark:prose-invert prose-primary max-w-none"
                         dangerouslySetInnerHTML={{
                             __html: project.description || "",
                         }}
                     />
-                    <div className="text-4xl font-medium">Links</div>
+                    <div className="text-3xl font-bold">Links</div>
                     <ul>
                         {project.links?.map((link, index) => (
                             <li key={index}>
@@ -71,7 +71,7 @@ export function Project({projectId}: {projectId: string}) {
                                     <Button
                                         variant="link"
                                         size="lg"
-                                        className="text-base"
+                                        className="text-base p-0"
                                     >
                                         {link.title}
                                     </Button>
