@@ -17,6 +17,27 @@ import type {Plugin} from "vite";
  * `{ frontmatter, html }` directly - no runtime markdown parsing needed
  * on the client.
  */
+/**
+ * Demote every generated heading one level: h1 -> h2, h2 -> h3, ... h5 -> h6
+ * (h6 is already the floor and stays put).
+ *
+ * The page title is the document's only <h1>, rendered by the page component.
+ * Some content files use `# ` for their own section headings, which would
+ * produce a second <h1> and muddle the document outline for crawlers. Fixing
+ * it here rather than in the markdown means new content can't reintroduce the
+ * problem. Iterating 5 -> 1 avoids cascading a heading down more than once.
+ */
+function demoteHeadings(html: string): string {
+    let out = html;
+    for (let level = 5; level >= 1; level--) {
+        out = out.replace(
+            new RegExp(`<(/?)h${level}(\\s|>)`, "g"),
+            `<$1h${level + 1}$2`
+        );
+    }
+    return out;
+}
+
 export function markdown(): Plugin {
     return {
         name: "portfolio-markdown-loader",
@@ -26,10 +47,9 @@ export function markdown(): Plugin {
 
             const raw = fs.readFileSync(id, "utf8");
             const {data, content} = matter(raw);
-            const html = remark()
-                .use(remarkHtml)
-                .processSync(content)
-                .toString();
+            const html = demoteHeadings(
+                remark().use(remarkHtml).processSync(content).toString()
+            );
 
             return {
                 code: `export default ${JSON.stringify({

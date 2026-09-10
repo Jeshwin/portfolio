@@ -17,15 +17,9 @@ import {
 import {Button} from "./ui/button";
 import {cn} from "@/lib/utils";
 import {makeTab, useOpenTab, useTabDrag, type PageId} from "@/lib/tabs";
+import {pathFor} from "@/lib/routes-map";
+import {LAYOUT_STORAGE_KEY} from "@/lib/use-url-sync";
 import {getPosts, getProjects} from "@/lib/content";
-
-/**
- * localStorage key used by the react-layman <LaymanProvider>. Bumped to v2
- * when the tab schema moved to `options.page`, so any stale layout from the
- * old name-based scheme is discarded on first load. The "Reset layout" button
- * wipes this key.
- */
-export const LAYOUT_STORAGE_KEY = "portfolio-layout-v2";
 
 const contactLinks = [
     {link: "https://github.com/Jeshwin", icon: <Github />, label: "GitHub"},
@@ -42,9 +36,13 @@ const contactLinks = [
 ];
 
 /**
- * A single explorer row. It is both a react-dnd drag source (drag it into a
- * layman window) and a button (click to open/focus it as a tab). `leading`
- * holds the folder chevron (or a spacer so leaf rows stay aligned).
+ * A single explorer row: a react-dnd drag source (drag it into a layman
+ * window) and a link (click to open/focus it as a tab). `leading` holds the
+ * folder chevron (or a spacer so leaf rows stay aligned).
+ *
+ * It's an <a> with a real `href` rather than a <button> so middle-click and
+ * cmd-click open the page in a new browser tab - every page has a URL now.
+ * A plain left click is intercepted and handled inside the workspace instead.
  */
 function TreeRow({
     icon: Icon,
@@ -52,6 +50,7 @@ function TreeRow({
     label,
     indent = 0,
     leading,
+    href,
     makeDragTab,
     onClick,
 }: {
@@ -60,14 +59,28 @@ function TreeRow({
     label: string;
     indent?: number;
     leading?: React.ReactNode;
+    href?: string;
     makeDragTab: () => ReturnType<typeof makeTab>;
     onClick: () => void;
 }) {
     const dragRef = useTabDrag(makeDragTab);
     return (
-        <button
+        <a
             ref={dragRef}
-            onClick={onClick}
+            href={href}
+            onClick={(event) => {
+                // Let the browser handle modified clicks (new tab/window).
+                if (
+                    event.metaKey ||
+                    event.ctrlKey ||
+                    event.shiftKey ||
+                    event.altKey
+                ) {
+                    return;
+                }
+                event.preventDefault();
+                onClick();
+            }}
             title={label}
             style={{paddingLeft: `${8 + indent * 14}px`}}
             className={cn(
@@ -83,7 +96,7 @@ function TreeRow({
                 }}
             />
             <span className="truncate">{label}</span>
-        </button>
+        </a>
     );
 }
 
@@ -122,6 +135,7 @@ function SidebarFolder({
                 icon={icon}
                 label={label}
                 iconColor={iconColor}
+                href={pathFor(page)}
                 leading={
                     <ChevronRight
                         className={cn(
@@ -149,6 +163,7 @@ function SidebarFolder({
                             iconColor={itemIconColor}
                             label={item.title}
                             indent={1}
+                            href={pathFor(itemPage, item.id)}
                             makeDragTab={() =>
                                 makeTab(item.title, itemPage, item.id)
                             }
@@ -246,6 +261,7 @@ export default function Sidebar({
                             icon={Home}
                             iconColor="#EF5B5B"
                             label="Home"
+                            href={pathFor("home")}
                             makeDragTab={() => makeTab("Home", "home")}
                             onClick={() => openLeaf("Home", "home")}
                         />
@@ -276,6 +292,7 @@ export default function Sidebar({
                             icon={User}
                             iconColor="#cdcddc"
                             label="About"
+                            href={pathFor("about")}
                             makeDragTab={() => makeTab("About", "about")}
                             onClick={() => openLeaf("About", "about")}
                         />
@@ -283,6 +300,7 @@ export default function Sidebar({
                             icon={Mail}
                             iconColor="#fafeff"
                             label="Contact"
+                            href={pathFor("contact")}
                             makeDragTab={() => makeTab("Contact", "contact")}
                             onClick={() => openLeaf("Contact", "contact")}
                         />

@@ -1,20 +1,16 @@
 import ProjectGallery from "@/components/project-gallery";
 import {Button} from "@/components/ui/button";
 import {getProject} from "@/lib/content";
+import {formatDate, isDifferentDay, isoDate} from "@/lib/utils";
 
 export function Project({projectId}: {projectId: string}) {
     const project = getProject(projectId);
-    const createdDate = new Date(project.createdAt);
-    const updatedDate = new Date(project.updatedAt);
-
-    // Check if the dates are different days
-    const isDifferentDay =
-        createdDate.toDateString() !== updatedDate.toDateString();
+    const wasUpdated = isDifferentDay(project.createdAt, project.updatedAt);
 
     return (
         <div className="h-full w-full overflow-auto">
-            <div className="container mx-auto p-8">
-                <div className="mb-8 flex gap-8 items-center">
+            <article className="container mx-auto p-8">
+                <header className="mb-8 flex gap-8 items-center">
                     <img
                         src={project.thumbnail}
                         alt={project.title}
@@ -24,42 +20,33 @@ export function Project({projectId}: {projectId: string}) {
                     />
                     <div>
                         <div className="flex flex-grow items-center gap-4 font-bold text-4xl mb-2">
-                            <div>{project.title}</div>
+                            <h1>{project.title}</h1>
                         </div>
                         <div className="text-base flex space-x-4">
-                            <div>
-                                {createdDate.toLocaleDateString(undefined, {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                })}
-                            </div>
-                            {isDifferentDay && (
-                                <div>
-                                    Updated:{" "}
-                                    {updatedDate.toLocaleDateString(undefined, {
-                                        year: "numeric",
-                                        month: "short",
-                                        day: "numeric",
-                                    })}
-                                </div>
+                            <time dateTime={isoDate(project.createdAt)}>
+                                {formatDate(project.createdAt)}
+                            </time>
+                            {wasUpdated && (
+                                <time dateTime={isoDate(project.updatedAt)}>
+                                    Updated: {formatDate(project.updatedAt)}
+                                </time>
                             )}
                         </div>
                     </div>
-                </div>
+                </header>
                 <div className="flex flex-col gap-6">
-                    <div className="text-3xl font-bold">Gallery</div>
+                    <h2 className="text-3xl font-bold">Gallery</h2>
                     {project.artifacts && project.artifacts.length > 0 && (
                         <ProjectGallery artifacts={project.artifacts} />
                     )}
-                    <div className="text-3xl font-bold">Description</div>
+                    <h2 className="text-3xl font-bold">Description</h2>
                     <div
                         className="prose dark:prose-invert prose-primary max-w-none"
                         dangerouslySetInnerHTML={{
                             __html: project.description || "",
                         }}
                     />
-                    <div className="text-3xl font-bold">Links</div>
+                    <h2 className="text-3xl font-bold">Links</h2>
                     <ul>
                         {project.links?.map((link, index) => (
                             <li key={index}>
@@ -80,7 +67,7 @@ export function Project({projectId}: {projectId: string}) {
                         ))}
                     </ul>
                 </div>
-            </div>
+            </article>
         </div>
     );
 }
