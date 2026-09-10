@@ -35,9 +35,20 @@ function pathToId(filepath: string): string {
     return name.replace(/\.md$/, "");
 }
 
+/**
+ * A draft with no frontmatter yet (an empty or half-written .md file) would
+ * otherwise produce an Invalid Date and crash the prerender - every page is
+ * now built ahead of time, so one bad file would fail the whole build. Skip
+ * such files instead: they're unpublished by definition.
+ */
+function isPublishable(fm: {title?: string; created_at?: string}): boolean {
+    return Boolean(fm?.title && fm?.created_at && !isNaN(Date.parse(fm.created_at)));
+}
+
 // ==================== Blog Posts ====================
 
 const posts: Post[] = Object.entries(blogModules)
+    .filter(([, mod]) => isPublishable(mod.frontmatter))
     .map(([filepath, mod]) => {
         const id = pathToId(filepath);
         const fm = mod.frontmatter;
@@ -66,6 +77,15 @@ export function getPost(id: string): Post {
     return post;
 }
 
+/**
+ * Non-throwing lookup. `getPost` throws, which is fine inside the workspace
+ * (a bad slug is a bug) but fatal during SSG and wrong for a URL a visitor
+ * typed - <RouteShell> uses this to fall back to the not-found page instead.
+ */
+export function hasPost(id: string): boolean {
+    return postsById.has(id);
+}
+
 export function getAllPostIds(): string[] {
     return posts.map((p) => p.id);
 }
@@ -73,6 +93,7 @@ export function getAllPostIds(): string[] {
 // ==================== Projects ====================
 
 const projects: Project[] = Object.entries(projectModules)
+    .filter(([, mod]) => isPublishable(mod.frontmatter))
     .map(([filepath, mod]) => {
         const id = pathToId(filepath);
         const fm = mod.frontmatter;
@@ -83,6 +104,7 @@ const projects: Project[] = Object.entries(projectModules)
             createdAt: new Date(fm.created_at),
             updatedAt: new Date(fm.updated_at),
             description: mod.html,
+            summary: fm.description,
             links: fm.links,
             artifacts: fm.artifacts,
             tags: fm.tags ?? [],
@@ -101,6 +123,11 @@ export function getProject(id: string): Project {
     const project = projectsById.get(id);
     if (!project) throw new Error(`Project not found: ${id}`);
     return project;
+}
+
+/** Non-throwing lookup - see `hasPost`. */
+export function hasProject(id: string): boolean {
+    return projectsById.has(id);
 }
 
 export function getAllProjectIds(): string[] {

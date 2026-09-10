@@ -1,8 +1,6 @@
-import {Button} from "@/components/ui/button";
-import {makeTab, useOpenTab} from "@/lib/tabs";
+import PageLinkButton from "@/components/page-link-button";
 
 export function Home() {
-    const openTab = useOpenTab();
     return (
         <div className="w-full h-full overflow-auto">
             <div className="w-full min-h-full grid place-content-center p-8">
@@ -16,39 +14,34 @@ export function Home() {
                     />
 
                     <div className="text-lg">👋 Hello, I&apos;m</div>
-                    <span className="font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary drop-shadow-xl">
+                    <h1 className="font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary drop-shadow-xl">
                         Jeshwin Prince
-                    </span>
+                    </h1>
                     <div className="text-lg mb-4 text-center">
-                        I am a fourth-year Computer Engineering student at Santa
-                        Clara University. I love programming, playing the
-                        guitar, and making art!
+                        I am pursuing my Masters of Computational Data Science
+                        at Carnegie Mellon University. I have a Bachelors of
+                        Science in Computer Science and Engineering with a Minor
+                        in Mathematics from Santa Clara University. I also love
+                        playing the guitar, making art, and cooking!
                     </div>
                     <div className="flex space-x-2">
-                        <Button
-                            size="lg"
-                            onClick={() =>
-                                openTab(makeTab("Projects", "projects"))
-                            }
-                        >
+                        <PageLinkButton page="projects" size="lg">
                             Explore Projects
-                        </Button>
-                        <Button
+                        </PageLinkButton>
+                        <PageLinkButton
+                            page="blog"
                             size="lg"
                             variant="secondary"
-                            onClick={() => openTab(makeTab("Blog", "blog"))}
                         >
                             Read Blog
-                        </Button>
-                        <Button
+                        </PageLinkButton>
+                        <PageLinkButton
+                            page="contact"
                             variant="accent"
                             size="lg"
-                            onClick={() =>
-                                openTab(makeTab("Contact", "contact"))
-                            }
                         >
                             Contact
-                        </Button>
+                        </PageLinkButton>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,14 @@ export interface Project {
     thumbnail: string;
     createdAt: Date;
     updatedAt: Date;
+    /** Rendered HTML body of the project's markdown file. */
     description?: string;
+    /**
+     * The one-line frontmatter description. Kept separate from `description`
+     * (which holds the HTML body) because this is what a meta description
+     * wants. `Post` already carries both as `description`/`body`.
+     */
+    summary?: string;
     links?: ProjectLink[];
     artifacts?: ProjectArtifact[];
     tags: string[];
