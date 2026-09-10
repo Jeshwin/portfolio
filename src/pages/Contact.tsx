@@ -13,11 +13,11 @@ export function Contact() {
                         height={256}
                         className="rounded-full size-40 drop-shadow-xl"
                     />
-                    <span className="font-bold text-4xl">Contact</span>
-                    <div className="text-lg w-96 mb-4 text-center">
+                    <h1 className="font-bold text-4xl">Contact</h1>
+                    <p className="text-lg w-96 mb-4 text-center">
                         I&apos;d love to hear from you! Shoot me an email or
                         send a message on LinkedIn!
-                    </div>
+                    </p>
                     <div className="flex space-x-2">
                         <a href="mailto:jeshwinjprince@gmail.com">
                             <Button size="lg">

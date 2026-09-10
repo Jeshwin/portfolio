@@ -23,9 +23,9 @@ export default function ExperienceTimeline({
                         <div className="ml-12 w-full">
                             <div className="text-sm">{entry.period}</div>
 
-                            <div className="text-xl font-semibold">
+                            <h3 className="text-xl font-semibold">
                                 {entry.company}
-                            </div>
+                            </h3>
 
                             <div className="text-primary font-semibold">
                                 {entry.role}

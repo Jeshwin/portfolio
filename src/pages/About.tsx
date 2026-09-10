@@ -1,5 +1,7 @@
+import {Download} from "lucide-react";
 import type {Experience} from "@/lib/types";
 import ExperienceTimeline from "@/components/experience-timeline";
+import {Button} from "@/components/ui/button";
 
 const coursework = [
     "Advanced Data Structures",
@@ -114,10 +116,27 @@ export function About() {
     return (
         <div className="w-full h-full overflow-auto @container">
             <div className="container mx-auto p-8">
-                <div className="mb-8 flex font-bold text-4xl flex-grow">
+                <h1 className="mb-4 flex font-bold text-4xl flex-grow">
                     About Me
+                </h1>
+                <div className="mb-8">
+                    {/*
+                     * `download` asks the browser to save the file rather than
+                     * navigate to it. `asChild` puts the button styles on the
+                     * anchor, so this stays a real link - it works in the
+                     * prerendered document and for middle-click.
+                     */}
+                    <Button asChild size="lg">
+                        <a
+                            href="/Jeshwin_Prince_Resume.pdf"
+                            download="Jeshwin_Prince_Resume.pdf"
+                        >
+                            <Download />
+                            Download Resume
+                        </a>
+                    </Button>
                 </div>
-                <div className="text-3xl font-semibold">Education</div>
+                <h2 className="text-3xl font-semibold">Education</h2>
                 <div className="flex space-x-6 py-6">
                     <img
                         src="/images/site/cmu.png"
@@ -127,9 +146,9 @@ export function About() {
                         className="size-32"
                     />
                     <div>
-                        <div className="font-semibold text-xl mb-2">
+                        <h3 className="font-semibold text-xl mb-2">
                             Carnegie Mellon University
-                        </div>
+                        </h3>
                         <div className="space-y-1 *:leading-5">
                             <div>Master of Computational Data Science</div>
                             <div>August 2026 - Present</div>
@@ -150,9 +169,9 @@ export function About() {
                         className="size-32"
                     />
                     <div>
-                        <div className="font-semibold text-xl mb-2">
+                        <h3 className="font-semibold text-xl mb-2">
                             Santa Clara University
-                        </div>
+                        </h3>
                         <div className="space-y-1 *:leading-5">
                             <div>
                                 Bachelor of Science in Computer Science and
@@ -167,9 +186,9 @@ export function About() {
                         </div>
                     </div>
                 </div>
-                <div className="text-3xl font-semibold mb-6">
+                <h2 className="text-3xl font-semibold mb-6">
                     Relevant Coursework
-                </div>
+                </h2>
                 <ul className="mb-6 columns-2 gap-x-8">
                     {coursework.map((course, index) => (
                         <li
@@ -181,17 +200,17 @@ export function About() {
                         </li>
                     ))}
                 </ul>
-                <div className="text-3xl font-semibold mb-6">Experience</div>
+                <h2 className="text-3xl font-semibold mb-6">Experience</h2>
                 <div className="mb-6">
                     <ExperienceTimeline experiences={experiences} />
                 </div>
-                <div className="mb-6 text-3xl font-semibold">Skills</div>
+                <h2 className="mb-6 text-3xl font-semibold">Skills</h2>
                 <div className="space-y-6">
                     {skillCategories.map((group) => (
                         <div key={group.category}>
-                            <div className="mb-2 text-lg font-bold">
+                            <h3 className="mb-2 text-lg font-bold">
                                 {group.category}
-                            </div>
+                            </h3>
                             <div className="flex flex-wrap gap-x-2 gap-y-2">
                                 {group.skills.map((skill) => (
                                     <div

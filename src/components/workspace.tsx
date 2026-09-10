@@ -1,8 +1,20 @@
 import {useEffect, useState} from "react";
 import {Layman, LaymanLayout, LaymanProvider} from "react-layman";
-import {makeTab, renderPane, renderTab} from "@/lib/tabs";
+import {
+    focusOrInsertTab,
+    makeTab,
+    makeTabFor,
+    renderPane,
+    renderTab,
+} from "@/lib/tabs";
+import {pathFor, type PageId} from "@/lib/routes-map";
+import {
+    PersistLayout,
+    UrlSync,
+    readPersistedLayout,
+} from "@/lib/use-url-sync";
 import ActivityBar from "./activity-bar";
-import Sidebar, {LAYOUT_STORAGE_KEY} from "./sidebar";
+import Sidebar from "./sidebar";
 
 function NullLayout() {
     return (
@@ -13,15 +25,28 @@ function NullLayout() {
 }
 
 /**
- * The entire application: a react-layman workspace flanked by a VS Code-style
- * activity bar and a collapsible sidebar. There is no router anymore - every
- * "page" is opened as a tab and rendered by `renderPane`.
- *
- * The activity bar and sidebar are rendered as children of <LaymanProvider>,
- * so they share its context (dispatch) and its react-dnd provider - which is
- * what lets the sidebar add tabs directly and support drag-and-drop.
+ * A single window holding just Home. The old default was a split view with
+ * About alongside, which fought with deep links (a post opening as a third
+ * pane) - and Home already links to Projects, Blog and Contact.
  */
-export default function Workspace() {
+function defaultLayout(): LaymanLayout {
+    return {tabs: [makeTab("Home", "home")], selectedIndex: 0};
+}
+
+/**
+ * The interactive application: a react-layman workspace flanked by a VS Code
+ * style activity bar and a collapsible sidebar. Mounts only inside
+ * <ClientOnly> children, replacing the pre-rendered static document.
+ *
+ * `initialPage`/`initialSlug` come from the URL the visitor landed on.
+ */
+export default function Workspace({
+    initialPage,
+    initialSlug,
+}: {
+    initialPage: PageId;
+    initialSlug?: string;
+}) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // Open the sidebar by default on desktop; keep it closed on mobile so it
@@ -32,22 +57,23 @@ export default function Workspace() {
         }
     }, []);
 
-    const initialLayout: LaymanLayout = {
-        direction: "row",
-        children: [
-            {
-                tabs: [makeTab("Home", "home")],
-                selectedIndex: 0,
-            },
-            {
-                tabs: [
-                    makeTab("About", "about"),
-                    makeTab("Contact", "contact"),
-                ],
-                selectedIndex: 0,
-            },
-        ],
-    };
+    /*
+     * Reconcile the entry URL with any persisted layout, synchronously, before
+     * <LaymanProvider> mounts. A `useState` initializer is guaranteed to run
+     * exactly once - `useMemo` offers no such guarantee - and the provider
+     * seeds its reducer from this value on its first render only.
+     *
+     * `focusOrInsertTab` focuses a matching tab if the page is already open,
+     * so reloading a deep link never duplicates a tab.
+     */
+    const [initialLayout] = useState<LaymanLayout>(() => {
+        const base = readPersistedLayout() ?? defaultLayout();
+        const path = pathFor(initialPage, initialSlug);
+        // "/" is the default landing page; there's nothing to reconcile, and
+        // forcing Home to the front would fight with a persisted layout.
+        if (!path || path === "/") return base;
+        return focusOrInsertTab(base, makeTabFor(initialPage, initialSlug));
+    });
 
     return (
         <LaymanProvider
@@ -57,10 +83,17 @@ export default function Workspace() {
             renderNull={<NullLayout />}
             mutable
             toolbarButtons={["splitBottom", "splitRight", "maximize", "float"]}
-            storageKey={LAYOUT_STORAGE_KEY}
+            /*
+             * Deliberately no `storageKey`: the provider would load its own
+             * persisted state through a lazy reducer initializer, overriding
+             * the layout computed above and breaking deep links. <PersistLayout>
+             * handles saving instead. See lib/use-url-sync.tsx.
+             */
             showTabs
             maxDepth={4}
         >
+            <UrlSync />
+            <PersistLayout />
             <div className="flex h-screen w-screen overflow-hidden">
                 <ActivityBar
                     sidebarOpen={sidebarOpen}

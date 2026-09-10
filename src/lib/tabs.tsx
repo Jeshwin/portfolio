@@ -1,43 +1,29 @@
 import {useCallback, useContext, useEffect} from "react";
 import {useDrag} from "react-dnd";
-import {LaymanContext, LaymanLayout, LaymanPath, TabData} from "react-layman";
 import {
-    Home,
-    User,
-    Mail,
-    Notebook,
-    Bookmark,
-    FileText,
-    Box,
-    FilePlus2,
-    FileQuestion,
-    type LucideIcon,
-} from "lucide-react";
-import {Home as HomePage} from "@/pages/Home";
-import {About} from "@/pages/About";
-import {Contact} from "@/pages/Contact";
-import {ProjectList} from "@/pages/ProjectList";
-import {BlogList} from "@/pages/BlogList";
-import {BlogPost} from "@/pages/BlogPost";
-import {Project} from "@/pages/Project";
-import {NewTab} from "@/pages/NewTab";
-import {NotFound} from "@/pages/NotFound";
+    Children,
+    LaymanContext,
+    LaymanLayout,
+    LaymanPath,
+    LaymanWindow,
+    TabData,
+} from "react-layman";
+import type {LucideIcon} from "lucide-react";
+import {
+    PAGES,
+    labelFor,
+    pageForPath,
+    pathFor,
+    type PageId,
+} from "./routes-map";
+
+export type {PageId};
 
 /**
- * Every "page" that used to be a route is now identified by a `page` id (and
- * an optional `slug` for the dynamic blog-post / project pages) stored in a
- * tab's `options`. This replaces react-router entirely - see `renderPane`.
+ * Tabs carry their page id (and slug, for dynamic pages) in `options`. All
+ * per-page knowledge - icon, color, component, URL - lives in the PAGES
+ * registry in routes-map.tsx; this module is only about tabs and layouts.
  */
-export type PageId =
-    | "home"
-    | "about"
-    | "contact"
-    | "projects"
-    | "blog"
-    | "blog-post"
-    | "project"
-    | "blank";
-
 interface PageTabOptions {
     page?: PageId;
     slug?: string;
@@ -48,16 +34,21 @@ function tabOptions(tab: TabData): PageTabOptions {
 }
 
 /** Resolve a tab's page id, treating react-layman's own "blank" tab specially. */
-function pageOf(tab: TabData): PageId | undefined {
+function pageOf(tab: TabData): PageId {
     const {page} = tabOptions(tab);
     if (page) return page;
     if (tab.name === "blank") return "blank";
-    return undefined;
+    return "not-found";
 }
 
 /** Create a tab for a page, carrying its slug when relevant. */
 export function makeTab(label: string, page: PageId, slug?: string): TabData {
     return new TabData(label, slug ? {page, slug} : {page});
+}
+
+/** Create a tab straight from a page id, using the registry for its label. */
+export function makeTabFor(page: PageId, slug?: string): TabData {
+    return makeTab(labelFor(page, slug), page, slug);
 }
 
 /**
@@ -72,77 +63,21 @@ export function tabKey(tab: TabData): string {
 
 /** Icon shown in the tab title (and reusable elsewhere), keyed off the page. */
 export function tabIcon(tab: TabData): LucideIcon {
-    switch (pageOf(tab)) {
-        case "home":
-            return Home;
-        case "about":
-            return User;
-        case "contact":
-            return Mail;
-        case "projects":
-            return Notebook;
-        case "blog":
-            return Bookmark;
-        case "blog-post":
-            return FileText;
-        case "project":
-            return Box;
-        case "blank":
-            return FilePlus2;
-        default:
-            return FileQuestion;
-    }
+    return PAGES[pageOf(tab)].icon;
 }
 
 /** Icon color shown in the tab title, matching the sidebar's per-page colors. */
 export function tabIconColor(tab: TabData): string | undefined {
-    switch (pageOf(tab)) {
-        case "home":
-            return "#EF5B5B";
-        case "blog":
-            return "#FF6719";
-        case "blog-post":
-            return "#C0FFEE";
-        case "projects":
-            return "#4D5D9A";
-        case "project":
-            return "#B07E34";
-        case "about":
-            return "#cdcddc";
-        case "contact":
-            return "#fafeff";
-        default:
-            return undefined;
-    }
+    return PAGES[pageOf(tab)].color;
 }
 
 /**
- * Maps a tab to the page it renders. This is the single place that decides
- * what shows inside a layman window - the former router's job. Dynamic pages
+ * Maps a tab to the page it renders - the former router's job. Dynamic pages
  * read their slug from the tab options.
  */
 export function renderPane(tab: TabData): JSX.Element {
     const {slug} = tabOptions(tab);
-    switch (pageOf(tab)) {
-        case "home":
-            return <HomePage />;
-        case "about":
-            return <About />;
-        case "contact":
-            return <Contact />;
-        case "projects":
-            return <ProjectList />;
-        case "blog":
-            return <BlogList />;
-        case "blog-post":
-            return <BlogPost postId={slug ?? ""} />;
-        case "project":
-            return <Project projectId={slug ?? ""} />;
-        case "blank":
-            return <NewTab />;
-        default:
-            return <NotFound />;
-    }
+    return PAGES[pageOf(tab)].render(slug);
 }
 
 /** Tab title: icon + label. */
@@ -156,6 +91,22 @@ export function renderTab(tab: TabData): JSX.Element {
         </span>
     );
 }
+
+// ==================== Tab <-> URL ====================
+
+/** The URL a tab should put in the address bar, if it has one. */
+export function pathForTab(tab: TabData): string | undefined {
+    const {slug} = tabOptions(tab);
+    return pathFor(pageOf(tab), slug);
+}
+
+/** The tab a URL should open. */
+export function tabForPath(pathname: string): TabData {
+    const {page, slug} = pageForPath(pathname);
+    return makeTabFor(page, slug);
+}
+
+// ==================== Layout helpers ====================
 
 function findTab(
     node: LaymanLayout,
@@ -172,6 +123,97 @@ function findTab(
         if (found) return found;
     }
     return null;
+}
+
+/**
+ * `Children<T>` is a tuple of at least two elements, and `Array.map` widens it
+ * back to a plain array - so every structural rewrite below goes through this
+ * helper to keep the tuple type.
+ */
+function mapChildren(
+    children: Children<LaymanLayout>,
+    fn: (child: LaymanLayout, index: number) => LaymanLayout
+): Children<LaymanLayout> {
+    return children.map(fn) as Children<LaymanLayout>;
+}
+
+/** Point a window's `selectedIndex` at one of its tabs, by layman path. */
+function selectTabAt(
+    node: LaymanLayout,
+    path: LaymanPath,
+    index: number
+): LaymanLayout {
+    if (!node) return node;
+    if ("tabs" in node) return {...node, selectedIndex: index};
+    const [head, ...rest] = path;
+    return {
+        ...node,
+        children: mapChildren(node.children, (child, i) =>
+            i === head ? selectTabAt(child, rest, index) : child
+        ),
+    };
+}
+
+/** Append `tab` to the first (top-left) window and select it. */
+function appendToTopLeft(node: LaymanLayout, tab: TabData): LaymanLayout {
+    if (!node) return {tabs: [tab], selectedIndex: 0};
+    if ("tabs" in node) {
+        return {
+            ...node,
+            tabs: [...node.tabs, tab],
+            selectedIndex: node.tabs.length,
+        };
+    }
+    return {
+        ...node,
+        children: mapChildren(node.children, (child, i) =>
+            i === 0 ? appendToTopLeft(child, tab) : child
+        ),
+    };
+}
+
+/**
+ * Pure: return a layout in which `tab`'s page is open and focused.
+ *
+ * If a tab with the same key already exists, that window's `selectedIndex` is
+ * pointed at it - so deep-linking to an already-open page focuses it and never
+ * duplicates it. Otherwise the tab is appended to the top-left window. An
+ * empty layout becomes a single window holding just this tab.
+ */
+export function focusOrInsertTab(
+    layout: LaymanLayout,
+    tab: TabData
+): LaymanLayout {
+    if (!layout) return {tabs: [tab], selectedIndex: 0};
+    const existing = findTab(layout, tabKey(tab));
+    if (existing) {
+        const window = windowAt(layout, existing.path);
+        const index =
+            window?.tabs.findIndex((t) => tabKey(t) === tabKey(tab)) ?? 0;
+        return selectTabAt(layout, existing.path, Math.max(index, 0));
+    }
+    return appendToTopLeft(layout, tab);
+}
+
+/** Resolve a layman path to the window it addresses, if it still exists. */
+export function windowAt(
+    node: LaymanLayout,
+    path: LaymanPath
+): LaymanWindow | null {
+    let current: LaymanLayout = node;
+    for (const index of path) {
+        if (!current || "tabs" in current) return null;
+        current = current.children[index];
+    }
+    if (!current || !("tabs" in current)) return null;
+    return current;
+}
+
+/** The first (top-left) window in a layout, depth-first. */
+export function topLeftWindow(node: LaymanLayout): LaymanWindow | null {
+    if (!node) return null;
+    if ("tabs" in node) return node;
+    return topLeftWindow(node.children[0]);
 }
 
 /**
