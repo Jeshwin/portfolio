@@ -61,6 +61,17 @@ export default {
                 ring: "rgb(var(--ring))",
             },
             typography: () => ({
+                DEFAULT: {
+                    css: {
+                        // Figure captions, in the site's muted color rather than
+                        // typography's default slate. `--muted-foreground` is
+                        // already redefined per-theme in globals.css, so one
+                        // value covers both light and dark.
+                        "--tw-prose-captions": "rgb(var(--muted-foreground))",
+                        "--tw-prose-invert-captions":
+                            "rgb(var(--muted-foreground))",
+                    },
+                },
                 primary: {
                     css: {
                         "--tw-prose-links": "rgb(var(--primary-foreground))",
