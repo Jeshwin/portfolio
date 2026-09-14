@@ -1,8 +1,8 @@
 ---
 title: "BridgeIDE: My Experience"
 description: "My reflection on my undergraduate senior design project"
-created_at: 2026-09-07T22:49:38Z
-updated_at: 2026-09-03T16:54:27Z
+created_at: 2026-09-14T11:54:01Z
+updated_at: 2026-09-14T11:54:01Z
 tags:
     - project
     - experience
@@ -13,7 +13,7 @@ tags:
 
 ## The Beginning
 
-BridgeIDE started off as a personal project among friends. One day, my friend Ethan asked me if he wanted to work together on a project we could put on our resume and talk about with recruiters. A few days later, over lunch, I proposed three ideas. One was a website to slice and manage 3D prints, similar to [AstroPrint](https://www.astroprint.com/), because I was really interested in 3D printing at the time. I had another idea, but it was so lackluster I've forgotten. But the third project idea clicked almost instantly with us. It was a coding environment running on the browser, just like [VS Code Web](https://code.visualstudio.com/docs/remote/vscode-web) and [Replit](https://replit.com/) (before they went all-in on vibe coding slop). The key innovation we wanted to add that would make the app really stand out was real-time collaboration. Although this is a feature that already existed on Replit and can be added to local IDEs through extensions like [Live Share](https://visualstudio.microsoft.com/services/live-share/), we hoped that our project would help us understand how these features work, and show others that we could contribute to similarly complex features in the future. However, this first version of the project _wasn't_ BridgeIDE!
+[BridgeIDE](https://github.com/Jeshwin/BridgeIDE-public) started off as a personal project among friends. One day, my friend Ethan asked me if he wanted to work together on a project we could put on our resume and talk about with recruiters. A few days later, over lunch, I proposed three ideas. One was a website to slice and manage 3D prints, similar to [AstroPrint](https://www.astroprint.com/), because I was really interested in 3D printing at the time. I had another idea, but it was so lackluster I've forgotten. But the third project idea clicked almost instantly with us. It was a coding environment running on the browser, just like [VS Code Web](https://code.visualstudio.com/docs/remote/vscode-web) and [Replit](https://replit.com/) (before they went all-in on vibe coding slop). The key innovation we wanted to add that would make the app really stand out was real-time collaboration. Although this is a feature that already existed on Replit and can be added to local IDEs through extensions like [Live Share](https://visualstudio.microsoft.com/services/live-share/), we hoped that our project would help us understand how these features work, and show others that we could contribute to similarly complex features in the future. However, this first version of the project _wasn't_ BridgeIDE!
 
 ## CodeNest
 
@@ -66,7 +66,7 @@ For the real-time multi-user support, I extensively researched how existing apps
 
 I remember working through the evening with Will trying to make the multi-user feature work. After 5 hours and a dinner break, we had a basic schema for sending updates across the WebSocket connection, but we weren't able to get two users to have a synced state. After we ended for the day and went back home, I stayed up until midnight working on the feature until I sent the team a screenshot of it finally working!
 
-![Live Share{caption="Live Share"}](bridgeide-my-experience/live-share.png)
+![Live Share{caption="Live Share"}](bridgeide-my-experience/live-share.jpg)
 
 ### Foundry
 
@@ -82,4 +82,22 @@ Of course, for a real product, we would consider scalability to be equally impor
 
 # Presenting our Project
 
+We actually presented BridgeIDE twice, one as an obligation for securing funding from the university, and the other as part of SCU's annual Senior Design Conference. Our first presentation was a short poster session for visiting high school students during the Spring Engineering Education Days, or SEEDs. It was a great time showing our work to both students and faculty, and we received a lot of great questions and feedback that we used to improve our presentation for the conference.
+
+Another funny story about our poster! We initially had one of my teammates assigned to create the poster, but they had assumed that there was some template they could use. In reality, there was actually no template! Instead, my teammate thought another team's poster submission was a template because it said "template" in the file name, and just copied their design and changed the title. Their submission was identical in every other way to the other team's poster, from the text to the images. Thankfully, I found out what happened before the submission deadline closed, and stayed up until 1 AM making my own design, writing my own text, and drawing my own diagrams. I am very proud of my poster, and I still keep it in my room to this day!
+
+![Poster{caption="Poster"}](bridgeide-my-experience/poster.png)
+
+On May 8, 2026, we finally presented BridgeIDE to judges and faculty at the Senior Design Conference. In order to get through dozens of teams across multiple departments in a single day, the event was spread across multiple rooms, where each room session would have 4-5 teams in the same department present one after the other. Each room would have their own judges, made up of SCU alumni and other industry professionals. At the end of the conference, one team per room would be selected as the winner for their session, and one team overall would be selected as the winner of the conference to receive a cash prize.
+
+When it was finally our turn to present, I still felt nervous, even though we had been practicing for over a week. Our plan was to switch between our slides and a live demo of BridgeIDE, so of course there was always a chance that something could go wrong in the demo that we didn't anticipate. Fortunately, the presentation went smoothly, and the judges were impressed with our demo and presentation. When we sat in for other team's presentations, we noticed the judges were quite harsh, probing the teams for why their project was useful or innovative. However, for BridgeIDE, we mostly received praise! Multiple judges even suggested that we sell this idea as a startup! After all of our hard work, their responses inspired us to continue developing BridgeIDE and potentially pitch it to investors!
+
+Ultimately, we won our session! I am grateful for this experience, as it taught me more about actual software development than any other class. Huge shoutout to our senior design advisor, Professor Darren Atkinson, for mentoring us, giving thoughtful advice, and keeping us on track to finish BridgeIDE according to our timeline. It was truly a highlight of my senior year at SCU.
+
+![My senior design team{caption="My senior design team"}](bridgeide-my-experience/winners.jpg)
+
 # Final Thoughts
+
+While the journey of BridgeIDE, from idea to CodeNest to senior design session winner, was an amazing experience, where do I go from here? Although we did reach out to potential investors and industry connection to pitch our idea to existing educational platforms and venture capital firms, the summer after senior year was a time to relax, not work. It is a big regret of mine that I didn't continue to reach out and maintain the connections I had gained through my work in BridgeIDE, and I've learned that maintaining my network is just as valuable as adding to it.
+
+If I were to restart development of BridgeIDE again, I would change two things. First, as I've mentioned extensively in development, I should have placed greater importance on scalability. ChatGPT could generate the entire frontend and backend in a single day, but designing and maintaining scalable infrastructure for potentially thousands of students and assignments is much more valuable and engaging work. This would have also given me valuable experience with cloud computing tools such as Kubernetes, which I am now working with through my masters program at Carnegie Mellon University. Second, I would continue pushing BridgeIDE as a real startup pitch, working more closely with my friends and colleagues to turn BridgeIDE into a real product that universities could use. The timing would be valuable, as both Replit and [now GitHub Classroom](https://github.com/orgs/community/discussions/205975) are no longer competitors in the space of education web apps for CS. Perhaps BridgeIDE will return?
