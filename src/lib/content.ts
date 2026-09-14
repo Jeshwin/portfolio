@@ -40,15 +40,28 @@ function pathToId(filepath: string): string {
  * otherwise produce an Invalid Date and crash the prerender - every page is
  * now built ahead of time, so one bad file would fail the whole build. Skip
  * such files instead: they're unpublished by definition.
+ *
+ * The body has to be non-empty too. Frontmatter is usually written first, so a
+ * file can have a complete, valid header and still have nothing under it - that
+ * passed every check above and published as a live, crawlable, entirely blank
+ * page. An unwritten post is a draft regardless of how finished its header is.
  */
-function isPublishable(fm: {title?: string; created_at?: string}): boolean {
-    return Boolean(fm?.title && fm?.created_at && !isNaN(Date.parse(fm.created_at)));
+function isPublishable(
+    fm: {title?: string; created_at?: string},
+    html: string
+): boolean {
+    return Boolean(
+        fm?.title &&
+            fm?.created_at &&
+            !isNaN(Date.parse(fm.created_at)) &&
+            html?.trim()
+    );
 }
 
 // ==================== Blog Posts ====================
 
 const posts: Post[] = Object.entries(blogModules)
-    .filter(([, mod]) => isPublishable(mod.frontmatter))
+    .filter(([, mod]) => isPublishable(mod.frontmatter, mod.html))
     .map(([filepath, mod]) => {
         const id = pathToId(filepath);
         const fm = mod.frontmatter;
@@ -93,7 +106,7 @@ export function getAllPostIds(): string[] {
 // ==================== Projects ====================
 
 const projects: Project[] = Object.entries(projectModules)
-    .filter(([, mod]) => isPublishable(mod.frontmatter))
+    .filter(([, mod]) => isPublishable(mod.frontmatter, mod.html))
     .map(([filepath, mod]) => {
         const id = pathToId(filepath);
         const fm = mod.frontmatter;

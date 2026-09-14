@@ -19,6 +19,7 @@
 
 # production
 /build
+/.next/
 
 # misc
 .DS_Store
@@ -37,3 +38,7 @@ yarn-error.log*
 # custom
 /db_data/
 /.claude/
+
+# Blog images copied out of content/blog/<slug>/ by vite-plugin-markdown.
+# The originals live next to their post and are the tracked copy.
+/public/images/blog/
