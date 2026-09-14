@@ -37,18 +37,23 @@ function readContent(dir, urlPrefix) {
         .readdirSync(absolute)
         .filter((file) => file.endsWith(".md"))
         .map((file) => {
-            const {data} = matter(
+            const {data, content} = matter(
                 fs.readFileSync(path.join(absolute, file), "utf8")
             );
-            return {file, data};
+            return {file, data, content};
         })
-        // Skip unpublished drafts, matching the filter in src/lib/content.ts -
-        // those pages are never prerendered, so they must not be advertised.
+        // Skip unpublished drafts, matching isPublishable in src/lib/content.ts
+        // - those pages are never prerendered, so they must not be advertised.
+        // The body check matters as much as the header one: frontmatter is
+        // written first, so a file can look complete and still have nothing
+        // under it. Keep this in step with content.ts; the two can't share code
+        // because that module needs import.meta.glob and the markdown plugin.
         .filter(
-            ({data}) =>
+            ({data, content}) =>
                 data?.title &&
                 data?.created_at &&
-                !Number.isNaN(Date.parse(data.created_at))
+                !Number.isNaN(Date.parse(data.created_at)) &&
+                content?.trim()
         )
         .map(({file, data}) => {
             const slug = file.replace(/\.md$/, "");
