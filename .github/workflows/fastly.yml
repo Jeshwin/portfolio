@@ -1,0 +1,53 @@
+name: Deploy to Fastly
+
+# Runs on a push to production, by hand from the Actions tab, and from the
+# Compute app's /admin/posts API after a post is published (workflow_dispatch).
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+# A publish and a push at the same time would race to upload; queue them.
+concurrency:
+  group: fastly-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      FASTLY_API_TOKEN: ${{ secrets.FASTLY_API_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            compute-js/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix compute-js
+
+      - name: Pull posts published through /admin/posts
+        run: node scripts/pull-kv-content.mjs
+
+      - name: Build static site (Vite + vite-react-ssg)
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      # Uploads only files whose hash changed. The Compute app itself is
+      # deployed separately (npm run fastly:deploy) - only needed when
+      # compute-js/src or static-publish.rc.js change.
+      - name: Upload dist/ to the Fastly KV Store
+        working-directory: compute-js
+        run: npm run fastly:publish

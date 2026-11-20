@@ -173,6 +173,13 @@ implicit: `content.ts` finds every `.md` file at build time via
 
 ## Deployment
 
+> **Moving to Fastly.** `.github/workflows/fastly.yml` deploys the same `dist/`
+> to Fastly Compute + KV Store, and `compute-js/` is the edge app. Posts can
+> also be published without git (`node scripts/publish.mjs`). See
+> [docs/fastly-migration.md](docs/fastly-migration.md). Until the DNS cutover
+> in that runbook is done, both workflows run and the EC2 setup below is still
+> what serves jeshwinprince.com. Delete this EC2 section once it's done.
+
 Push to `production` (or run the workflow manually). The workflow:
 
 1. `npm ci` on Node 22.
