@@ -1,0 +1,69 @@
+# This file describes a Fastly Compute package. To learn more visit:
+# https://www.fastly.com/documentation/reference/compute/fastly-toml
+
+authors = ["Jeshwin Prince"]
+description = "jeshwinprince.com on Fastly Compute"
+language = "javascript"
+manifest_version = 3
+name = "portfolio"
+service_id = "hIRbEsg8AZ5vmfxhM9T2MC"
+
+[local_server]
+
+  [local_server.backends]
+
+    [local_server.backends.github]
+      url = "https://api.github.com"
+
+  [local_server.kv_stores]
+
+    [[local_server.kv_stores.portfolio-posts]]
+      data = "Local stand-in for the posts store."
+      key = "README"
+
+    [local_server.kv_stores.portfolio-site]
+      file = "./static-publisher/kvstore.json"
+      format = "json"
+
+  [local_server.secret_stores]
+
+    [[local_server.secret_stores.portfolio-secrets]]
+      data = "local-dev-token"
+      key = "PUBLISH_TOKEN"
+
+    [[local_server.secret_stores.portfolio-secrets]]
+      data = "not-a-real-token"
+      key = "GITHUB_TOKEN"
+
+[scripts]
+  build = "npm run build"
+
+[setup]
+
+  [setup.backends]
+
+    [setup.backends.github]
+      address = "api.github.com"
+      description = "GitHub API, to trigger the rebuild after a publish"
+      port = 443
+
+  [setup.kv_stores]
+
+    [setup.kv_stores.portfolio-posts]
+      description = "Blog posts published through /admin/posts"
+
+    [setup.kv_stores.portfolio-site]
+      description = "Static site files, managed by compute-js-static-publish"
+
+  [setup.secret_stores]
+
+    [setup.secret_stores.portfolio-secrets]
+      description = "Publishing secrets"
+
+      [setup.secret_stores.portfolio-secrets.entries]
+
+        [setup.secret_stores.portfolio-secrets.entries.GITHUB_TOKEN]
+          description = "Fine-grained GitHub PAT: Jeshwin/portfolio only, Actions read+write"
+
+        [setup.secret_stores.portfolio-secrets.entries.PUBLISH_TOKEN]
+          description = "Bearer token for /admin/posts (make one with: openssl rand -hex 32)"
